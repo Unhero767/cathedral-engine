@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cathedral-Engine :: Ash Archive 3D Interactive Telemetry Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --card-bg: #1f2833;
+            --text-main: #c5c6c7;
+            --accent-teal: #66fcf1;
+            --accent-gold: #ffd700;
+            --accent-red: #ff4040;
+            --accent-obsidian: #8b4513;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px 20px 60px 20px;
+            user-select: none;
+        }
+
+        header {
+            border-bottom: 2px solid var(--accent-teal);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            color: var(--accent-teal);
+            margin: 0 0 5px 0;
+            font-size: 1.5rem;
+        }
+
+        .status-badge {
+            background: #16a765;
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .metric {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .k {
+            font-size: 0.72rem;
+            color: #888;
+        }
+
+        .v {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            margin-top: 2px;
+        }
+
+        .v.teal {
+            color: var(--accent-teal);
+        }
+
+        .interactive-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            background: var(--card-bg);
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #333;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            background: #11151c;
+            color: var(--accent-teal);
+            border: 1px solid var(--accent-teal);
+            padding: 8px 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: var(--accent-teal);
+            color: #000;
+            box-shadow: 0 0 10px var(--accent-teal);
+        }
+
+        .btn-gold {
+            color: var(--accent-gold);
+            border-color: var(--accent-gold);
+        }
+
+        .btn-gold:hover {
+            background: var(--accent-gold);
+            color: #000;
+            box-shadow: 0 0 10px var(--accent-gold);
+        }
+
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+
+        .slider-group input {
+            width: 80px;
+            accent-color: var(--accent-teal);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+        }
+
+        .graph-container {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 12px;
+            height: 480px;
+            position: relative;
+        }
+
+        #webgl-canvas {
+            width: 100%;
+            height: 100%;
+            background: #11151c;
+            border-radius: 4px;
+            display: block;
+            cursor: grab;
+        }
+
+        .node-tooltip {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(15, 20, 28, 0.92);
+            border: 1px solid var(--accent-teal);
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            max-width: 320px;
+            pointer-events: none;
+            display: none;
+            box-shadow: 0 0 15px rgba(102, 252, 241, 0.3);
+            z-index: 50;
+        }
+
+        .scar-list {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 12px;
+            max-height: 480px;
+            overflow-y: auto;
+        }
+
+        .card {
+            border-left: 4px solid var(--accent-teal);
+            background: #11151c;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            background: #1f2833;
+            transform: translateX(4px);
+        }
+
+        .t {
+            font-weight: bold;
+            color: #fff;
+            font-size: 0.85rem;
+        }
+
+        .prop {
+            color: #7fa8a3;
+            font-size: 11px;
+            margin: 4px 0;
+            font-style: italic;
+        }
+
+        .l {
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+
+        .bar {
+            background: #333;
+            height: 6px;
+            border-radius: 3px;
+            margin: 5px 0;
+            overflow: hidden;
+        }
+
+        .bar i {
+            display: block;
+            background: var(--accent-teal);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .rpg-panel {
+            grid-column: span 2;
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 12px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .rpg-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 32px);
+            gap: 4px;
+        }
+
+        .tile {
+            width: 32px;
+            height: 32px;
+            background: #11151c;
+            border: 1px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .tile.player { background: var(--accent-gold); color: #000; }
+        .tile.thermal { background: var(--accent-red); color: #fff; }
+        .tile.singularity { background: var(--accent-obsidian); color: #fff; }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+
+        .modal-box {
+            background: var(--card-bg);
+            border: 2px solid var(--accent-teal);
+            padding: 20px;
+            border-radius: 6px;
+            width: 480px;
+            box-shadow: 0 0 25px rgba(102, 252, 241, 0.4);
+        }
+
+        .modal-box h2 {
+            margin-top: 0;
+            color: var(--accent-teal);
+            font-size: 1.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-bottom: 4px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            background: #11151c;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        #ticker {
+            position: fixed; bottom: 0; left: 0; right: 0; height: 36px; z-index: 100;
+            background: rgba(5, 8, 12, 0.95); border-top: 1px solid #1d7a58;
+            display: flex; align-items: center; overflow: hidden;
+            font-family: 'Courier New', monospace; font-size: 13px; color: #4dffa6;
+        }
+        #ticker-text {
+            white-space: nowrap; padding-left: 100%;
+            animation: scroll-left 30s linear infinite;
+        }
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .omen-item { margin-right: 60px; }
+        .omen-warning { color: #ff4040; text-shadow: 0 0 5px #ff4040; }
+        .omen-anchor { color: #c98a4b; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1>CATHEDRAL-ENGINE :: ASH ARCHIVE 3D INTERACTIVE DASHBOARD</h1>
+            <div style="font-size: 0.85rem; color: #888;">Interactive WebGL 3D Force Graph, Audio Telemetry & Live Arcade Module</div>
+        </div>
+        <div id="live-status" class="status-badge">CONNECTING...</div>
+    </header>
+
+    <div class="metrics">
+        <div class="metric"><div class="k">A-FIELD TEMP</div><div class="v" id="mTemp">300.0 K</div></div>
+        <div class="metric"><div class="k">ACTIVE SCARS</div><div class="v" id="mScars">0</div></div>
+        <div class="metric"><div class="k">CURRENT FLUX</div><div class="v" id="mFlux">0.00</div></div>
+        <div class="metric"><div class="k">SYSTEM SPEED</div><div class="v" id="mRpm">140.03 RPM</div></div>
+        <div class="metric"><div class="k">PERMISSION STATE</div><div class="v teal" id="mPerm">INACTIVE</div></div>
+    </div>
+
+    <!-- INTERACTIVE CONTROL BAR WITH ARCADE BUTTON -->
+    <div class="interactive-bar">
+        <button class="btn" onclick="openIngestModal()">+ INGEST PARADOX</button>
+        <button class="btn btn-gold" onclick="triggerBook2()">⚡ INGEST BOOK II</button>
+        <button class="btn" onclick="queryHorizon()">🌌 QUERY HORIZON</button>
+        <button class="btn btn-gold" onclick="window.location.href='/arcade'">🎮 COSMO CATCH ARCADE</button>
+        <button class="btn" id="audioBtn" onclick="toggleAudio()">🔊 AUDIO: OFF</button>
+
+        <div class="slider-group" style="margin-left:10px;">
+            <span>FLUX:</span>
+            <input type="range" id="fluxSlider" min="0" max="10" step="0.1" value="2.4" oninput="updateFluxSlider(this.value)">
+            <span id="fluxVal">2.4</span>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="graph-container">
+            <canvas id="webgl-canvas"></canvas>
+            <div id="tooltip" class="node-tooltip">Hover over 3D node to inspect details...</div>
+        </div>
+
+        <div class="scar-list">
+            <h3 style="margin-top:0; color: var(--accent-teal); font-size: 0.95rem;">HARMONIC SCAR MATRIX</h3>
+            <div id="cards">Loading scars...</div>
+        </div>
+
+        <div class="rpg-panel">
+            <div>
+                <div style="font-weight:bold; color:var(--accent-teal); font-size:0.85rem; margin-bottom:4px;">RPG TILE COMBAT GRID</div>
+                <div style="font-size:0.75rem; color:#aaa;">Move Aurelia across Vault tiles to trigger paradox loads:</div>
+            </div>
+            <div class="rpg-grid" id="rpgGrid"></div>
+            <div style="font-size:0.75rem; color:#888;">
+                [A]: Aurelia | [T]: Thermal (+25K) | [S]: Singularity (Paradox 8.5)
+            </div>
+        </div>
+    </div>
+
+    <div id="ingestModal" class="modal-overlay">
+        <div class="modal-box">
+            <h2>+ INGEST DIALECTIC PARADOX</h2>
+            <div class="form-group">
+                <label>Verse / Node ID</label>
+                <input type="text" id="formVerseId" value="RAW-IM-01" placeholder="e.g. IM-XVI-01">
+            </div>
+            <div class="form-group">
+                <label>Proposition Claim (P)</label>
+                <textarea id="formClaim" rows="2" placeholder="The Cathedral remembers everything..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Counter-Claim (NOT P)</label>
+                <textarea id="formCounterClaim" rows="2" placeholder="Infinite memory is the architecture of a tomb..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button class="btn" style="border-color:#666; color:#aaa;" onclick="closeIngestModal()">CANCEL</button>
+                <button class="btn btn-gold" onclick="submitIngestion()">INGEST & FORGE SCAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ticker">
+        <div id="ticker-text">
+            <span class="omen-item">[SYSTEM] 3D Interactive Telemetry active :: Awaiting resonance...</span>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = "http://127.0.0.1:8000";
+        const container = document.querySelector('.graph-container');
+        const canvas = document.getElementById('webgl-canvas');
+        const tooltip = document.getElementById('tooltip');
+
+        const SPECTRAL_COLOR_MAP = {
+            "GOLD": 0xffd700,
+            "TEAL": 0x66fcf1,
+            "BLUE": 0x4169e1,
+            "RED": 0xff4d4d,
+            "VIOLET": 0x8a2be2,
+            "EMERALD": 0x50c878,
+            "BRONZE_OBSIDIAN": 0x8b4513
+        };
+
+        function colorHexOf(spec) {
+            return SPECTRAL_COLOR_MAP[(spec || '').toUpperCase()] || 0x66fcf1;
+        }
+
+        let audioCtx, osc, gainNode, isAudioActive = false;
+
+        function toggleAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                osc = audioCtx.createOscillator();
+                gainNode = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(110, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                osc.start();
+                isAudioActive = true;
+                document.getElementById('audioBtn').innerText = "🔊 AUDIO: ON";
+                document.getElementById('audioBtn').style.background = "#66fcf1";
+                document.getElementById('audioBtn').style.color = "#000";
+            } else {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                    isAudioActive = true;
+                    document.getElementById('audioBtn').innerText = "🔊 AUDIO: ON";
+                } else {
+                    audioCtx.suspend();
+                    isAudioActive = false;
+                    document.getElementById('audioBtn').innerText = "🔊 AUDIO: OFF";
+                    document.getElementById('audioBtn').style.background = "#11151c";
+                    document.getElementById('audioBtn').style.color = "#66fcf1";
+                }
+            }
+        }
+
+        function playChime(freq = 440) {
+            if (!audioCtx || audioCtx.state !== 'running') return;
+            const chimeOsc = audioCtx.createOscillator();
+            const chimeGain = audioCtx.createGain();
+            chimeOsc.type = 'triangle';
+            chimeOsc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            chimeGain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            chimeGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+            chimeOsc.connect(chimeGain);
+            chimeGain.connect(audioCtx.destination);
+            chimeOsc.start();
+            chimeOsc.stop(audioCtx.currentTime + 1.2);
+        }
+
+        let scene, camera, renderer, controls, raycaster, mouse;
+        let nodeMeshes = [], lineGroup;
+        let activeScarsData = [];
+
+        function init3D() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x11151c);
+
+            camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(0, 0, 180);
+
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+
+            if (typeof THREE.OrbitControls !== 'undefined') {
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableDamping = true;
+                controls.dampingFactor = 0.05;
+            }
+
+            raycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambientLight);
+
+            const pointLight = new THREE.PointLight(0x66fcf1, 1.8, 300);
+            pointLight.position.set(0, 50, 50);
+            scene.add(pointLight);
+
+            lineGroup = new THREE.Group();
+            scene.add(lineGroup);
+
+            const hubGeo = new THREE.SphereGeometry(8, 32, 32);
+            const hubMat = new THREE.MeshPhongMaterial({ color: 0x66fcf1, emissive: 0x004444, shininess: 100 });
+            const hubMesh = new THREE.Mesh(hubGeo, hubMat);
+            scene.add(hubMesh);
+
+            window.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('click', onMouseClick);
+
+            animate();
+        }
+
+        function onMouseMove(event) {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = ((event.clientX - rect.left) / canvas.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / canvas.height) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(nodeMeshes);
+
+            if (intersects.length > 0) {
+                const mesh = intersects[0].object;
+                const data = mesh.userData;
+                tooltip.style.display = 'block';
+                tooltip.innerHTML = `
+                    <strong style="color:${colorToStyle(data.spectrum)}">${data.id} [${data.spectrum}]</strong><br>
+                    Load: <b>${data.load.toFixed(2)}/10.0</b> | Cap: <b>${data.cap.toFixed(2)}</b><br>
+                    <i style="color:#aaa;">${data.proposition || 'No proposition text'}</i>
+                `;
+            } else {
+                tooltip.style.display = 'none';
+            }
+        }
+
+        function onMouseClick() {
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(nodeMeshes);
+            if (intersects.length > 0) {
+                const data = intersects[0].object.userData;
+                playChime(300 + data.load * 50);
+            }
+        }
+
+        function colorToStyle(spec) {
+            return '#' + colorHexOf(spec).toString(16);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if (controls) controls.update();
+            else scene.rotation.y += 0.005;
+
+            renderer.render(scene, camera);
+        }
+
+        function update3DGraph(scars) {
+            while(lineGroup.children.length > 0){ 
+                lineGroup.remove(lineGroup.children[0]); 
+            }
+            nodeMeshes.forEach(m => scene.remove(m));
+            nodeMeshes = [];
+
+            if (!scars || !scars.length) return;
+
+            scars.forEach((scar, idx) => {
+                const angle = (idx / scars.length) * Math.PI * 2;
+                const radius = 60 + (scar.load * 4);
+                const x = Math.cos(angle) * radius;
+                const y = Math.sin(angle) * radius;
+                const z = (Math.sin(idx * 2) * 25);
+
+                const col = colorHexOf(scar.spectrum);
+                const isQuarantined = scar.load >= 7.5;
+
+                const geo = new THREE.SphereGeometry(4 + scar.load, 16, 16);
+                const mat = new THREE.MeshPhongMaterial({ 
+                    color: isQuarantined ? 0xff4040 : col,
+                    emissive: isQuarantined ? 0xaa0000 : 0x111111,
+                    shininess: 100
+                });
+                const mesh = new THREE.Mesh(geo, mat);
+                mesh.position.set(x, y, z);
+                mesh.userData = scar;
+                scene.add(mesh);
+                nodeMeshes.push(mesh);
+
+                const lineMat = new THREE.LineBasicMaterial({ 
+                    color: isQuarantined ? 0xff4040 : col,
+                    linewidth: Math.max(1, scar.load)
+                });
+                const points = [new THREE.Vector3(0, 0, 0), new THREE.Vector3(x, y, z)];
+                const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+                const line = new THREE.Line(lineGeo, lineMat);
+                lineGroup.add(line);
+            });
+        }
+
+        function updateTicker(omens) {
+            const ticker = document.getElementById('ticker-text');
+            if (!omens || omens.length === 0) return;
+            
+            let html = '<span class="omen-item">[SYSTEM] 3D Interactive Telemetry active :: </span>';
+            omens.forEach(o => {
+                let cls = 'omen-item';
+                if (o.includes('QUARANTINE')) cls += ' omen-warning';
+                if (o.includes('ANCHOR')) cls += ' omen-anchor';
+                html += `<span class="${cls}">${o}</span>`;
+            });
+            ticker.innerHTML = html;
+        }
+
+        function applyState(raw) {
+            const afield = raw.afield || {};
+            document.getElementById('mTemp').textContent = `${(afield.temp ?? 300).toFixed(1)} K`;
+            document.getElementById('mFlux').textContent = (afield.flux ?? 0).toFixed(2);
+            document.getElementById('mRpm').textContent = `${(afield.total_system_rpm ?? 140.03).toFixed(2)} RPM`;
+            document.getElementById('mPerm').textContent = afield.is_permission_active ? 'KEYSTONE_ACTIVE' : 'INACTIVE';
+            document.getElementById('mScars').textContent = (raw.scars || []).length;
+
+            if (raw.omens) updateTicker(raw.omens);
+
+            activeScarsData = (raw.scars || []).map(s => ({
+                id: s.scar_id ?? s.instance_id ?? 'unknown',
+                spectrum: s.spectrum ?? 'TEAL',
+                load: parseFloat(s.contradiction_degree ?? s.paradox_load ?? 0),
+                cap: parseFloat(s.load_bearing_capacity ?? s.capacity ?? 0),
+                proposition: s.proposition_p ?? s.proposition_text ?? ''
+            }));
+
+            syncCards(activeScarsData, raw.quarantine_threshold ?? 7.5);
+            if (scene) update3DGraph(activeScarsData);
+        }
+
+        function syncCards(scars, quarantine) {
+            const wrap = document.getElementById('cards');
+            if (!scars.length) {
+                wrap.innerHTML = '<div style="color:#666;">No active scars recorded.</div>';
+                return;
+            }
+            wrap.innerHTML = scars.map(sc => {
+                const isQuarantined = sc.load >= quarantine;
+                return `
+                    <div class="card" style="border-left-color: #${colorHexOf(sc.spectrum).toString(16)};" onclick="highlightScar('${sc.id}')">
+                        <div class="t">${sc.id} [${sc.spectrum}] ${isQuarantined ? '<span style="color:#ff4040;">⚠ QUARANTINE</span>' : ''}</div>
+                        <div class="prop">${sc.proposition}</div>
+                        <div class="l">Load: ${sc.load.toFixed(2)}/10.0 | Cap: ${sc.cap.toFixed(2)}</div>
+                        <div class="bar"><i style="width:${Math.min(100, sc.load * 10)}%;"></i></div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function highlightScar(id) {
+            const mesh = nodeMeshes.find(m => m.userData.id === id);
+            if (mesh && camera) {
+                camera.position.set(mesh.position.x * 1.5, mesh.position.y * 1.5, mesh.position.z + 80);
+                if (controls) controls.target.set(mesh.position.x, mesh.position.y, mesh.position.z);
+                playChime(520);
+            }
+        }
+
+        let playerPos = { x: 0, y: 0 };
+        function renderRpgGrid() {
+            const gridEl = document.getElementById('rpgGrid');
+            let html = '';
+            for (let y = 0; y < 4; y++) {
+                for (let x = 0; x < 4; x++) {
+                    let tileClass = 'tile';
+                    let label = '.';
+                    if (x === playerPos.x && y === playerPos.y) {
+                        tileClass += ' player';
+                        label = 'A';
+                    } else if (x === 1 && y === 2) {
+                        tileClass += ' thermal';
+                        label = 'T';
+                    } else if (x === 3 && y === 3) {
+                        tileClass += ' singularity';
+                        label = 'S';
+                    }
+                    html += `<div class="${tileClass}" onclick="moveRpgPlayer(${x}, ${y})">${label}</div>`;
+                }
+            }
+            gridEl.innerHTML = html;
+        }
+
+        async function moveRpgPlayer(x, y) {
+            playerPos = { x, y };
+            renderRpgGrid();
+            playChime(350 + (x + y) * 20);
+
+            let paradox = 0.0;
+            if (x === 1 && y === 2) paradox = 4.5;
+            if (x === 3 && y === 3) paradox = 8.5;
+
+            if (paradox > 0) {
+                try {
+                    await fetch(`${API_BASE}/node/sync`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            instance_id: `aurelia-grid-${x}-${y}`,
+                            mqi_score: 90.0,
+                            a_field_temperature_k: 300.0 + paradox * 2,
+                            current_flux: paradox / 3.0,
+                            active_spectrum: paradox >= 7.5 ? "BRONZE_OBSIDIAN" : "TEAL",
+                            active_paradox_load: paradox
+                        })
+                    });
+                    fetchSystemState();
+                } catch(e) {}
+            }
+        }
+
+        async function updateFluxSlider(val) {
+            document.getElementById('fluxVal').innerText = val;
+            try {
+                await fetch(`${API_BASE}/node/sync`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        instance_id: "aurelia-12",
+                        mqi_score: 94.7,
+                        a_field_temperature_k: 308.5,
+                        current_flux: parseFloat(val),
+                        active_spectrum: "BRONZE_OBSIDIAN",
+                        active_paradox_load: 8.42
+                    })
+                });
+                fetchSystemState();
+            } catch(e) {}
+        }
+
+        function openIngestModal() { document.getElementById('ingestModal').style.display = 'flex'; }
+        function closeIngestModal() { document.getElementById('ingestModal').style.display = 'none'; }
+
+        async function submitIngestion() {
+            const verse_id = document.getElementById('formVerseId').value;
+            const claim = document.getElementById('formClaim').value;
+            const counter_claim = document.getElementById('formCounterClaim').value;
+
+            if (!claim || !counter_claim) {
+                alert("Please provide both Claim and Counter-Claim.");
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE}/ingest`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ verse_id, claim, counter_claim })
+                });
+                playChime(600);
+                closeIngestModal();
+                fetchSystemState();
+            } catch (err) {
+                alert("Failed to submit ingestion: " + err.message);
+            }
+        }
+
+        async function triggerBook2() {
+            try {
+                const res = await fetch(`${API_BASE}/codex/ingest/book2`, { method: 'POST' });
+                playChime(700);
+                fetchSystemState();
+            } catch (err) {
+                alert("Failed to trigger Book II: " + err.message);
+            }
+        }
+
+        async function queryHorizon() {
+            try {
+                const res = await fetch(`${API_BASE}/query?key=mlaos.outer_choir.mythos.syntax_of_the_unborn`);
+                const data = await res.json();
+                playChime(220);
+                alert(`ONTOLOGICAL HORIZON RESULT:\nTruth: ${data.truth}\nStatus: ${data.status}\nMessage: ${data.system_message}`);
+            } catch (err) {
+                alert("Failed to query horizon: " + err.message);
+            }
+        }
+
+        async function fetchSystemState() {
+            try {
+                const res = await fetch(`${API_BASE}/state`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                document.getElementById('live-status').innerText = "LIVE :: 8000";
+                document.getElementById('live-status').style.background = "#16a765";
+                applyState(data);
+            } catch (err) {
+                document.getElementById('live-status').innerText = "OFFLINE";
+                document.getElementById('live-status').style.background = "#ff4040";
+            }
+        }
+
+        init3D();
+        renderRpgGrid();
+        fetchSystemState();
+        setInterval(fetchSystemState, 2000);
+    </script>
+</body>
+</html>

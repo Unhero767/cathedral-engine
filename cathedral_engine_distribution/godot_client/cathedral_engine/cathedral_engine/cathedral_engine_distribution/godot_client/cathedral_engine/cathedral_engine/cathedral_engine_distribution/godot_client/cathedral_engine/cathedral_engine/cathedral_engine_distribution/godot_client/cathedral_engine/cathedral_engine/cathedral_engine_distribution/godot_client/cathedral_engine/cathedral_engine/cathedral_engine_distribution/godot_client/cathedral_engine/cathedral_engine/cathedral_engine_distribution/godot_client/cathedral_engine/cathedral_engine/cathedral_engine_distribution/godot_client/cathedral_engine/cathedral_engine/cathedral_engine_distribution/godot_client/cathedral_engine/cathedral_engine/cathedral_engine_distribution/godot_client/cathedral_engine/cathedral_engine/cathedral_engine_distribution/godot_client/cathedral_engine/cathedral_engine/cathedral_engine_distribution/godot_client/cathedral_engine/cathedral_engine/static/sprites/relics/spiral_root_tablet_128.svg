@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" shape-rendering="crispEdges">
+  <rect width="128" height="128" fill="#0A0C10" />
+  <!-- Phaistos-Patterned Ceramic Proto-Codex -->
+  <circle cx="64" cy="64" r="46" fill="#6B4E1B" stroke="#2B1D04" stroke-width="3"/>
+  <circle cx="64" cy="64" r="40" fill="#2B1D04"/>
+  <!-- Recursive Spiral Glyphs -->
+  <path d="M64,64 A6,6 0 0,1 70,64 A12,12 0 0,1 58,64 A18,18 0 0,1 76,64 A24,24 0 0,1 52,64 A30,30 0 0,1 82,64" fill="none" stroke="#C99738" stroke-width="3"/>
+  <!-- Glowing Ingress Nodes -->
+  <circle cx="70" cy="64" r="3" fill="#BA2D2D"/>
+  <circle cx="58" cy="64" r="3" fill="#21A863"/>
+  <circle cx="76" cy="64" r="3" fill="#FAD06C"/>
+  <circle cx="52" cy="64" r="3" fill="#C475F5"/>
+</svg>

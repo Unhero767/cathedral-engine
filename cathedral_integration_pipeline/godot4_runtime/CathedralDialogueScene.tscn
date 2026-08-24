@@ -1,0 +1,129 @@
+[gd_scene load_steps=6 format=3 uid="uid://mlaoseas03dialogue001"]
+
+[ext_resource type="Shader" path="res://cathedral_integration_pipeline/godot4_runtime/cathedral_portrait_dither.gdshader" id="1_shader"]
+[ext_resource type="SpriteFrames" path="res://cathedral_integration_pipeline/godot4_runtime/aurelia_9_vanguard_spriteframes.tres" id="2_sprite_frames"]
+[ext_resource type="Script" path="res://cathedral_integration_pipeline/godot4_runtime/CathedralAvatarPortrait.gd" id="3_portrait_script"]
+[ext_resource type="Script" path="res://cathedral_integration_pipeline/godot4_runtime/DialogueManager.gd" id="4_dialogue_mgr"]
+[ext_resource type="Script" path="res://cathedral_integration_pipeline/godot4_runtime/DialogueUI.gd" id="5_dialogue_ui"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dither"]
+shader = ExtResource("1_shader")
+shader_parameter/u_shadow_depth_ramp = 0.55
+shader_parameter/u_specular_rim_factor = 1.53
+shader_parameter/u_lumen_emission_gain = 1.0
+shader_parameter/u_afield_potency = 0.95
+shader_parameter/u_enable_dither = true
+shader_parameter/u_enable_dual_lumen = true
+
+[node name="CathedralDialogueScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.04, 0.06, 1)
+
+[node name="PortraitContainer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -180.0
+offset_right = 64.0
+offset_bottom = -52.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AvatarPortrait" type="AnimatedSprite2D" parent="PortraitContainer"]
+material = SubResource("ShaderMaterial_dither")
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("2_sprite_frames")
+animation = &"liturgical_idle"
+script = ExtResource("3_portrait_script")
+character_recipe_path = "res://cathedral_integration_pipeline/recipes/aurelia_9_vanguard.json"
+base_afield_potency = 0.95
+
+[node name="DialogueUI" type="Control" parent="." node_paths=PackedStringArray("dialogue_manager", "avatar_portrait")]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -240.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("5_dialogue_ui")
+dialogue_manager = NodePath("../DialogueManager")
+avatar_portrait = NodePath("../PortraitContainer/AvatarPortrait")
+
+[node name="DialoguePanel" type="PanelContainer" parent="DialogueUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 20.0
+offset_right = -40.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="DialogueUI/DialoguePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DialogueUI/DialoguePanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SpeakerHeader" type="HBoxContainer" parent="DialogueUI/DialoguePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SpeakerName" type="Label" parent="DialogueUI/DialoguePanel/MarginContainer/VBoxContainer/SpeakerHeader"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Aurelia-9"
+
+[node name="SpeakerTitle" type="Label" parent="DialogueUI/DialoguePanel/MarginContainer/VBoxContainer/SpeakerHeader"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.75, 1)
+theme_override_font_sizes/font_size = 14
+text = "[Vanguard of the First Hearth]"
+
+[node name="DialogueText" type="RichTextLabel" parent="DialogueUI/DialoguePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "The Bone Remains. The Hazard is Truth."
+
+[node name="ChoicesContainer" type="VBoxContainer" parent="DialogueUI/DialoguePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ContinuePrompt" type="Label" parent="DialogueUI/DialoguePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.55, 1)
+theme_override_font_sizes/font_size = 12
+text = "[ Space / Enter to continue ]"
+horizontal_alignment = 2
+
+[node name="DialogueManager" type="Node" parent="."]
+script = ExtResource("4_dialogue_mgr")
+narrative_manifest_path = "res://cathedral_integration_pipeline/narrative_manifest.json"

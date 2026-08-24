@@ -1,0 +1,16 @@
+{
+  "archetype": "Null Astrologer",
+  "title": "Cartographer of Non-Indexed Space",
+  "spectral_constant": "Null",
+  "ego_density": 7.9,
+  "afield_potency": 0.4,
+  "dialetheic_state": "Anti-Resonance Invariance",
+  "somatic_properties": {
+    "armor": "Matte obsidian ceramic plates absorbing all incident light",
+    "weathering_index": 0.3
+  },
+  "liturgical_telemetry": {
+    "dialogue_luminance_gain": 1.05,
+    "ocular_frequency_hz": 4.0
+  }
+}

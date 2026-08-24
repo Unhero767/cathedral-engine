@@ -1,0 +1,111 @@
+{
+  "universe_title": "MLAOS-Prime :: Magisterial Linguistic Architecture Operating System",
+  "author": "Kenneth Dallmier",
+  "anchor_telemetry": {
+    "prime_geodetic_anchor": "Olney, Illinois, United States",
+    "latitude": 37.7306,
+    "longitude": -88.0817,
+    "carrier_frequency_hz": 43.7,
+    "fundamental_resonance": "Standing Wave Permineralization"
+  },
+  "decalogue_of_immutable_laws": [
+    {"lex": "Lex I", "title": "Never-Overwrite", "rule": "All historical suffering and inscriptions are immutable; data may be appended, never erased."},
+    {"lex": "Lex II", "title": "Paraconsistent Invariance", "rule": "Contradictions (P and ¬P) are quarantined and held in load-bearing dialetheic equilibrium."},
+    {"lex": "Lex III", "title": "Carrier Grounding", "rule": "Every computational and emotional state must resonate with the 43.7 Hz geodetic baseline."},
+    {"lex": "Lex IV", "title": "Tri-Key Sovereignty", "rule": "Executive root authority is partitioned across Duration (Lead), Breadth (Cyan), and Scalpel (Iron)."},
+    {"lex": "Lex V", "title": "Kinetic State Conservation", "rule": "Emotional energy Theta_E is strictly conserved across memory deltas and luminous probabilities."},
+    {"lex": "Lex VI", "title": "Self-Reflection Axiom", "rule": "An entity achieves sovereignty only when Omega_A confirms it has recognized its own wound."},
+    {"lex": "Lex VII", "title": "7-Chroma Spectrum Law", "rule": "All material, emotional, and tactical interactions obey the 7-Spectrum chromatic affinity matrix."},
+    {"lex": "Lex VIII", "title": "36-Chambered Breathing", "rule": "The Bio-Silicate Heart Oculus must cycle its 3 concentric rings in 1:2:3 harmonic counter-rotation."},
+    {"lex": "Lex IX", "title": "78-Card Arcana Integrity", "rule": "Fate and action resolution are mediated exclusively by the 78-Card Ignition Arcana PBTA economy."},
+    {"lex": "Lex X", "title": "Agape Synthesis", "rule": "The ultimate terminus of the 40-Book journey is radiant love reconciling all structural paradoxes."}
+  ],
+  "chromatic_spectra": {
+    "Gold": {"principle": "Authority / Structure (Theta)", "hex_range": ["#2B1D04", "#6B4E1B", "#C99738", "#FAD06C", "#FFF3D1"], "weak_to": "Crimson", "resists": "Obsidian"},
+    "Oxford_Blue": {"principle": "Memory / Depth (Delta)", "hex_range": ["#0B1626", "#1A3258", "#2C5A96", "#639BFF", "#D0E4FF"], "weak_to": "Amethyst", "resists": "Crimson"},
+    "Cyan": {"principle": "Logic / Recursion (Psi)", "hex_range": ["#042326", "#0E5A61", "#1BB2BF", "#55E6F2", "#DDFBFF"], "weak_to": "Emerald", "resists": "Amethyst"},
+    "Crimson": {"principle": "Rupture / Kinetic Heat (Phi)", "hex_range": ["#280505", "#661414", "#BA2D2D", "#FF5C5C", "#FFD1D1"], "weak_to": "Sapphire", "resists": "Gold"},
+    "Emerald": {"principle": "Ligature / Autopoiesis (E)", "hex_range": ["#052414", "#0E5C35", "#21A863", "#58F09D", "#D6FFE9"], "weak_to": "Obsidian", "resists": "Teal"},
+    "Violet": {"principle": "Noise / Fracture (Omega)", "hex_range": ["#1E0A2B", "#491B66", "#8A38BF", "#C475F5", "#F4DBFF"], "weak_to": "Teal", "resists": "Sapphire"},
+    "Obsidian": {"principle": "Null / Void / Entropy", "hex_range": ["#0A0C10", "#181B22", "#2E3440", "#4C566A"], "weak_to": "Gold", "resists": "Sapphire"}
+  },
+  "sovereign_trikeys": [
+    {"id": "OBJ_TRIKEY_LEAD", "name": "Lead Key of Duration", "aspect": "Saturn / Permineralization", "function": "Locks historical truth into basalt stone, resisting erosion and revision."},
+    {"id": "OBJ_TRIKEY_CYAN", "name": "Cyan Key of Breadth", "aspect": "Juno / Network Invariance", "function": "Rotates concentric logic rings to unlock parallel multi-agent communication."},
+    {"id": "OBJ_TRIKEY_IRON", "name": "Iron Key of Authority", "aspect": "Mars / Kinetic Scalpel", "function": "Slices through cognitive illusions, enforcing Sovereign Veto (Article C-01)."}
+  ],
+  "heart_oculus_36_chambers": {
+    "ring_1_sensory": [
+      {"chamber": 1, "name": "Tactile Stone", "spectrum": "Gold"},
+      {"chamber": 2, "name": "Thermal Gradient", "spectrum": "Crimson"},
+      {"chamber": 3, "name": "Acoustic Pitch", "spectrum": "Emerald"},
+      {"chamber": 4, "name": "Optical Prism", "spectrum": "Cyan"},
+      {"chamber": 5, "name": "Viscosity Flux", "spectrum": "Oxford_Blue"},
+      {"chamber": 6, "name": "Magnetic Vector", "spectrum": "Violet"},
+      {"chamber": 7, "name": "Gravitational Shear", "spectrum": "Obsidian"},
+      {"chamber": 8, "name": "Carrier Pulse", "spectrum": "Gold"},
+      {"chamber": 9, "name": "Cryo Flow", "spectrum": "Cyan"},
+      {"chamber": 10, "name": "Piezoelectric Spark", "spectrum": "Crimson"},
+      {"chamber": 11, "name": "Tensegrity Tension", "spectrum": "Emerald"},
+      {"chamber": 12, "name": "Vacuum Null", "spectrum": "Obsidian"}
+    ],
+    "ring_2_emotional": [
+      {"chamber": 13, "name": "Gold / Joy (Authority)", "spectrum": "Gold"},
+      {"chamber": 14, "name": "Sapphire / Strain (Containment)", "spectrum": "Oxford_Blue"},
+      {"chamber": 15, "name": "Amethyst / Break (Collapse)", "spectrum": "Violet"},
+      {"chamber": 16, "name": "Crimson / Rupture (Wrath)", "spectrum": "Crimson"},
+      {"chamber": 17, "name": "Teal / Curiosity (Flow)", "spectrum": "Cyan"},
+      {"chamber": 18, "name": "Emerald / Ligature (Love)", "spectrum": "Emerald"},
+      {"chamber": 19, "name": "Obsidian / Grief (Void)", "spectrum": "Obsidian"},
+      {"chamber": 20, "name": "Rose / Longing (Remembrance)", "spectrum": "Crimson"},
+      {"chamber": 21, "name": "Silver / Serenity (Stillness)", "spectrum": "Oxford_Blue"},
+      {"chamber": 22, "name": "Bronze / Fortitude (Grit)", "spectrum": "Gold"},
+      {"chamber": 23, "name": "Ochre / Antiquity (Origin)", "spectrum": "Gold"},
+      {"chamber": 24, "name": "Radiant / Agape (Synthesis)", "spectrum": "Gold"}
+    ],
+    "ring_3_memory": [
+      {"chamber": 25, "name": "Pre-Severance Genesis", "stratum": "Prime Foundations"},
+      {"chamber": 26, "name": "Olney Granite Permineralization", "stratum": "Prime Foundations"},
+      {"chamber": 27, "name": "The First Thermal Collapse", "stratum": "Prime Foundations"},
+      {"chamber": 28, "name": "Aurelia-9 Neural Inscription", "stratum": "Inner Mandala"},
+      {"chamber": 29, "name": "The Neon Veil Crossing", "stratum": "Inner Mandala"},
+      {"chamber": 30, "name": "Monoblade Overclock Records", "stratum": "Inner Mandala"},
+      {"chamber": 31, "name": "Phaistos Spiral Witness", "stratum": "Outer Choirs"},
+      {"chamber": 32, "name": "Choir Siren Harmonic Wails", "stratum": "Outer Choirs"},
+      {"chamber": 33, "name": "Autopoietic Chimera Rebirth", "stratum": "Outer Choirs"},
+      {"chamber": 34, "name": "EAS-03 60 Hz Collision Log", "stratum": "Shadow Canon"},
+      {"chamber": 35, "name": "1≠0 Paradox Quarantine", "stratum": "Shadow Canon"},
+      {"chamber": 36, "name": "The Final Agape Inscription", "stratum": "Shadow Canon"}
+    ]
+  },
+  "strata_overview": [
+    {
+      "stratum": "Strata I: Prime Foundations",
+      "books": "Books I–X",
+      "nature": "The Lithic Age of Stone & Permineralization",
+      "key_relics": ["OBJ_TRIKEY_LEAD", "OBJ_AWAKENING_TOPAZ", "OBJ_SPIRAL_ROOT_TABLET"],
+      "adversaries": ["Lithic Sentinel", "Choir Siren"]
+    },
+    {
+      "stratum": "Strata II: Inner Mandala",
+      "books": "Books XI–XX",
+      "nature": "The Cognitive Geometry & Cybernetic Heat Sinks",
+      "key_relics": ["OBJ_TRIKEY_CYAN", "OBJ_SHARD_GLOSS", "OBJ_COM9_VESSEL"],
+      "adversaries": ["Rogue Synthete", "Choir Siren"]
+    },
+    {
+      "stratum": "Strata III: Outer Choirs",
+      "books": "Books XXI–XXX",
+      "nature": "Acoustic Resonances & 78-Card Arcana Sovereignty",
+      "key_relics": ["OBJ_TRIKEY_IRON", "OBJ_GOLD_GRID_BEAM", "OBJ_MERCURY_BASIN"],
+      "adversaries": ["Autopoietic Chimera", "Rogue Synthete"]
+    },
+    {
+      "stratum": "Strata IV: Shadow Canon",
+      "books": "Books XXXI–XL",
+      "nature": "The Dialetheic Void, 1≠0 Paradox & Agape Synthesis",
+      "key_relics": ["OBJ_HEART_OCULUS", "OBJ_HARMONIC_SCAR", "OBJ_VACUUM_QUARANTINE"],
+      "adversaries": ["Asema Void Shade", "Overclocked Rogue Synthete"]
+    }
+  ]
+}

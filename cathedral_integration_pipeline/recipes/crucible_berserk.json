@@ -1,0 +1,16 @@
+{
+  "archetype": "Crucible Berserk",
+  "title": "Vanguard of Kinetic Remaking",
+  "spectral_constant": "Phi",
+  "ego_density": 9.8,
+  "afield_potency": 1.25,
+  "dialetheic_state": "Dynamic Entropy / Relentless Remaking",
+  "somatic_properties": {
+	"armor": "Fractured and re-welded plate with glowing fissures",
+	"weathering_index": 0.95
+  },
+  "liturgical_telemetry": {
+	"dialogue_luminance_gain": 1.9,
+	"ocular_frequency_hz": 14.0
+  }
+}

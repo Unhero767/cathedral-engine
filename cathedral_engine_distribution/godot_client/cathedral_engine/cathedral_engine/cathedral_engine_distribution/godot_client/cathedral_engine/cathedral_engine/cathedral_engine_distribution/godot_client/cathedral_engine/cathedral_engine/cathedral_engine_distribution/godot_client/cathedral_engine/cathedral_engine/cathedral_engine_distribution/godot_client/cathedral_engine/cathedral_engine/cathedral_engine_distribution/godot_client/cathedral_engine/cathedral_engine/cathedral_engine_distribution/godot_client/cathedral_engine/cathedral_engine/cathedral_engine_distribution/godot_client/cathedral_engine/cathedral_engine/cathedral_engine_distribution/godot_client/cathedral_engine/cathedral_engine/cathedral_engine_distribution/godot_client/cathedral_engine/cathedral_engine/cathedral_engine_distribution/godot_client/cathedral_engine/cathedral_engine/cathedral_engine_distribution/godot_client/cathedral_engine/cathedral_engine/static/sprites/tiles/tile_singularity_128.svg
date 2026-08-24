@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" shape-rendering="crispEdges">
+  <rect width="128" height="128" fill="#040608"/>
+  <!-- Non-Euclidean Inversion Vortex -->
+  <polygon points="64,12 116,64 64,116 12,64" fill="#0d0814" stroke="#c475f5" stroke-width="2"/>
+  <polygon points="64,28 100,64 64,100 28,64" fill="#190d29" stroke="#ef4444" stroke-width="1.5"/>
+  <polygon points="64,44 84,64 64,84 44,64" fill="#000" stroke="#00e5ff" stroke-width="1"/>
+  <circle cx="64" cy="64" r="2" fill="#fff"/>
+</svg>

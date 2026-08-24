@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CATHEDRAL BORN // ADVANCED COMPLEXITY STUDIO (+30%) — EAS-03</title>
+<style>
+  :root {
+    --bg-primary: #0a0b0e;
+    --bg-panel: #111318;
+    --bg-card: #171a21;
+    --gold: #dfb249;
+    --gold-bright: #ffd466;
+    --cyan: #00e5ff;
+    --text-main: #dce1eb;
+    --text-muted: #7e8799;
+    --border: #262a36;
+    --border-gold: rgba(223, 178, 73, 0.4);
+    --font-mono: 'SF Mono', Monaco, monospace;
+    --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+  body { background-color: var(--bg-primary); color: var(--text-main); font-family: var(--font-ui); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+  header { background: #14161d; border-bottom: 1px solid var(--border-gold); padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; height: 50px; }
+  .brand { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--gold-bright); letter-spacing: 1px; }
+  .workspace { display: grid; grid-template-columns: 380px 1fr 380px; flex: 1; height: calc(100vh - 50px); overflow: hidden; }
+  .panel { background: var(--bg-panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow-y: auto; padding: 12px; gap: 10px; }
+  .panel-right { border-left: 1px solid var(--border); border-right: none; }
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 12px; }
+  .card-title { font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .param-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+  .param-name { font-size: 11px; color: var(--text-main); flex: 1; }
+  .param-slider { flex: 1; -webkit-appearance: none; height: 4px; background: #252833; border-radius: 2px; outline: none; }
+  .param-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); cursor: pointer; }
+  .param-val { font-family: var(--font-mono); font-size: 11px; color: var(--gold-bright); width: 32px; text-align: right; }
+  .viewport { background: radial-gradient(circle at center, #161924 0%, #08090c 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; position: relative; }
+  .canvas-container { background: #0d0f14; border: 2px solid var(--border-gold); border-radius: 12px; padding: 16px; box-shadow: 0 0 40px rgba(0,0,0,0.8); }
+  #complexCanvas { image-rendering: pixelated; width: 320px; height: 320px; border-radius: 4px; display: block; }
+  .btn-primary { background: linear-gradient(180deg, #dfb249 0%, #b88d2d 100%); border: none; color: #000; padding: 8px 14px; border-radius: 4px; font-weight: 700; font-size: 11px; cursor: pointer; width: 100%; margin-top: 6px; }
+  .btn-primary:hover { filter: brightness(1.15); }
+  .btn-row { display: flex; gap: 6px; margin-top: 6px; }
+  .btn-chip { background: transparent; border: 1px solid var(--border); color: var(--text-main); padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; flex: 1; text-align: center; }
+  .btn-chip.active, .btn-chip:hover { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">CATHEDRAL BORN // ADVANCED COMPLEXITY STUDIO (+30%)</div>
+  <div style="font-family:var(--font-mono); font-size:11px; color:var(--cyan);">Filigree Etching • SSS Blush • Wind-Phase Hair Active</div>
+</header>
+
+<div class="workspace">
+  <!-- LEFT: ADVANCED SKIN & EYES -->
+  <div class="panel">
+    <div class="card">
+      <div class="card-title">✨ Advanced Derma & SSS</div>
+      <div class="param-row">
+        <span class="param-name">Subsurface Blush Intensity</span>
+        <input type="range" class="param-slider" id="sssIntensity" min="0" max="50" value="25" oninput="renderComplexStudio()">
+        <span class="param-val" id="v-sssIntensity">25</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Chroma Eye Reflex</span>
+        <input type="color" id="reflexColor" value="#ffd746" onchange="renderComplexStudio()" style="background:none; border:none; width:36px; height:24px; cursor:pointer;">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">👁 Iris Precision Scale</div>
+      <div class="param-row">
+        <span class="param-name">Iris Diameter</span>
+        <input type="range" class="param-slider" id="irisScale" min="10" max="22" value="16" oninput="renderComplexStudio()">
+        <span class="param-val" id="v-irisScale">16</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER: VIEWPORT -->
+  <div class="viewport">
+    <div class="canvas-container">
+      <canvas id="complexCanvas" width="256" height="256"></canvas>
+    </div>
+    <div style="margin-top: 14px; display:flex; gap:8px;">
+      <button class="btn-chip active" onclick="setAnim('liturgical_idle', this)">Idle</button>
+      <button class="btn-chip" onclick="setAnim('lumen_pulse', this)">Pulse</button>
+      <button class="btn-chip" onclick="setAnim('harmonic_resonance', this)">Halo</button>
+      <button class="btn-chip" onclick="setAnim('ocular_surge', this)">Ocular Surge</button>
+    </div>
+  </div>
+
+  <!-- RIGHT: GOTHIC FILIGREE & HAIR -->
+  <div class="panel panel-right">
+    <div class="card">
+      <div class="card-title">🛡 Gothic Armor & Filigree</div>
+      <div class="param-row">
+        <span class="param-name">Filigree Etching Density</span>
+        <input type="range" class="param-slider" id="filigreeDensity" min="8" max="24" value="16" oninput="renderComplexStudio()">
+        <span class="param-val" id="v-filigreeDensity">16</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Gold Inlay Tone</span>
+        <input type="color" id="trimColor" value="#ffd746" onchange="renderComplexStudio()" style="background:none; border:none; width:36px; height:24px; cursor:pointer;">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💇 Volumetric Hair & Wind Sway</div>
+      <div class="param-row">
+        <span class="param-name">Wind Sway Amplitude</span>
+        <input type="range" class="param-slider" id="windSway" min="0" max="8" value="3" oninput="renderComplexStudio()">
+        <span class="param-val" id="v-windSway">3</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📦 Export Asset</div>
+      <button class="btn-primary" onclick="exportComplexPortrait()">💾 Export HD Complex PNG</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('complexCanvas');
+const ctx = canvas.getContext('2d');
+let currentAnim = 'liturgical_idle';
+
+function setAnim(anim, btn) {
+  currentAnim = anim;
+  document.querySelectorAll('.viewport button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function renderComplexStudio() {
+  ctx.clearRect(0, 0, 256, 256);
+  const t = Date.now() * 0.003;
+
+  const sss = parseInt(document.getElementById('sssIntensity').value);
+  const reflexHex = document.getElementById('reflexColor').value;
+  const irisS = parseInt(document.getElementById('irisScale').value);
+  const filigD = parseInt(document.getElementById('filigreeDensity').value);
+  const trimHex = document.getElementById('trimColor').value;
+  const windA = parseInt(document.getElementById('windSway').value);
+
+  ['sssIntensity','irisScale','filigreeDensity','windSway'].forEach(id => {
+    document.getElementById('v-' + id).textContent = document.getElementById(id).value;
+  });
+
+  // 1. Armor with Etched Filigree
+  ctx.fillStyle = "#6e7887";
+  ctx.fillRect(52, 160, 152, 96);
+  ctx.fillStyle = trimHex;
+  ctx.fillRect(68, 152, 120, 16);
+
+  ctx.strokeStyle = trimHex;
+  ctx.lineWidth = 1;
+  for(let fx = 76; fx < 180; fx += filigD) {
+    ctx.beginPath();
+    ctx.moveTo(fx, 170);
+    ctx.lineTo(fx + 6, 220);
+    ctx.stroke();
+  }
+
+  // 2. Neck & SSS Collarbone
+  ctx.fillStyle = "#966455";
+  ctx.fillRect(108, 126, 40, 44);
+  ctx.fillStyle = "rgb(230, 185, 170)";
+  ctx.fillRect(116, 126, 24, 44);
+  ctx.fillStyle = `rgb(${230 + sss}, ${185 - sss}, ${170 - sss})`;
+  ctx.fillRect(112, 158, 32, 6);
+
+  // 3. Head Structure
+  ctx.fillStyle = "rgb(230, 185, 170)";
+  for(let y=60; y<148; y++) {
+    let w = (y < 95) ? 40 : Math.floor(40 - (y - 95) * 0.6);
+    ctx.fillRect(128 - w, y, w * 2, 1);
+  }
+
+  // 4. Stylized Eyes with Reflex
+  ctx.fillStyle = "#966455";
+  ctx.fillRect(94, 88, 32, 16);
+  ctx.fillRect(130, 88, 32, 16);
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(98, 91, 24, 10);
+  ctx.fillRect(134, 91, 24, 10);
+  ctx.fillStyle = "#00e5ff";
+  ctx.fillRect(102, 92, irisS, 8);
+  ctx.fillRect(138, 92, irisS, 8);
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(104, 93, 4, 4);
+  ctx.fillStyle = reflexHex;
+  ctx.fillRect(110, 96, 3, 3);
+  ctx.fillRect(146, 96, 3, 3);
+
+  // Nose & Mouth
+  ctx.fillStyle = "#966455";
+  ctx.fillRect(126, 92, 4, 32);
+  ctx.fillStyle = "#b45050";
+  ctx.fillRect(116, 132, 24, 4);
+
+  // 5. Hair with Wind Sway
+  const sway = Math.floor(windA * Math.sin(t * 3));
+  ctx.fillStyle = "#f0e6c8";
+  ctx.fillRect(80 + sway, 35, 96, 34);
+  ctx.fillRect(72 + sway, 58, 20, 68);
+  ctx.fillRect(164 + sway, 58, 20, 68);
+  ctx.fillRect(92, 55, 72, 14);
+
+  // 6. Halo
+  if(currentAnim === 'harmonic_resonance' || currentAnim === 'lumen_pulse') {
+    ctx.strokeStyle = trimHex;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(128, 82, 82 + 5 * Math.sin(t * 5), 0, Math.PI * 2);
+    ctx.stroke();
+  }
+}
+
+function exportComplexPortrait() {
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL("image/png");
+  a.download = "advanced_complex_portrait.png";
+  a.click();
+}
+
+setInterval(renderComplexStudio, 1000 / 60);
+renderComplexStudio();
+</script>
+</body>
+</html>

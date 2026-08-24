@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cathedral-Engine :: 128px HD-2D RPG Altar</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="/static/audio_engine.js"></script>
+    <style>
+        :root {
+            --bg: #06080d;
+            --panel: #0d121c;
+            --panel-border: #1e293b;
+            --gold: #d4af37;
+            --teal: #00e5ff;
+            --sapphire: #3b82f6;
+            --crimson: #ef4444;
+            --emerald: #10b981;
+            --obsidian: #0f172a;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --tile-normal: #131b2a;
+            --tile-monolith: #27272a;
+            --tile-keystone: #3b3014;
+            --tile-thermal: #3b1414;
+            --tile-sink: #14243b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace; }
+        body { background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
+
+        /* Left HUD */
+        #hud-left { width: 340px; background: var(--panel); border-right: 1px solid var(--panel-border); padding: 18px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; z-index: 10; }
+        .hud-header { font-size: 1.1rem; font-weight: 800; color: var(--gold); letter-spacing: 1.5px; border-bottom: 1px solid var(--panel-border); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .hud-card { background: var(--obsidian); border: 1px solid var(--panel-border); border-radius: 6px; padding: 12px; }
+        .hud-card h4 { font-size: 0.82rem; color: var(--teal); margin-bottom: 8px; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; }
+        .stat-bar-container { background: #1e293b; border-radius: 4px; height: 8px; overflow: hidden; margin-top: 4px; }
+        .stat-bar-hp { background: #10b981; height: 100%; width: 100%; transition: width 0.3s; }
+        .stat-bar-paradox { background: #a855f7; height: 100%; width: 20%; transition: width 0.3s; }
+
+        /* Pixel Relics Grid */
+        .relic-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 6px; }
+        .relic-slot { width: 100%; aspect-ratio: 1/1; background: #0b0f17; border: 1px solid var(--panel-border); border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; transition: 0.2s; }
+        .relic-slot:hover { border-color: var(--gold); transform: scale(1.05); }
+        .relic-slot img { width: 100%; height: 100%; image-rendering: pixelated; }
+
+        /* Center Canvas */
+        #game-center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 12px; position: relative; overflow: hidden; }
+        #three-viewport-container { width: 100%; height: 260px; border-radius: 8px; border: 1px solid var(--panel-border); margin-bottom: 12px; background: #000; position: relative; overflow: hidden; }
+        #three-canvas { width: 100%; height: 100%; }
+        
+        #grid-container { display: grid; grid-template-columns: repeat(8, 48px); grid-template-rows: repeat(8, 48px); gap: 3px; background: #0b0f17; padding: 8px; border-radius: 8px; border: 1px solid var(--panel-border); box-shadow: 0 0 30px rgba(0,0,0,0.8); }
+        .grid-tile { width: 48px; height: 48px; border-radius: 4px; background: var(--tile-normal); border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; position: relative; transition: all 0.15s; font-size: 1.2rem; user-select: none; }
+        .grid-tile:hover { border-color: var(--teal); background: #1e293b; }
+        .grid-tile.monolith { background: var(--tile-monolith); border-color: #52525b; cursor: not-allowed; }
+        .grid-tile.keystone { background: var(--tile-keystone); border-color: var(--gold); }
+        .grid-tile.thermal { background: var(--tile-thermal); border-color: var(--crimson); }
+        .grid-tile.sink { background: var(--tile-sink); border-color: var(--sapphire); }
+
+        .token-player { position: absolute; font-size: 1.5rem; filter: drop-shadow(0 0 6px var(--teal)); z-index: 2; }
+        .token-enemy { position: absolute; font-size: 1.5rem; filter: drop-shadow(0 0 6px var(--crimson)); z-index: 2; }
+        .enemy-hp-badge { position: absolute; bottom: 1px; font-size: 0.55rem; background: rgba(0,0,0,0.85); color: var(--crimson); font-weight: 800; padding: 1px 3px; border-radius: 2px; border: 1px solid var(--crimson); z-index: 3; }
+
+        /* Controls Bottom Bar */
+        #action-bar { margin-top: 12px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: center; }
+        button { background: rgba(212,175,55,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.75rem; transition: all 0.2s; }
+        button:hover { background: var(--gold); color: #000; box-shadow: 0 0 10px rgba(212,175,55,0.5); }
+        button.btn-end { background: rgba(239,68,68,0.2); border-color: var(--crimson); color: var(--crimson); }
+        button.btn-end:hover { background: var(--crimson); color: #fff; box-shadow: 0 0 10px rgba(239,68,68,0.5); }
+
+        /* Right Telemetry & Action Log */
+        #hud-right { width: 340px; background: var(--panel); border-left: 1px solid var(--panel-border); padding: 18px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; z-index: 10; }
+        #combat-log { flex: 1; background: var(--obsidian); border: 1px solid var(--panel-border); border-radius: 6px; padding: 10px; font-size: 0.75rem; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; min-height: 180px; }
+        .log-entry { padding-bottom: 3px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
+        /* Modals */
+        .modal-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(4px); align-items: center; justify-content: center; z-index: 100; }
+        .modal-box { background: var(--panel); border: 2px solid var(--gold); border-radius: 8px; width: 620px; max-height: 90vh; overflow-y: auto; padding: 22px; box-shadow: 0 0 30px rgba(212,175,55,0.3); }
+        .modal-speaker { color: var(--gold); font-weight: 800; font-size: 1rem; margin-bottom: 10px; display: flex; justify-content: space-between; }
+        .modal-text { font-size: 0.85rem; line-height: 1.5; color: var(--text); margin-bottom: 16px; }
+        .modal-options { display: flex; flex-direction: column; gap: 8px; }
+        .modal-opt-btn { text-align: left; padding: 8px 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--panel-border); color: var(--text); border-radius: 4px; cursor: pointer; transition: 0.2s; font-size: 0.8rem; }
+        .modal-opt-btn:hover { background: rgba(0,229,255,0.15); border-color: var(--teal); color: var(--teal); }
+
+        /* Character Creation Form */
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 0.75rem; color: var(--gold); text-transform: uppercase; font-weight: 700; margin-bottom: 4px; }
+        .form-input { width: 100%; background: var(--obsidian); border: 1px solid var(--panel-border); color: var(--text); padding: 8px; border-radius: 4px; font-size: 0.85rem; }
+        .origin-card { border: 1px solid var(--panel-border); padding: 8px; border-radius: 4px; margin-bottom: 6px; cursor: pointer; background: rgba(0,0,0,0.3); font-size: 0.75rem; transition: 0.2s; }
+        .origin-card:hover, .origin-card.selected { border-color: var(--teal); background: rgba(0,229,255,0.1); }
+    </style>
+</head>
+<body>
+    <!-- Left HUD -->
+    <div id="hud-left">
+        <div class="hud-header">
+            <span>⚡ CATHEDRAL RPG</span>
+            <button onclick="toggleAudio()" id="btn-audio" style="font-size: 0.7rem; padding: 4px 8px;">🔇 Sound OFF</button>
+        </div>
+        
+        <div class="hud-card">
+            <h4>
+                <span id="char-name">Kiri Vespera</span> 
+                <button onclick="openCharacterCreation()" style="font-size:0.65rem; padding: 2px 6px;">New Hero ✎</button>
+            </h4>
+            <div style="font-size: 0.75rem; color: var(--text-muted);" id="char-class">Void Walker [Obsidian Spectrum]</div>
+            
+            <div style="margin-top: 10px; font-size: 0.75rem; display: flex; justify-content: space-between;">
+                <span>HP: <strong id="hp-val">20/20</strong></span>
+                <span style="color: var(--teal);">AP: <strong id="ap-val">4/4</strong></span>
+            </div>
+            <div class="stat-bar-container"><div id="hp-bar" class="stat-bar-hp"></div></div>
+
+            <div style="margin-top: 8px; font-size: 0.75rem; display: flex; justify-content: space-between;">
+                <span>Paradox: <strong id="paradox-val" style="color: #a855f7;">0/5</strong></span>
+                <span style="font-size: 0.7rem; color: var(--text-muted);" id="emo-state">Gold/Joy</span>
+            </div>
+            <div class="stat-bar-container"><div id="paradox-bar" class="stat-bar-paradox"></div></div>
+        </div>
+
+        <div class="hud-card">
+            <h4>128px HD Relic Inventory</h4>
+            <div class="relic-grid">
+                <div class="relic-slot" title="Lead Key of Duration"><img src="/static/sprites/relics/trikey_lead_128.svg"></div>
+                <div class="relic-slot" title="Cyan Key of Breadth"><img src="/static/sprites/relics/trikey_cyan_128.svg"></div>
+                <div class="relic-slot" title="Iron Key of Authority"><img src="/static/sprites/relics/trikey_iron_128.svg"></div>
+                <div class="relic-slot" title="HGASE Resonator Prism"><img src="/static/sprites/shards/awakening_topaz_128.svg"></div>
+                <div class="relic-slot" title="36-Chambered Bio-Silicate Processor"><img src="/static/sprites/processors/heart_oculus_128.svg"></div>
+                <div class="relic-slot" title="Phaistos Ceramic Proto-Codex"><img src="/static/sprites/relics/spiral_root_tablet_128.svg"></div>
+                <div class="relic-slot" title="The Lumen Lantern"><img src="/static/sprites/focus/lumen_lantern_128.svg"></div>
+                <div class="relic-slot" title="78-Card Ignition Arcana Pocket Codex"><img src="/static/sprites/items/ignition_deck_box_128.svg"></div>
+            </div>
+        </div>
+
+        <div class="hud-card">
+            <h4>Save / Load Checkpoints</h4>
+            <div style="display: flex; gap: 6px; margin-top: 4px;">
+                <button onclick="saveGame(1)" style="flex: 1; font-size: 0.7rem; padding: 4px 2px;">💾 Slot 1</button>
+                <button onclick="saveGame(2)" style="flex: 1; font-size: 0.7rem; padding: 4px 2px;">💾 Slot 2</button>
+                <button onclick="saveGame(3)" style="flex: 1; font-size: 0.7rem; padding: 4px 2px;">💾 Slot 3</button>
+            </div>
+            <button onclick="exportChronicle()" style="width: 100%; margin-top: 6px; font-size: 0.7rem; background: rgba(0,229,255,0.15); border-color: var(--teal); color: var(--teal);">📄 Export NotebookLM Chronicle</button>
+        </div>
+    </div>
+
+    <!-- Center Playable Canvas -->
+    <div id="game-center">
+        <!-- Three.js 2.5D Isometric Altar Viewport -->
+        <div id="three-viewport-container">
+            <div id="three-canvas"></div>
+            <div style="position: absolute; bottom: 8px; left: 12px; font-size: 0.7rem; color: var(--gold); text-shadow: 0 0 4px #000;" id="chamber-liturgy">
+                Book I: The Lithic Threshold (43.7 Hz Carrier Resonance)
+            </div>
+        </div>
+
+        <div id="grid-container"></div>
+
+        <div id="action-bar">
+            <button onclick="performAttack('Lithic Resonator Strike', 'Gold')">⚔️ Gold Strike (2 AP)</button>
+            <button onclick="performAttack('Void Inversion Surge', 'Obsidian')">🔮 Void Inversion (2 AP)</button>
+            <button onclick="performAttack('Monoblade Flurry', 'Crimson')">🗡️ Crimson Blade (2 AP)</button>
+            <button onclick="openDialogue('CHAMBER_I_LITHIC')">💬 Inquire (Chamber I)</button>
+            <button onclick="openDialogue('CHAMBER_II_SOMATIC')">💬 Somatic Console (Chamber II)</button>
+            <button class="btn-end" onclick="endTurn()">⌛ End Turn</button>
+        </div>
+    </div>
+
+    <!-- Right HUD Log & Quests -->
+    <div id="hud-right">
+        <div class="hud-header">📜 ACTIVE QUEST JOURNAL</div>
+        <div class="hud-card" style="max-height: 160px; overflow-y: auto;">
+            <ul style="list-style: none; font-size: 0.75rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 5px;" id="quest-list">
+                <li><strong style="color: var(--gold);">I. Lithic Threshold:</strong> Calibrate Keystones (1/1) ✓</li>
+                <li><strong style="color: var(--teal);">II. Somatic Intersections:</strong> Stabilize Cryo-Pressure (0/1)</li>
+            </ul>
+        </div>
+
+        <div class="hud-header">⚡ ASH LEDGER COMBAT LOG</div>
+        <div id="combat-log"></div>
+    </div>
+
+    <!-- Dialogue Modal -->
+    <div id="dialogue-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div style="display:flex; gap:14px; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--panel-border); padding-bottom:10px;">
+                <img id="diag-portrait" src="/static/sprites/npcs/npc_aurelia_9_128.svg" style="width:64px; height:64px; border-radius:6px; border:1px solid var(--gold); background:#000;">
+                <div style="flex:1;">
+                    <div id="diag-speaker" style="color:var(--gold); font-weight:800; font-size:1.1rem;">Aurelia-9</div>
+                    <div id="diag-spec" style="font-size:0.75rem; color:var(--teal);">Gold / Joy</div>
+                </div>
+            </div>
+                <span id="diag-spec" style="font-size: 0.75rem; color: var(--teal);">Gold/Joy</span>
+            </div>
+            <div class="modal-text" id="diag-text">The lithic threshold responds to our presence, Architect.</div>
+            <div class="modal-options" id="diag-options"></div>
+        </div>
+    </div>
+
+    <!-- Character Creation Modal -->
+    <div id="char-create-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-speaker">
+                <span>⚡ SOVEREIGN GENESIS :: CHARACTER CREATION</span>
+                <button onclick="closeCharModal()" style="font-size:0.7rem; padding: 2px 6px;">✕</button>
+            </div>
+            
+            <div class="form-group">
+                <label>Character Designation</label>
+                <input type="text" id="cc-name" class="form-input" value="Kenneth Dallmier">
+            </div>
+
+            <div class="form-group">
+                <label>Lineage / Origin Vector (Codex Strata)</label>
+                <div id="cc-origins">
+                    <div class="origin-card selected" onclick="selectOrigin('LITHIC_SCION', this)">
+                        <strong>Lithic Scion (Prime Foundations, Books I–X)</strong>
+                        <div style="color:var(--text-muted);">Permineralized stone-code equations (+4 HP, +2 Somatic). Passive: -2 Kinetic Damage.</div>
+                    </div>
+                    <div class="origin-card" onclick="selectOrigin('SYNTHETIC_SYNTHETE', this)">
+                        <strong>Synthetic Synthete (Inner Mandala, Books XI–XX)</strong>
+                        <div style="color:var(--text-muted);">Cybernetic neural threading (+1 AP, +2 Insight). Passive: Somatic Cryo-Sink.</div>
+                    </div>
+                    <div class="origin-card" onclick="selectOrigin('HARMONIC_CANTOR', this)">
+                        <strong>Harmonic Cantor (Outer Choirs, Books XXI–XXX)</strong>
+                        <div style="color:var(--text-muted);">Acoustic 43.7 Hz standing wave mastery (+3 Resonance). Passive: +2 on Arcana Rolls.</div>
+                    </div>
+                    <div class="origin-card" onclick="selectOrigin('ASEMA_EXILE', this)">
+                        <strong>Asema Exile (Shadow Canon, Books XXXI–XL)</strong>
+                        <div style="color:var(--text-muted);">Non-Euclidean void survivor. Passive: 7-Point Paradox Limit & Phase Drift.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" style="display: flex; gap: 10px;">
+                <div style="flex: 1;">
+                    <label>Archetype Class</label>
+                    <select id="cc-archetype" class="form-input">
+                        <option value="VOID_WALKER">Void Walker [Obsidian]</option>
+                        <option value="CYBERNETIC_SYNTHETE">Cybernetic Synthete [Sapphire]</option>
+                        <option value="LITHIC_ANCHOR">Lithic Anchor [Gold]</option>
+                        <option value="CHOIR_CANTOR">Choir Cantor [Emerald]</option>
+                    </select>
+                </div>
+                <div style="flex: 1;">
+                    <label>Spectrum Alignment</label>
+                    <select id="cc-spectrum" class="form-input">
+                        <option value="Gold">Gold (Authority / Θ)</option>
+                        <option value="Sapphire">Sapphire (Memory / Δ)</option>
+                        <option value="Cyan">Cyan (Logic / Ψ)</option>
+                        <option value="Crimson">Crimson (Rupture / Φ)</option>
+                        <option value="Emerald">Emerald (Ligature / E)</option>
+                        <option value="Obsidian">Obsidian (Null / Entropy)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>128px Starter Relic Attunement</label>
+                <select id="cc-relic" class="form-input">
+                    <option value="OBJ_TRIKEY_LEAD">Lead Key of Duration (+2 Somatic, +4 HP)</option>
+                    <option value="OBJ_SHARD_GLOSS">Alexandrian Cryptographic Memory Chip (+2 Insight, +50 XP)</option>
+                    <option value="OBJ_AWAKENING_TOPAZ">Lithic Summa Golden-Ratio Shard (+2 Resonance, +1 Insight)</option>
+                    <option value="OBJ_LUMEN_LANTERN">The Lantern at the Edge of Memory (+6 HP, +1 Resonance)</option>
+                </select>
+            </div>
+
+            <button onclick="submitCharacterCreation()" style="width: 100%; margin-top: 10px; background: var(--gold); color: #000; padding: 10px; font-size: 0.9rem;">⚡ INSCRIBE IMMUTABLE GENESIS BLOCK</button>
+        </div>
+    </div>
+
+    <script>
+        let gameState = {};
+        let selectedOriginKey = "LITHIC_SCION";
+        const gridContainer = document.getElementById('grid-container');
+
+        const TILE_MAP = [
+            ['normal', 'normal', 'normal', 'normal', 'normal', 'normal', 'normal', 'normal'],
+            ['normal', 'normal', 'normal', 'thermal', 'normal', 'normal', 'normal', 'normal'],
+            ['normal', 'normal', 'monolith', 'normal', 'normal', 'sink', 'normal', 'normal'],
+            ['normal', 'normal', 'normal', 'normal', 'normal', 'normal', 'normal', 'normal'],
+            ['normal', 'normal', 'normal', 'normal', 'keystone', 'normal', 'normal', 'normal'],
+            ['normal', 'normal', 'normal', 'normal', 'normal', 'normal', 'normal', 'normal'],
+            ['normal', 'normal', 'normal', 'normal', 'normal', 'normal', 'monolith', 'normal'],
+            ['normal', 'normal', 'normal', 'normal', 'normal', 'normal', 'normal', 'normal']
+        ];
+
+        function toggleAudio() {
+            if (window.cathedralAudio) {
+                const active = window.cathedralAudio.toggleMute();
+                document.getElementById('btn-audio').innerText = active ? "🔊 43.7 Hz ON" : "🔇 Sound OFF";
+                document.getElementById('btn-audio').style.color = active ? "var(--teal)" : "var(--gold)";
+            }
+        }
+
+        async function fetchGameState() {
+            try {
+                const res = await fetch('/api/rpg/state');
+                gameState = await res.json();
+                renderHUD();
+                renderGrid();
+                renderLog();
+                renderQuests();
+                if (window.cathedralAudio && gameState.player) {
+                    window.cathedralAudio.setSpectrum(gameState.player.spectrum || 'Gold');
+                }
+            } catch(e) { console.error("Error loading RPG state:", e); }
+        }
+
+        function renderHUD() {
+            const p = gameState.player || { name: 'Kiri Vespera', hp: 20, max_hp: 20, ap: 4, max_ap: 4, paradox: 0, max_paradox: 5 };
+            document.getElementById('char-name').innerText = p.name;
+            document.getElementById('char-class').innerText = `${p.archetype || 'Void Walker'} [${p.spectrum || 'Obsidian'} Spectrum]`;
+            document.getElementById('hp-val').innerText = `${p.hp}/${p.max_hp}`;
+            document.getElementById('ap-val').innerText = `${p.ap}/${p.max_ap}`;
+            document.getElementById('paradox-val').innerText = `${p.paradox}/${p.max_paradox}`;
+            document.getElementById('emo-state').innerText = p.emotional_state || 'Gold/Joy';
+
+            document.getElementById('hp-bar').style.width = `${(p.hp / p.max_hp) * 100}%`;
+            document.getElementById('paradox-bar').style.width = `${(p.paradox / p.max_paradox) * 100}%`;
+        }
+
+        function renderGrid() {
+            gridContainer.innerHTML = '';
+            for (let y = 0; y < 8; y++) {
+                for (let x = 0; x < 8; x++) {
+                    const tile = document.createElement('div');
+                    tile.className = `grid-tile ${TILE_MAP[y][x]}`;
+                    tile.onclick = () => onTileClick(x, y);
+
+                    // Render player token
+                    if (gameState.player && gameState.player.x === x && gameState.player.y === y) {
+                        const token = document.createElement('div');
+                        token.className = 'token-player';
+                        token.innerText = '🧙‍♂️';
+                        tile.appendChild(token);
+                    }
+
+                    // Render enemy tokens
+                    if (gameState.enemies) {
+                        gameState.enemies.forEach(e => {
+                            if (e.x === x && e.y === y && e.is_alive) {
+                                const token = document.createElement('div');
+                                token.className = 'token-enemy';
+                                token.innerText = e.archetype === 'LITHIC_SENTINEL' ? '🗿' : (e.archetype === 'VOID_SHADE' ? '👻' : '🤖');
+                                
+                                const hpBadge = document.createElement('div');
+                                hpBadge.className = 'enemy-hp-badge';
+                                hpBadge.innerText = `${e.hp}HP [${e.spectrum[0]}]`;
+                                tile.appendChild(token);
+                                tile.appendChild(hpBadge);
+                            }
+                        });
+                    }
+
+                    gridContainer.appendChild(tile);
+                }
+            }
+        }
+
+        function renderLog() {
+            const logBox = document.getElementById('combat-log');
+            logBox.innerHTML = '';
+            (gameState.action_log || []).forEach(log => {
+                const div = document.createElement('div');
+                div.className = 'log-entry';
+                div.innerText = log;
+                logBox.appendChild(div);
+            });
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        function renderQuests() {
+            const qList = document.getElementById('quest-list');
+            if (gameState.active_quests && gameState.active_quests.length > 0) {
+                qList.innerHTML = '';
+                gameState.active_quests.forEach(q => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong style="color: var(--gold);">${q.title}</strong><br><span style="font-size:0.68rem;">Reward: ${q.reward_insight} Insight | ${q.reward_relic || 'None'}</span>`;
+                    qList.appendChild(li);
+                });
+            }
+        }
+
+        async function onTileClick(x, y) {
+            if (TILE_MAP[y][x] === 'monolith') return;
+            const res = await fetch(`/api/rpg/move?x=${x}&y=${y}`);
+            gameState = await res.json();
+            renderHUD();
+            renderGrid();
+            renderLog();
+        }
+
+        async function performAttack(actionName, spectrum) {
+            if (!gameState.enemies || gameState.enemies.length === 0) {
+                alert("No active adversaries in sight.");
+                return;
+            }
+            const activeEnemy = gameState.enemies.find(e => e.is_alive);
+            if (!activeEnemy) {
+                alert("All adversaries in this chamber have been cleansed.");
+                return;
+            }
+            if (window.cathedralAudio) {
+                window.cathedralAudio.playDiceRoll();
+                setTimeout(() => window.cathedralAudio.playAttackHit(spectrum), 200);
+            }
+            const res = await fetch(`/api/rpg/attack?target_uid=${activeEnemy.uid}&action=${encodeURIComponent(actionName)}&spectrum=${spectrum}`);
+            gameState = await res.json();
+            renderHUD();
+            renderGrid();
+            renderLog();
+        }
+
+        async function endTurn() {
+            const res = await fetch('/api/rpg/end_turn');
+            gameState = await res.json();
+            renderHUD();
+            renderGrid();
+            renderLog();
+        }
+
+        let currentTreeKey = "CHAMBER_I_LITHIC";
+        async function openDialogue(treeKey = "CHAMBER_I_LITHIC") {
+            currentTreeKey = treeKey;
+            const res = await fetch(`/api/rpg/dialogue?tree=${treeKey}&node=start`);
+            const data = await res.json();
+            if (data.node) {
+                document.getElementById('diag-speaker').innerText = data.node.speaker;
+                if(data.node.speaker_portrait) document.getElementById('diag-portrait').src = data.node.speaker_portrait;
+                document.getElementById('diag-spec').innerText = data.node.speaker_spectrum;
+                document.getElementById('diag-text').innerText = data.node.text;
+                
+                const optContainer = document.getElementById('diag-options');
+                optContainer.innerHTML = '';
+                data.node.options.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'modal-opt-btn';
+                    const checkTxt = opt.skill_check_stat ? ` [Check: ${opt.skill_check_stat} DC${opt.skill_check_dc}]` : '';
+                    btn.innerText = `[${idx+1}] ${opt.text}${checkTxt}`;
+                    btn.onclick = () => selectDialogueOption(idx);
+                    optContainer.appendChild(btn);
+                });
+                document.getElementById('dialogue-modal').style.display = 'flex';
+            }
+        }
+
+        async function selectDialogueOption(idx) {
+            if (window.cathedralAudio) window.cathedralAudio.playDiceRoll();
+            const res = await fetch(`/api/rpg/dialogue_choice?tree=${currentTreeKey}&node=start&choice=${idx}`);
+            const result = await res.json();
+            if (result.next_node) {
+                document.getElementById('diag-text').innerText = result.next_node.text;
+                const optContainer = document.getElementById('diag-options');
+                optContainer.innerHTML = '';
+                result.next_node.options.forEach((opt, nIdx) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'modal-opt-btn';
+                    btn.innerText = opt.text;
+                    btn.onclick = () => closeDialogue();
+                    optContainer.appendChild(btn);
+                });
+            } else {
+                closeDialogue();
+            }
+            fetchGameState();
+        }
+
+        function closeDialogue() {
+            document.getElementById('dialogue-modal').style.display = 'none';
+        }
+
+        function openCharacterCreation() {
+            document.getElementById('char-create-modal').style.display = 'flex';
+        }
+
+        function closeCharModal() {
+            document.getElementById('char-create-modal').style.display = 'none';
+        }
+
+        function selectOrigin(originKey, element) {
+            selectedOriginKey = originKey;
+            document.querySelectorAll('.origin-card').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        async function submitCharacterCreation() {
+            const name = document.getElementById('cc-name').value;
+            const archetype = document.getElementById('cc-archetype').value;
+            const spectrum = document.getElementById('cc-spectrum').value;
+            const relic = document.getElementById('cc-relic').value;
+
+            if (window.cathedralAudio) window.cathedralAudio.playCriticalHit();
+
+            const url = `/api/rpg/character_create?name=${encodeURIComponent(name)}&origin=${selectedOriginKey}&archetype=${archetype}&spectrum=${spectrum}&relic=${relic}`;
+            const res = await fetch(url);
+            const data = await res.json();
+
+            alert(`⚡ GENESIS INSCRIBED!
+Character: ${data.character_name}
+Origin: ${data.origin}
+Passive: ${data.passive_trait}
+Merkle Genesis: ${data.genesis_merkle_root.substring(0, 20)}...`);
+            closeCharModal();
+            fetchGameState();
+        }
+
+        async function saveGame(slotId) {
+            const res = await fetch(`/api/rpg/save?slot=${slotId}&name=Manual_Slot_${slotId}`);
+            const data = await res.json();
+            alert(`✓ Saved to Slot ${slotId}!
+Merkle Root: ${data.merkle_root.substring(0, 18)}...`);
+        }
+
+        async function exportChronicle() {
+            const res = await fetch('/api/rpg/export_chronicle');
+            const data = await res.json();
+            alert(`✓ Campaign chronicle exported to:
+${data.chronicle_file}`);
+        }
+
+        // --- Three.js 2.5D Isometric Altar Viewport ---
+        let threeRenderer, threeScene, threeCamera, threeLight, altarMesh;
+        function initThreeViewport() {
+            const container = document.getElementById('three-canvas');
+            if (!container) return;
+
+            threeScene = new THREE.Scene();
+            threeCamera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            threeCamera.position.set(12, 16, 18);
+            threeCamera.lookAt(0, 0, 0);
+
+            threeRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            threeRenderer.setSize(container.clientWidth, container.clientHeight);
+            threeRenderer.shadowMap.enabled = true;
+            container.appendChild(threeRenderer.domElement);
+
+            // Ambient Light
+            const ambient = new THREE.AmbientLight(0x1a2333, 1.2);
+            threeScene.add(ambient);
+
+            // Dynamic Point Light (43.7 Hz Carrier Pulse)
+            threeLight = new THREE.PointLight(0xd4af37, 2.5, 30);
+            threeLight.position.set(0, 6, 0);
+            threeLight.castShadow = true;
+            threeScene.add(threeLight);
+
+            // 3D Stone Grid Base
+            const floorGeo = new THREE.PlaneGeometry(16, 16, 8, 8);
+            const floorMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.8, metalness: 0.2, wireframe: false });
+            const floor = new THREE.Mesh(floorGeo, floorMat);
+            floor.rotation.x = -Math.PI / 2;
+            floor.receiveShadow = true;
+            threeScene.add(floor);
+
+            // Central Sacred Octahedron Altar
+            const altarGeo = new THREE.OctahedronGeometry(2.2, 0);
+            const altarMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, roughness: 0.3, metalness: 0.8, wireframe: true });
+            altarMesh = new THREE.Mesh(altarGeo, altarMat);
+            altarMesh.position.y = 2.5;
+            altarMesh.castShadow = true;
+            threeScene.add(altarMesh);
+
+            function animate(time) {
+                requestAnimationFrame(animate);
+                const t = time * 0.001;
+                altarMesh.rotation.y = t * 0.5;
+                altarMesh.rotation.x = Math.sin(t * 0.8) * 0.2;
+                
+                // 43.7 Hz amplitude modulation on point light
+                threeLight.intensity = 2.0 + Math.sin(t * 43.7 * 0.1) * 0.8;
+                
+                threeRenderer.render(threeScene, threeCamera);
+            }
+            animate(0);
+        }
+
+        fetchGameState();
+        setTimeout(initThreeViewport, 300);
+    </script>
+</body>
+</html>

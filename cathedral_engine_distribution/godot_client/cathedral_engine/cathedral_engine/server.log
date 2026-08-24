@@ -1,0 +1,35 @@
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 63843)
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/3.15/lib/python3.15/socketserver.py", line 315, in _handle_request_noblock
+    self.process_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.15/lib/python3.15/socketserver.py", line 346, in process_request
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.15/lib/python3.15/socketserver.py", line 359, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.15/lib/python3.15/http/server.py", line 704, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.15/lib/python3.15/socketserver.py", line 763, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.15/lib/python3.15/http/server.py", line 468, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Library/Frameworks/Python.framework/Versions/3.15/lib/python3.15/http/server.py", line 456, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/kennethdallmier/cathedral_engine/server.py", line 56, in do_GET
+    self._send_json(state)
+    ~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/kennethdallmier/cathedral_engine/server.py", line 88, in _send_json
+    self.wfile.write(json.dumps(data, indent=2).encode("utf-8"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.15/lib/python3.15/socketserver.py", line 842, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------

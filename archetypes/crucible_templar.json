@@ -1,0 +1,16 @@
+{
+  "specimen_id": "CT-OMEGA-01",
+  "archetype_name": "Crucible Templar",
+  "caste": "Melee Vanguard",
+  "spectral_constant": "JOY_GOLD_THETA",
+  "dialetheic_afield": 0.87,
+  "master_texture_path": "res://assets/portraits/master_atlas_strip.png",
+  "silhouette_preset": "templar_plate",
+  "anatomical_parameters": {
+    "adipose_distribution_visceral": 0.85,
+    "cranial_vault_depth": 1.15,
+    "hypertrophy_pectoralis_major": 0.9,
+    "resonance_afield_conductance": 1.45,
+    "resonance_ocular_cyan_luminosity": 0.92
+  }
+}

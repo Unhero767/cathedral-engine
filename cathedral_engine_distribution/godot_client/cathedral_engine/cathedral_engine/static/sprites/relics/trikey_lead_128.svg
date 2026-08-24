@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" shape-rendering="crispEdges">
+  <rect width="128" height="128" fill="#0A0C10" />
+  <!-- Lead Key of Duration -->
+  <!-- Bow (Square Brutalist) -->
+  <rect x="24" y="24" width="32" height="32" fill="#2E3440" stroke="#0A0C10" stroke-width="2"/>
+  <rect x="32" y="32" width="16" height="16" fill="#0A0C10"/>
+  <!-- Gold Inlay Wire -->
+  <rect x="28" y="28" width="4" height="24" fill="#C99738"/>
+  <rect x="48" y="28" width="4" height="24" fill="#C99738"/>
+  <!-- Shaft -->
+  <rect x="56" y="36" width="48" height="8" fill="#181B22"/>
+  <rect x="56" y="38" width="48" height="4" fill="#2E3440"/>
+  <!-- Central Pulse Channel (Lumen Gold) -->
+  <rect x="60" y="39" width="40" height="2" fill="#FAD06C"/>
+  <!-- Step-cut Teeth -->
+  <rect x="88" y="44" width="8" height="16" fill="#2E3440"/>
+  <rect x="96" y="44" width="8" height="24" fill="#4C566A"/>
+  <rect x="94" y="48" width="2" height="18" fill="#C99738"/>
+  <!-- Gold Seam Solder -->
+  <line x1="88" y1="44" x2="104" y2="44" stroke="#FFF3D1" stroke-width="2"/>
+</svg>

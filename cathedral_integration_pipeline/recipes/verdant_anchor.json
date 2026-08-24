@@ -1,0 +1,16 @@
+{
+  "archetype": "Verdant Anchor",
+  "title": "Attuner of the Living Filaments",
+  "spectral_constant": "Epsilon",
+  "ego_density": 8.3,
+  "afield_potency": 0.9,
+  "dialetheic_state": "Restorative Biomechanical Symbiosis",
+  "somatic_properties": {
+    "armor": "Laminated bone-fiber plate interwoven with emerald conduits",
+    "weathering_index": 0.45
+  },
+  "liturgical_telemetry": {
+    "dialogue_luminance_gain": 1.4,
+    "ocular_frequency_hz": 9.0
+  }
+}

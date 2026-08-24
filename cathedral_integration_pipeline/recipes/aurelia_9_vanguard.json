@@ -1,0 +1,16 @@
+{
+  "archetype": "Aurelia-9",
+  "title": "Vanguard of the First Hearth",
+  "spectral_constant": "Theta",
+  "ego_density": 8.3,
+  "afield_potency": 0.95,
+  "dialetheic_state": "Joy in Martial Severity",
+  "somatic_properties": {
+	"armor": "Fluted gilded plate",
+	"weathering_index": 0.65
+  },
+  "liturgical_telemetry": {
+	"dialogue_luminance_gain": 1.45,
+	"ocular_frequency_hz": 10.0
+  }
+}

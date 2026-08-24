@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://boldxgyp4q7a7"]
+
+[node name="ShaderTestSandbox" type="Node2D" unique_id=319851397]
+position = Vector2(-927, -364)
+
+[node name="TargetA" type="Sprite2D" parent="." unique_id=1368798172]
+
+[node name="TargetB" type="Sprite2D" parent="." unique_id=635841863]

@@ -1,0 +1,99 @@
+{
+  "version": "1.0.0",
+  "codex_stratum": "Stratum_01_Foundational",
+  "npcs": {
+    "Aurelia-9": {
+      "title": "Vanguard of the First Hearth",
+      "spectral_constant": "Theta",
+      "hex_color": "#D4AF37",
+      "portrait_tres": "res://cathedral_integration_pipeline/godot4_runtime/aurelia_9_vanguard_spriteframes.tres",
+      "recipe_path": "res://cathedral_integration_pipeline/recipes/aurelia_9_vanguard.json"
+    },
+    "Caelen": {
+      "title": "Master Architect of the Lattices",
+      "spectral_constant": "Psi",
+      "hex_color": "#008080",
+      "portrait_tres": "res://cathedral_integration_pipeline/godot4_runtime/caelen_architect_spriteframes.tres",
+      "recipe_path": "res://cathedral_integration_pipeline/recipes/caelen_architect.json"
+    },
+    "Deimos": {
+      "title": "Catalyst of Kinetic Remaking",
+      "spectral_constant": "Phi",
+      "hex_color": "#8B0000",
+      "portrait_tres": "res://cathedral_integration_pipeline/godot4_runtime/deimos_catalyst_spriteframes.tres",
+      "recipe_path": "res://cathedral_integration_pipeline/recipes/deimos_catalyst.json"
+    }
+  },
+  "conversations": {
+    "chamber_01_prologue": {
+      "title": "Ignition of the First Hearth",
+      "start_node": "node_01",
+      "nodes": {
+        "node_01": {
+          "speaker": "Aurelia-9",
+          "text": "The Bone Remains. The Hazard is Truth. Welcome to the Reliquary Chamber.",
+          "default_liturgy": "liturgical_idle",
+          "stress_words": {
+            "Bone": 1.0,
+            "Hazard": 1.0,
+            "Truth": 1.0,
+            "Reliquary": 0.8
+          },
+          "next": "node_02"
+        },
+        "node_02": {
+          "speaker": "Caelen",
+          "text": "The substrate constants are verified. Ego Density stands at 8.30. No drift detected.",
+          "default_liturgy": "ocular_surge",
+          "stress_words": {
+            "verified": 0.8,
+            "Ego": 0.9,
+            "Density": 0.9,
+            "drift": 0.7
+          },
+          "next": "node_03"
+        },
+        "node_03": {
+          "speaker": "Aurelia-9",
+          "text": "How shall we proceed into the Glitch-Waste perimeter?",
+          "default_liturgy": "liturgical_idle",
+          "choices": [
+            {
+              "text": "Enforce the Plumb Line of absolute Law (Theta Alignment)",
+              "next": "node_law_path",
+              "ash_ledger_event": "Chose Law alignment under Sovereign Theta protocol."
+            },
+            {
+              "text": "Authorize kinetic combustion and remaking (Phi Alignment)",
+              "next": "node_kinetic_path",
+              "ash_ledger_event": "Chose Kinetic Remaking under Deimos protocol."
+            }
+          ]
+        },
+        "node_law_path": {
+          "speaker": "Aurelia-9",
+          "text": "Then the Vanguard holds the line. Our fluted plate shall not yield.",
+          "default_liturgy": "harmonic_resonance",
+          "stress_words": {
+            "Vanguard": 1.0,
+            "fluted": 0.9,
+            "yield": 0.8
+          },
+          "next": null
+        },
+        "node_kinetic_path": {
+          "speaker": "Deimos",
+          "text": "Sparks in the slag! Break the stagnant lattice and re-forge the waste!",
+          "default_liturgy": "harmonic_resonance",
+          "stress_words": {
+            "Sparks": 1.0,
+            "slag": 1.0,
+            "lattice": 0.8,
+            "re-forge": 1.0
+          },
+          "next": null
+        }
+      }
+    }
+  }
+}

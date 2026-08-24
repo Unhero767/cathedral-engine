@@ -1,0 +1,16 @@
+{
+  "archetype": "Crucible Templar",
+  "title": "Defender of the Slag Gates",
+  "spectral_constant": "Phi",
+  "ego_density": 9.2,
+  "afield_potency": 0.95,
+  "dialetheic_state": "Thermal Combustion Equilibrium",
+  "somatic_properties": {
+    "armor": "Heavy slag-hardened plate with thermal relief vents",
+    "weathering_index": 0.85
+  },
+  "liturgical_telemetry": {
+    "dialogue_luminance_gain": 1.7,
+    "ocular_frequency_hz": 8.0
+  }
+}

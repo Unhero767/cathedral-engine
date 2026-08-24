@@ -1,0 +1,11 @@
+{
+  "system": "MLAOS-Prime / Cathedral-Engine v4.0",
+  "author": "Kenneth W. Dallmier (Unhero767)",
+  "geodetic_anchor": "Olney, IL (37.7306 N, -88.0817 W)",
+  "spectral_baseline": {
+    "carrier_hz": 43.7,
+    "somatic_baseline_hz": 1.5,
+    "circ_a_target": 1.0
+  },
+  "ledger_path": "strata/prime_ledger.ndjson"
+}

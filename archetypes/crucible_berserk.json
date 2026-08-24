@@ -1,0 +1,14 @@
+{
+  "specimen_id": "CB-PHI-05",
+  "archetype_name": "Crucible Berserk",
+  "caste": "Shock Vanguard",
+  "spectral_constant": "ANGER_CRIMSON_PHI",
+  "dialetheic_afield": 1.1,
+  "master_texture_path": "res://assets/portraits/master_atlas_strip.png",
+  "silhouette_preset": "berserk_bulk",
+  "anatomical_parameters": {
+    "hypertrophy_deltoid_lateral": 1.2,
+    "hypertrophy_pectoralis_major": 1.15,
+    "vascularity_forearm_anterior": 0.95
+  }
+}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" shape-rendering="crispEdges">
+  <rect width="128" height="128" fill="#0A0C10" />
+  <!-- Petrified Paradox Obsidian Pillar -->
+  <polygon points="40,20 88,20 100,108 28,108" fill="#181B22" stroke="#0A0C10" stroke-width="3"/>
+  <!-- Internal X-Shaped Fracture Plane -->
+  <line x1="38" y1="28" x2="90" y2="100" stroke="#1BB2BF" stroke-width="3"/>
+  <line x1="90" y1="28" x2="38" y2="100" stroke="#639BFF" stroke-width="3"/>
+  <!-- Center Singularity Intersection -->
+  <circle cx="64" cy="64" r="6" fill="#DDFBFF"/>
+  <!-- Bio-Silicate Anchors -->
+  <path d="M28,108 L20,118 M100,108 L108,118" stroke="#21A863" stroke-width="3"/>
+</svg>

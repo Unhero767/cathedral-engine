@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" shape-rendering="crispEdges">
+  <rect width="128" height="128" fill="#131b2a"/>
+  <rect x="16" y="16" width="96" height="96" fill="#1a2333" stroke="#d4af37" stroke-width="2"/>
+  <!-- Concentric Gold Wave Lines -->
+  <circle cx="64" cy="64" r="32" fill="none" stroke="#d4af37" stroke-width="2"/>
+  <circle cx="64" cy="64" r="18" fill="none" stroke="#fad06c" stroke-width="1.5"/>
+  <rect x="58" y="58" width="12" height="12" fill="#fff" stroke="#d4af37" stroke-width="1"/>
+</svg>

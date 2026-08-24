@@ -1,0 +1,16 @@
+{
+  "archetype": "Sovereign Seraph",
+  "title": "Archon of the High Choir",
+  "spectral_constant": "Theta",
+  "ego_density": 8.5,
+  "afield_potency": 1.1,
+  "dialetheic_state": "Radiant Martial Authority",
+  "somatic_properties": {
+    "armor": "Gilded fluted cuirass with radial tri-key halo",
+    "weathering_index": 0.5
+  },
+  "liturgical_telemetry": {
+    "dialogue_luminance_gain": 1.6,
+    "ocular_frequency_hz": 10.0
+  }
+}

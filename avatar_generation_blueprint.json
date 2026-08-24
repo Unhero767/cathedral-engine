@@ -1,0 +1,21 @@
+{
+  "generation_pipeline": "ComfyUI_Architectonic_Sovereign_v4",
+  "base_model": "Hyperreal Gothic Biomechanical Checkpoint / SDXL-Turbo Sovereign",
+  "master_prompt": "An imposing dark fantasy sovereign entity clad in hyper-dense tectonic basalt armor and obsidian plating, fused spinal architecture, glowing crimson and bronze litho-chemical magma fissures cracking across the heavy metallic torso, intricate gothic filigree engravings, dramatic chiaroscuro studio lighting, volumetric smoke and ember particles swirling in the abyss, 8k resolution, photorealistic cinematic concept art, masterful micro-surface detail, Unreal Engine 5 render style, dark fantasy masterwork masterpiece --ar 9:16",
+  "negative_prompt": "cartoon, illustration, anime, smooth plastic, lowres, bright cheerful lighting, poorly drawn hands, flat colors, blurry, text, watermark",
+  "parameters": {
+    "sampling_steps": 42,
+    "cfg_scale": 7.5,
+    "denoise": 0.65,
+    "lora_weights": {
+      "gothic_tectonic_armor_v2": 0.85,
+      "obsidian_fissure_glow": 0.70
+    }
+  },
+  "codex_metadata": {
+    "classification": "HYPER-DENSITY SOVEREIGNTY ORGANISM",
+    "spectral_constant": "CRIMSON/DEFIANCE FUSED WITH BRONZE-OBSIDIAN/NULL",
+    "metabolic_core": "GEOTHERMAL ENDOTHERMY",
+    "final_axiom": "I AM THE ANCHOR."
+  }
+}

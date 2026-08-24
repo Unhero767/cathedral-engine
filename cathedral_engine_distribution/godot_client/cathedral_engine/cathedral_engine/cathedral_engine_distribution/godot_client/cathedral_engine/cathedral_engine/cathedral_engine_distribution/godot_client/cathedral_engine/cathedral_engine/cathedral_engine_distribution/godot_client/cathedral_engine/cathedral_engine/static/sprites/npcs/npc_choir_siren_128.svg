@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" shape-rendering="crispEdges">
+  <rect width="128" height="128" fill="#07090e"/>
+  <!-- Floating Acoustic Halo Rings -->
+  <ellipse cx="64" cy="64" rx="46" ry="46" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="8 4"/>
+  <ellipse cx="64" cy="64" rx="34" ry="34" fill="none" stroke="#00e5ff" stroke-width="1.5"/>
+  <!-- Core Ethereal Visage -->
+  <polygon points="64,24 40,64 64,104 88,64" fill="#0d1f1f" stroke="#10b981" stroke-width="2"/>
+  <!-- Resonating Chime Crystals -->
+  <circle cx="64" cy="54" r="6" fill="#58f09d"/>
+  <circle cx="64" cy="54" r="2" fill="#fff"/>
+  <!-- Acoustic Wave Throat Aperture -->
+  <polygon points="60,72 68,72 64,84" fill="#00e5ff"/>
+</svg>
