@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://godot_client/CathedralSync.gd" id="1_sync"]
+[ext_resource type="Script" path="res://godot_client/ChamberV.gd" id="2_chamber"]
+[ext_resource type="Shader" path="res://godot_client/ResonanceScreen.gdshader" id="3_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_resonance"]
+shader = ExtResource("3_shader")
+shader_parameter/aberration_intensity = 0.005
+shader_parameter/carrier_hz = 130.81
+
+[node name="ChamberV" type="Node3D"]
+script = ExtResource("2_chamber")
+
+[node name="CathedralSync" type="Node" parent="."]
+script = ExtResource("1_sync")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.5)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_resonance")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
