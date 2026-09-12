@@ -1,0 +1,24 @@
+// Godot Spatial Shader: Scarlet Drynn Carapace & Subsurface Circuitry
+shader_type spatial;
+
+uniform vec4 porcelain_color : source_color = vec4(0.92, 0.92, 0.95, 1.0);
+uniform vec4 vascular_glow_color : source_color = vec4(1.0, 0.27, 0.0, 1.0); // #FF4500
+uniform vec4 obsidian_plate_color : source_color = vec4(0.04, 0.04, 0.06, 1.0); // #0B0B10;
+uniform sampler2D vascular_circuitry_mask;
+uniform float roughness_obsidian = 0.06;
+
+void fragment() {
+    vec4 mask = texture(vascular_circuitry_mask, UV);
+    
+    // Base layer blending: Porcelain Dermis vs Obsidian Carapace
+    vec3 base_albedo = mix(porcelain_color.rgb, obsidian_plate_color.rgb, mask.r);
+    ALBEDO = base_albedo;
+    
+    // Roughness assignment based on carpace integration
+    ROUGHNESS = mix(0.35, roughness_obsidian, mask.r);
+    METALLIC = mix(0.0, 0.85, mask.r);
+    
+    // Subsurface Vascular Circuitry Emission (#FF4500 / #DC143C)
+    float emission_pulse = sin(TIME * 3.0) * 0.2 + 0.8; // 1.5 Hz pulse rate
+    EMISSION = vascular_glow_color.rgb * mask.g * emission_pulse * 2.5;
+}

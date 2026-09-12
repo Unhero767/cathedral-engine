@@ -1,0 +1,37 @@
+USER INTENTION
+      │
+      ▼
+TextureButton
+Sense Organ
+      │
+      │ pressed.connect(...)
+      ▼
+VaultRequest
+Nerve Impulse
+      │
+      │ Book ID + Spectral Frequency + Operator Sigil + Φ intensity
+      ▼
+ParaconsistentGate
+Reflex Arc / Legal Validator
+      │
+      ├── SEAL_FAULT ──────────────► Ledger + Fault Signal
+      │
+      ├── HOLD_CONTRADICTION ──────► Dialetheic Buffer holds contradiction
+      │
+      └── UNSEAL
+             │
+             ▼
+        AshArchive
+        Memory Stratum
+             │
+             ▼
+        VaultPayload
+        Canonical Text + Revision Hash
+             │
+             ▼
+        DialetheicBuffer
+        Conscious Chamber
+             │
+             ▼
+        VaultLedger
+        Append-Only Fossil Record

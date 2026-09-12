@@ -1,0 +1,21 @@
+class_name VaultRequest
+extends RefCounted
+
+var book_id: StringName
+var spectral_frequency: StringName
+var operator_key: StringName
+var phi_intensity: float
+var timestamp_unix: int
+
+
+func _init(
+    p_book_id: StringName,
+    p_spectral_frequency: StringName,
+    p_operator_key: StringName,
+    p_phi_intensity: float
+) -> void:
+    book_id = p_book_id
+    spectral_frequency = p_spectral_frequency
+    operator_key = p_operator_key
+    phi_intensity = p_phi_intensity
+    timestamp_unix = int(Time.get_unix_time_from_system())

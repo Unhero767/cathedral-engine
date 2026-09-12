@@ -1,0 +1,54 @@
+class_name VaultLedger
+extends Node
+
+const LEDGER_PATH := "user://vault_ledger.jsonl"
+
+
+func append_unseal(request: VaultRequest, payload: VaultPayload) -> void:
+    _append({
+        "event": "vault_unsealed",
+        "book_id": str(request.book_id),
+        "spectral_frequency": str(request.spectral_frequency),
+        "operator_key": str(request.operator_key),
+        "phi_intensity": request.phi_intensity,
+        "revision_hash": payload.revision_hash,
+        "timestamp_unix": request.timestamp_unix
+    })
+
+
+func append_hold(request: VaultRequest, reason: StringName) -> void:
+    _append({
+        "event": "contradiction_held",
+        "book_id": str(request.book_id),
+        "spectral_frequency": str(request.spectral_frequency),
+        "operator_key": str(request.operator_key),
+        "phi_intensity": request.phi_intensity,
+        "reason": str(reason),
+        "timestamp_unix": request.timestamp_unix
+    })
+
+
+func append_fault(request: VaultRequest, reason: StringName) -> void:
+    _append({
+        "event": "seal_fault",
+        "book_id": str(request.book_id),
+        "spectral_frequency": str(request.spectral_frequency),
+        "operator_key": str(request.operator_key),
+        "phi_intensity": request.phi_intensity,
+        "reason": str(reason),
+        "timestamp_unix": request.timestamp_unix
+    })
+
+
+func _append(event: Dictionary) -> void:
+    var file := FileAccess.open(LEDGER_PATH, FileAccess.APPEND)
+
+    if file == null:
+        file = FileAccess.open(LEDGER_PATH, FileAccess.WRITE)
+
+    if file == null:
+        push_error("VaultLedger: unable to open ledger path.")
+        return
+
+    file.store_line(JSON.stringify(event))
+    file.close()

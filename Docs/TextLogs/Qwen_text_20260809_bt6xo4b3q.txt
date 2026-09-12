@@ -1,0 +1,6 @@
+Φ(t) = Σ w_i · e^{-λ(t - t_i)}
+
+where:
+    w_i     = interaction weight
+    t_i     = interaction timestamp
+    λ       = decay constant

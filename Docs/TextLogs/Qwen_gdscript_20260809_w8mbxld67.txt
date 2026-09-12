@@ -1,0 +1,30 @@
+class_name VaultPayload
+extends RefCounted
+
+var valid: bool = false
+var book_id: StringName
+var canonical_text: String = ""
+var revision_hash: String = ""
+var retrieved_at_unix: int = 0
+
+
+static func invalid(p_book_id: StringName) -> VaultPayload:
+    var payload := VaultPayload.new()
+    payload.valid = false
+    payload.book_id = p_book_id
+    payload.retrieved_at_unix = int(Time.get_unix_time_from_system())
+    return payload
+
+
+static func sealed(
+    p_book_id: StringName,
+    p_text: String,
+    p_revision_hash: String
+) -> VaultPayload:
+    var payload := VaultPayload.new()
+    payload.valid = true
+    payload.book_id = p_book_id
+    payload.canonical_text = p_text
+    payload.revision_hash = p_revision_hash
+    payload.retrieved_at_unix = int(Time.get_unix_time_from_system())
+    return payload

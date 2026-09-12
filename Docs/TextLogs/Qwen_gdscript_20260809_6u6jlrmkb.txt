@@ -1,0 +1,68 @@
+class_name ParaconsistentGate
+extends Node
+
+enum Verdict {
+    SEAL_FAULT,
+    HOLD_CONTRADICTION,
+    UNSEAL
+}
+
+@export var minimum_phi: float = 0.0
+
+var _held_book_frequencies: Dictionary = {}
+
+
+func adjudge(request: VaultRequest) -> Dictionary:
+    if request.book_id == &"":
+        return {
+            "verdict": Verdict.SEAL_FAULT,
+            "reason": &"EmptyBookId"
+        }
+
+    if request.spectral_frequency == &"":
+        return {
+            "verdict": Verdict.SEAL_FAULT,
+            "reason": &"EmptySpectralFrequency"
+        }
+
+    if request.operator_key == &"":
+        return {
+            "verdict": Verdict.SEAL_FAULT,
+            "reason": &"MissingOperatorSigil"
+        }
+
+    if request.phi_intensity < minimum_phi:
+        return {
+            "verdict": Verdict.SEAL_FAULT,
+            "reason": &"InsufficientConsciousnessIntensity"
+        }
+
+    var contradiction := _detect_contradiction(request)
+
+    if contradiction != &"":
+        return {
+            "verdict": Verdict.HOLD_CONTRADICTION,
+            "reason": contradiction
+        }
+
+    return {
+        "verdict": Verdict.UNSEAL,
+        "reason": &"TriKeyAligned"
+    }
+
+
+func _detect_contradiction(request: VaultRequest) -> StringName:
+    if not _held_book_frequencies.has(request.book_id):
+        _held_book_frequencies[request.book_id] = [request.spectral_frequency]
+        return &""
+
+    var frequencies: Array = _held_book_frequencies[request.book_id]
+
+    if frequencies.has(request.spectral_frequency):
+        return &""
+
+    # Dialetheic policy: do not erase the prior frequency.
+    # Preserve both as simultaneously active within the buffer.
+    frequencies.append(request.spectral_frequency)
+
+    return &"SpectralContradictionHeld"

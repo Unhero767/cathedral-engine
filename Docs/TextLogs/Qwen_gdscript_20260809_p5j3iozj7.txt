@@ -1,0 +1,138 @@
+extends Control
+class_name SovereignInterface
+
+signal vault_unsealed(request: VaultRequest, payload: VaultPayload)
+signal chamber_fault(request: VaultRequest, reason: StringName)
+signal buffer_aspects_changed(aspects: int)
+
+const QUADRANT_SPECTRA := {
+    &"I_X_PrimeFoundations": &"Gold/Joy",
+    &"XI_XX_InnerMandala": &"Teal/Curiosity",
+    &"XXI_XXX_OuterChoirs": &"Blue/Sorrow",
+    &"XXXI_XL_InnerShadowCanon": &"Bronze-Obsidian/Null"
+}
+
+@onready var dialetheic_buffer: DialetheicBuffer = $DialetheicBuffer
+
+@onready var tectonic_navigator: TabContainer = (
+    $DialetheicBuffer/ArchiveStrata/TectonicNavigator
+)
+
+@onready var paraconsistent_gate: ParaconsistentGate = $ParaconsistentGate
+@onready var ash_archive: AshArchive = $AshArchive
+@onready var vault_ledger: VaultLedger = $VaultLedger
+
+var _phi: float = 0.0
+var _phi_decay_per_second: float = 0.35
+
+
+func _ready() -> void:
+    if dialetheic_buffer:
+        dialetheic_buffer.aspects_changed.connect(_on_buffer_aspects_changed)
+
+    _inscribe_quadrants()
+
+
+func _process(delta: float) -> void:
+    _phi = maxf(0.0, _phi - _phi_decay_per_second * delta)
+
+
+func _inscribe_quadrants() -> void:
+    for grid_name in QUADRANT_SPECTRA.keys():
+        _bind_stratum(grid_name, QUADRANT_SPECTRA[grid_name])
+
+
+func _bind_stratum(grid_name: StringName, dominant_frequency: StringName) -> void:
+    var grid_node := tectonic_navigator.get_node_or_null(NodePath(grid_name))
+
+    if grid_node == null:
+        push_error(
+            "Cathedral-Engine Fault: Missing structural grid: %s" % grid_name
+        )
+        return
+
+    for book_chamber in grid_node.get_children():
+        if book_chamber is TextureButton:
+            var book_id: StringName = book_chamber.get_meta(
+                &"book_id",
+                book_chamber.name
+            )
+
+            book_chamber.pressed.connect(
+                _on_chamber_touched.bind(book_id, dominant_frequency)
+            )
+
+            book_chamber.mouse_entered.connect(
+                _on_chamber_hovered.bind(book_id, dominant_frequency)
+            )
+
+
+func _on_chamber_hovered(
+    _book_id: StringName,
+    _frequency: StringName
+) -> void:
+    _phi += 0.12
+
+
+func _on_chamber_touched(
+    book_id: StringName,
+    frequency: StringName
+) -> void:
+    _phi += 1.0
+
+    var request := VaultRequest.new(
+        book_id,
+        frequency,
+        _operator_key(),
+        _consciousness_intensity()
+    )
+
+    var verdict: Dictionary = paraconsistent_gate.adjudge(request)
+    var verdict_type: int = verdict.get(
+        "verdict",
+        ParaconsistentGate.Verdict.SEAL_FAULT
+    )
+
+    match verdict_type:
+        ParaconsistentGate.Verdict.UNSEAL:
+            _execute_unseal(request)
+
+        ParaconsistentGate.Verdict.HOLD_CONTRADICTION:
+            var reason: StringName = verdict.get("reason", &"Contradiction")
+            vault_ledger.append_hold(request, reason)
+            dialetheic_buffer.hold_contradiction(request, reason)
+            chamber_fault.emit(request, reason)
+
+        _:
+            var reason: StringName = verdict.get("reason", &"SealFault")
+            vault_ledger.append_fault(request, reason)
+            chamber_fault.emit(request, reason)
+
+
+func _execute_unseal(request: VaultRequest) -> void:
+    var payload := ash_archive.fetch(request.book_id)
+
+    if payload.valid:
+        vault_ledger.append_unseal(request, payload)
+        dialetheic_buffer.manifest(payload)
+        vault_unsealed.emit(request, payload)
+    else:
+        vault_ledger.append_fault(request, &"ArchiveMissing")
+        chamber_fault.emit(request, &"ArchiveMissing")
+
+
+func _operator_key() -> StringName:
+    var sigil := OS.get_environment("MLAOS_OPERATOR_SIGIL")
+
+    if sigil == "":
+        return &"UnsealedOperator"
+
+    return StringName(sigil)
+
+
+func _consciousness_intensity() -> float:
+    return _phi
+
+
+func _on_buffer_aspects_changed(aspects: int) -> void:
+    buffer_aspects_changed.emit(aspects)

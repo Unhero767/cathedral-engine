@@ -1,0 +1,66 @@
+extends Control
+# VesselTelemetry.gd - BODY Ω-B Osteomorphic Schematic | Live Telemetry Overlay
+
+const CHASSIS_TEXTURE := "res://Assets/vessel_chassis.png"
+
+enum NodeState { COHERENT, STRAINED, RUPTURE }
+
+# Normalized (0..1) anchor points mapped from the Osteomorphic Audit
+const SENSOR_NODES := {
+	"cervical_bus":      Vector2(0.37, 0.06),
+	"sternal_conductor": Vector2(0.37, 0.38),
+	"clavicle_yoke_L":   Vector2(0.17, 0.22),
+	"clavicle_yoke_R":   Vector2(0.56, 0.21),
+	"rib_strut_03_L":    Vector2(0.16, 0.42),
+	"rib_strut_03_R":    Vector2(0.55, 0.42),
+	"deltoid_gimbal_R":  Vector2(0.74, 0.30),
+	"pelvic_cradle":     Vector2(0.37, 0.90),
+	"conscience_seat":   Vector2(0.68, 0.74),
+}
+
+const COLOR_COHERENT := Color("e6c200") # Gold
+const COLOR_STRAINED := Color("cc3333") # Red
+const COLOR_RUPTURE  := Color("8833cc") # Violet
+
+var _telemetry := {}
+var _tick: float = 0.0
+
+func _ready() -> void:
+	var chassis := TextureRect.new()
+	chassis.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	chassis.set_anchors_preset(Control.PRESET_FULL_RECT)
+	chassis.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if ResourceLoader.exists(CHASSIS_TEXTURE):
+		chassis.texture = load(CHASSIS_TEXTURE)
+	add_child(chassis)
+
+	for node_name in SENSOR_NODES.keys():
+		_telemetry[node_name] = randf_range(0.05, 0.3)
+
+func _process(delta: float) -> void:
+	_tick += delta
+	if _tick >= 0.5:
+		_tick = 0.0
+		_advance_telemetry()
+		queue_redraw()
+
+func _advance_telemetry() -> void:
+	for node_name in _telemetry.keys():
+		var strain: float = _telemetry[node_name]
+		_telemetry[node_name] = clampf(strain + randf_range(-0.08, 0.09), 0.02, 1.0)
+
+func _color_of(strain: float) -> Color:
+	if strain < 0.55: return COLOR_COHERENT
+	if strain < 0.85: return COLOR_STRAINED
+	return COLOR_RUPTURE
+
+func _draw() -> void:
+	if size == Vector2.ZERO:
+		return
+	for node_name in SENSOR_NODES.keys():
+		var pos := Vector2(SENSOR_NODES[node_name].x * size.x, SENSOR_NODES[node_name].y * size.y)
+		var col := _color_of(_telemetry.get(node_name, 0.0))
+		draw_circle(pos, 5.0, col)
+		draw_arc(pos, 9.0, 0.0, TAU, 32, Color(col, 0.45), 1.5)
+		draw_string(ThemeDB.fallback_font, pos + Vector2(12, 4), node_name,
+				HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(col, 0.9))

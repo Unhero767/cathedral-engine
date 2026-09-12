@@ -1,0 +1,30 @@
+// MLAOS-PRIME // ECLIPTIC_OCCLUSION_VECTOR.glsl
+// Calculating the psycho-semantic density of the shadow cast by Sovereign Law (001)
+
+uniform vec3 u_SunPath_Gold_Theta;     // Radiant Joy / Structural Law Direction
+uniform vec3 u_Obsidian_Null_Void;     // #0B0B10 - Paradox Stasis Vector
+uniform float u_Penumbra_Softness;     // The blur radius of the shadow's edge
+uniform float u_Entropy_Decay_Uranium; // 024 - Thermodynamic Decay factor
+
+float calculateUmbraDensity(vec3 worldPosition, vec3 entityNormal) {
+    // 1. Calculate the dot product between the sun's path and the entity's surface
+    float NdotL = dot(entityNormal, normalize(u_SunPath_Gold_Theta));
+    
+    // 2. The Terminator Line: Smooth transition into the shadow (Penumbra)
+    float shadowGradient = smoothstep(-u_Penumbra_Softness, u_Penumbra_Softness, NdotL);
+    
+    // 3. Deep Umbra Calculation (Behind the sun)
+    // As light fades, the Null/Obsidian void (#0B0B10) asserts its anti-resonance
+    float voidResonance = 1.0 - shadowGradient; 
+    
+    // 4. Inject Midnight Ink (018) and Mirrored Ash (020) into the deep shadow
+    // Ink absorbs, Ash scatters the residual ambient void-light
+    vec3 inkAbsorption = vec3(0.043, 0.055, 0.078) * voidResonance; // #0B0E14
+    vec3 ashScattering = vec3(0.75, 0.75, 0.75) * pow(voidResonance, 4.0); 
+    
+    // 5. Apply Uranium/Ash (024) Entropic Decay to the occluded geometry
+    float decayNoise = snoise(worldPosition * 0.5 + u_Time * 0.1);
+    float finalShadowDensity = voidResonance * (1.0 + decayNoise * u_Entropy_Decay_Uranium);
+    
+    return clamp(finalShadowDensity, 0.0, 1.0);
+}

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CATHEDRAL-ENGINE — Master Reference Implementation & Build Specification</title>
+    <!-- Three.js for 3D Dual-Topology WebGL rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,800;1,400&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #0a0b0e;
+            --bg-surface: #11141c;
+            --bg-elevated: #181d28;
+            --bg-card: #1f2533;
+            --border-subtle: #2b3447;
+            --border-active: #485675;
+            --text-primary: #e6ebf5;
+            --text-secondary: #9aa5b8;
+            --text-muted: #5e6b82;
+            --gold-primary: #e5a93c;
+            --gold-glow: rgba(229, 169, 60, 0.25);
+            --cyan-accent: #00e5a3;
+            --cyan-glow: rgba(0, 229, 163, 0.2);
+            --blue-accent: #38bdf8;
+            --red-alert: #ef4444;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-display: 'Cinzel', serif;
+            --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(229, 169, 60, 0.08) 0%, transparent 60%),
+                radial-gradient(circle at 100% 100%, rgba(0, 229, 163, 0.04) 0%, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+        }
+
+        header {
+            background: linear-gradient(180deg, rgba(17, 20, 28, 0.95) 0%, rgba(10, 11, 14, 0.85) 100%);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 24px 32px 18px 32px;
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .title-block h1 {
+            font-family: var(--font-display);
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .title-block h1 span.highlight {
+            color: var(--gold-primary);
+            text-shadow: 0 0 16px var(--gold-glow);
+        }
+
+        .badge-version {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            padding: 4px 8px;
+            background: rgba(229, 169, 60, 0.12);
+            color: var(--gold-primary);
+            border: 1px solid rgba(229, 169, 60, 0.35);
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .epigraph {
+            font-family: var(--font-display);
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            margin-top: 18px;
+            border-bottom: 1px solid var(--border-subtle);
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 6px 6px 0 0;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .nav-btn.active {
+            color: var(--gold-primary);
+            background: var(--bg-surface);
+            border-color: var(--border-subtle) var(--border-subtle) var(--bg-surface) var(--border-subtle);
+            border-top: 2px solid var(--gold-primary);
+            font-weight: 600;
+        }
+
+        main {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 24px 32px 64px 32px;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-pane.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 24px;
+        }
+
+        @media (max-width: 1080px) {
+            .layout-grid { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 10px;
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gold-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .viewport-container {
+            position: relative;
+            width: 100%;
+            height: 580px;
+            background: #050608;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #webgl-canvas { width: 100%; height: 100%; display: block; }
+
+        .viewport-overlay {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(10, 11, 14, 0.85);
+            border: 1px solid var(--border-subtle);
+            padding: 10px 14px;
+            border-radius: 6px;
+            backdrop-filter: blur(8px);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        .viewport-overlay span.val { color: var(--cyan-accent); font-weight: 600; }
+
+        .control-group { margin-bottom: 16px; }
+
+        .control-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .control-label span.num { color: var(--gold-primary); font-weight: bold; }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: var(--bg-card);
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--gold-primary);
+            cursor: pointer;
+            box-shadow: 0 0 8px var(--gold-glow);
+        }
+
+        .btn-toggle-group {
+            display: flex;
+            gap: 6px;
+            background: var(--bg-card);
+            padding: 4px;
+            border-radius: 6px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .btn-toggle {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            padding: 6px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .btn-toggle.active {
+            background: var(--gold-primary);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold-primary) 0%, #b88022 100%);
+            color: #000;
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 16px var(--gold-glow);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-active);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-elevated);
+            border-color: var(--gold-primary);
+            color: var(--gold-primary);
+        }
+
+        .gates-list { display: flex; flex-direction: column; gap: 8px; }
+
+        .gate-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .gate-item.pass { border-left: 3px solid var(--cyan-accent); }
+        .gate-item.fail { border-left: 3px solid var(--red-alert); background: rgba(239, 68, 68, 0.08); }
+
+        .gate-status-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .gate-status-badge.pass { background: rgba(0, 229, 163, 0.15); color: var(--cyan-accent); }
+        .gate-status-badge.fail { background: rgba(239, 68, 68, 0.2); color: var(--red-alert); }
+
+        .code-block {
+            background: #08090d;
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            padding: 14px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--text-secondary);
+            overflow-x: auto;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .code-block pre { margin: 0; }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .copy-btn:hover { color: var(--text-primary); border-color: var(--gold-primary); }
+
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            margin: 12px 0;
+        }
+
+        .table-custom th {
+            background: var(--bg-elevated);
+            color: var(--gold-primary);
+            padding: 10px 12px;
+            text-align: left;
+            border: 1px solid var(--border-subtle);
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .table-custom td { padding: 8px 12px; border: 1px solid var(--border-subtle); color: var(--text-secondary); }
+        .table-custom tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+        .hash-display {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--blue-accent);
+            word-break: break-all;
+            background: rgba(56, 189, 248, 0.08);
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            display: inline-block;
+        }
+
+        .dropzone {
+            border: 2px dashed var(--border-active);
+            border-radius: 8px;
+            padding: 32px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: rgba(17, 20, 28, 0.5);
+            margin-bottom: 16px;
+        }
+
+        .dropzone:hover, .dropzone.dragover {
+            border-color: var(--gold-primary);
+            background: rgba(229, 169, 60, 0.05);
+        }
+
+        .subtabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 6px;
+        }
+
+        .subtab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            padding: 4px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .subtab-btn.active { background: var(--bg-elevated); color: var(--gold-primary); font-weight: 600; }
+
+        .test-row {
+            display: grid;
+            grid-template-columns: 80px 1fr 180px 110px;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            border-radius: 4px;
+            margin-bottom: 6px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+        }
+
+        .test-row.pass { border-left: 3px solid var(--cyan-accent); }
+        .test-row.fail { border-left: 3px solid var(--red-alert); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-top">
+        <div class="title-block">
+            <h1>CATHEDRAL<span class="highlight">-ENGINE</span> <span class="badge-version">Master Build v0.4</span></h1>
+            <div class="epigraph">“The stone does not merely feel the weight of the cathedral; the stone IS the weight of the architect's devotion made manifest.”</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <div id="master-status-pill" style="font-family: var(--font-mono); font-size: 11px; padding: 6px 12px; background: rgba(0, 229, 163, 0.1); border: 1px solid var(--cyan-accent); border-radius: 20px; color: var(--cyan-accent); display: flex; align-items: center; gap: 6px;">
+                <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--cyan-accent); box-shadow: 0 0 8px var(--cyan-accent);"></span>
+                ZERO-TRUST STATE: <strong id="header-hstate-short">33aa062d...</strong> (2360 B)
+            </div>
+            <button class="btn-outline" onclick="downloadCurrentMlvx()">⬇ Export .mlvox</button>
+        </div>
+    </div>
+
+    <nav class="nav-tabs">
+        <button class="nav-btn active" onclick="switchTab('tab-viewport')">❖ 1. Dual-Topology Viewport</button>
+        <button class="nav-btn" onclick="switchTab('tab-vault')">🛡 2. Zero-Trust Ingestion & Vault</button>
+        <button class="nav-btn" onclick="switchTab('tab-adversarial')">⚔ 3. Adversarial Test Matrix (23)</button>
+        <button class="nav-btn" onclick="switchTab('tab-fixtures')">☲ 4. Conformance Fixtures</button>
+        <button class="nav-btn" onclick="switchTab('tab-spec')">📜 5. Constitutional Specification</button>
+        <button class="nav-btn" onclick="switchTab('tab-code')">💻 6. Reference Code (Py / C#)</button>
+    </nav>
+</header>
+
+<main>
+    <!-- TAB 1: DUAL TOPOLOGY VIEWPORT -->
+    <div id="tab-viewport" class="tab-pane active">
+        <div class="layout-grid">
+            <div class="viewport-container">
+                <canvas id="webgl-canvas"></canvas>
+                <div class="viewport-overlay">
+                    <div>TOPOLOGY: <span class="val" id="overlay-topo-mode">DUAL SYNCHRONIZED</span></div>
+                    <div>RESOLUTION: <span class="val" id="overlay-res">8³ (512 Voxels)</span></div>
+                    <div>ISOVALUE τ: <span class="val" id="overlay-tau">0.450</span></div>
+                    <div>VERTICES / TRIS: <span class="val" id="overlay-counts">96 / 44</span></div>
+                    <div>INVARIANT: <span class="val" style="color: var(--gold-primary);">ZERO DIVERGENCE</span></div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">⬡ Dual-Topology Controls</div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">Projection Mode</div>
+                        <div class="btn-toggle-group">
+                            <button class="btn-toggle" id="btn-mode-discrete" onclick="setRenderMode('discrete')">Discrete (Voxel)</button>
+                            <button class="btn-toggle" id="btn-mode-continuous" onclick="setRenderMode('continuous')">Continuous (Mesh)</button>
+                            <button class="btn-toggle active" id="btn-mode-dual" onclick="setRenderMode('dual')">Dual Overlay</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Isosurface Isovalue (τ)</span>
+                            <span class="num" id="lbl-isovalue">0.450</span>
+                        </div>
+                        <input type="range" id="slider-isovalue" min="0.10" max="0.90" step="0.01" value="0.45" oninput="updateIsovalue(this.value)">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">
+                            <span>Volumetric Z-Slice Cutoff</span>
+                            <span class="num" id="lbl-zslice">All Layers (0-7)</span>
+                        </div>
+                        <input type="range" id="slider-zslice" min="0" max="7" step="1" value="7" oninput="updateZSlice(this.value)">
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">Visual Attributes</div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <label style="font-family: var(--font-mono); font-size: 11px; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                <input type="checkbox" id="chk-wireframe" onchange="toggleWireframe(this.checked)"> Wireframe
+                            </label>
+                            <label style="font-family: var(--font-mono); font-size: 11px; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                <input type="checkbox" id="chk-scars" checked onchange="toggleScars(this.checked)"> Scar Anchors
+                            </label>
+                            <label style="font-family: var(--font-mono); font-size: 11px; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                <input type="checkbox" id="chk-rotate" checked onchange="toggleAutoRotate(this.checked)"> Auto Orbit
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" style="width: 100%;" onclick="resetCamera()">Reset Viewport Camera</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">📜 Surface Provenance</div>
+                    </div>
+                    <div style="font-family: var(--font-mono); font-size: 11px; display: flex; flex-direction: column; gap: 8px;">
+                        <div>Source H_state:</div>
+                        <div class="hash-display" id="prov-hstate">33aa062d027ab0a9b08278caee3362c02c577befe174ceb75f2df2d264aa7d8b</div>
+                        <div>Source H_scar:</div>
+                        <div class="hash-display" id="prov-hscar">00daa755661c5ccb1547c8eacb7b913a9ee52351f351d663cc5c8acf65fde133</div>
+                        <div>Source H_payload:</div>
+                        <div class="hash-display" id="prov-hpayload">3d2e071f480ac2ef2670631a04d0410cc5c5066d15e8126ec7812d64ccc8d83e</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: ZERO-TRUST INGESTION & VAULT -->
+    <div id="tab-vault" class="tab-pane">
+        <div class="layout-grid">
+            <div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">📥 .mlvox Ingestion Portal</div>
+                        <div class="badge-version">Zero-Trust Pipeline</div>
+                    </div>
+
+                    <div class="dropzone" id="dropzone" onclick="document.getElementById('file-input').click()">
+                        <input type="file" id="file-input" style="display: none;" accept=".mlvox" onchange="handleFileUpload(event)">
+                        <div style="font-size: 32px; margin-bottom: 8px;">🛡️</div>
+                        <div style="font-weight: 600; margin-bottom: 4px;">Drag & Drop .mlvox Binary Vault File</div>
+                        <div style="color: var(--text-muted); font-size: 12px;">Or click to browse from filesystem. The runtime treats all inputs as untrusted until verified.</div>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;">
+                        <button class="btn-outline" onclick="loadPresetDemo()">Load Canonical Demo (8³, 2 Scars, 2360 B)</button>
+                        <button class="btn-outline" onclick="loadPresetFixture('fixture_002')">Load Fixture 002 (4³)</button>
+                        <button class="btn-outline" onclick="loadPresetFixture('fixture_multiple_scars')">Load Fixture 007 (5 Scars)</button>
+                    </div>
+
+                    <div class="card-title" style="margin: 20px 0 10px 0;">🛡 11-Stage Verification Jurisdiction Log</div>
+                    <div class="gates-list" id="gates-container"></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">🔬 Fixed 136-Byte Header Breakdown</div>
+                    </div>
+                    <table class="table-custom" id="table-header-breakdown">
+                        <thead>
+                            <tr>
+                                <th>Offset</th>
+                                <th>Size</th>
+                                <th>Field Name</th>
+                                <th>Type</th>
+                                <th>Decoded Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-header"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">☲ Scar Table (N × 88 Bytes)</div>
+                    </div>
+                    <div id="scar-records-display" style="display: flex; flex-direction: column; gap: 10px;"></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">📦 Float32LE Payload Matrix</div>
+                    </div>
+                    <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">
+                        Sample values from linear index <span class="hash-display">x + R*(y + R*z)</span>:
+                    </div>
+                    <div class="code-block" id="payload-matrix-preview" style="max-height: 220px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: ADVERSARIAL TEST MATRIX -->
+    <div id="tab-adversarial" class="tab-pane">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">⚔ 23-Jurisdiction Adversarial Mutation Matrix</div>
+                <button class="btn-primary" onclick="runAllAdversarialTests()">▶ Execute 23 Live Adversarial Attacks</button>
+            </div>
+            <div style="color: var(--text-secondary); font-size: 13px; margin-bottom: 16px;">
+                Every test executes an in-memory adversarial corruption on a valid <code>.mlvox</code> byte stream and asserts that the Zero-Trust reader fails closed at the exact prescribed jurisdiction.
+            </div>
+
+            <div id="adversarial-tests-list"></div>
+        </div>
+    </div>
+
+    <!-- TAB 4: CONFORMANCE FIXTURES -->
+    <div id="tab-fixtures" class="tab-pane">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">☲ Cross-Language Conformance Fixtures (Python ⟷ C#)</div>
+            </div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;" id="fixture-btn-bar"></div>
+            <div id="fixture-detail-card" class="code-block" style="font-size: 12px; line-height: 1.6;">
+                Select a fixture above to inspect canonical schema, UTF-8 bytes, and SHA-256 state commitments.
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 5: SPECIFICATION -->
+    <div id="tab-spec" class="tab-pane">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">🏛 Cathedral-Engine Constitutional Build Specification</div>
+            </div>
+            <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
+                <h3 style="color: var(--gold-primary); margin: 16px 0 8px 0; font-family: var(--font-display);">1. CORE AXIOM</h3>
+                <p><strong>Topology(discrete) ≡ Topology(continuous) ≡ State(H_state)</strong></p>
+                <p>The voxel field is the authoritative volumetric state. The continuous surface is a deterministic projection of that state. Neither topology may become an independent source of truth.</p>
+
+                <h3 style="color: var(--gold-primary); margin: 24px 0 8px 0; font-family: var(--font-display);">2. FOUR JUDICIAL GATES</h3>
+                <ul style="margin-left: 20px;">
+                    <li><strong>Structural Gate:</strong> Requires metadata, identity, and discretized fields.</li>
+                    <li><strong>Scalar Gate:</strong> Requires R &gt; 0, N = R³ elements, finite, real, not NaN, not infinity, V(x,y,z) in [0.0, 1.0].</li>
+                    <li><strong>Topological Gate:</strong> Validates ScarSet schema, ID pattern SCAR-\d{3,}, coordinate normalization [-1.0, 1.0], r &gt; 0, and unique canonical ordering.</li>
+                    <li><strong>Canonical Gate:</strong> Validates H_scar, H_payload, and Master State Commitment H_state.</li>
+                </ul>
+
+                <h3 style="color: var(--gold-primary); margin: 24px 0 8px 0; font-family: var(--font-display);">3. CRYPTOGRAPHIC MASTER COMMITMENT</h3>
+                <p><strong>DomainSeparator</strong> = "MLAOSSTATE\0" (11 bytes)</p>
+                <p><strong>MetadataBlock</strong> = &lt;HHIBB (10 bytes: Schema=1, Format=1, Res=R, Encoding=0x01, Comp=0x00)</p>
+                <p><strong>H_state</strong> = SHA256(DomainSeparator || MetadataBlock || H_scar || H_payload || Payload)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 6: REFERENCE CODE -->
+    <div id="tab-code" class="tab-pane">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">💻 Multi-Language Constitutional Code Vault</div>
+            </div>
+            
+            <div class="subtabs" id="code-subtabs">
+                <button class="subtab-btn active" onclick="showCodeTab('py-canon')">canonical.py</button>
+                <button class="subtab-btn" onclick="showCodeTab('py-crypto')">crypto.py</button>
+                <button class="subtab-btn" onclick="showCodeTab('py-vault')">vault.py</button>
+                <button class="subtab-btn" onclick="showCodeTab('py-mc')">continuous.py</button>
+                <button class="subtab-btn" onclick="showCodeTab('cs-reader')">MlvxReader.cs</button>
+                <button class="subtab-btn" onclick="showCodeTab('cs-runtime')">CathedralRuntime.cs</button>
+                <button class="subtab-btn" onclick="showCodeTab('cs-mc')">MarchingCubes.cs</button>
+            </div>
+
+            <div class="code-block" id="code-content-display" style="max-height: 520px;">
+                <button class="copy-btn" onclick="copyActiveCode()">Copy Code</button>
+                <pre><code id="code-pre"></code></pre>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+const EDGE_VERTICES = [
+    [0, 1], [1, 2], [2, 3], [3, 0],
+    [4, 5], [5, 6], [6, 7], [7, 4],
+    [0, 4], [1, 5], [2, 6], [3, 7]
+];
+
+const CUBE_OFFSETS = [
+    [0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0],
+    [0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]
+];
+
+const EDGE_TABLE = [];
+for (let i = 0; i < 256; i++) {
+    let mask = 0;
+    for (let e = 0; e < 12; e++) {
+        let v1 = EDGE_VERTICES[e][0], v2 = EDGE_VERTICES[e][1];
+        if (((i >> v1) & 1) !== ((i >> v2) & 1)) {
+            mask |= (1 << e);
+        }
+    }
+    EDGE_TABLE.push(mask);
+}
+
+const BASE_TRI_TABLE = [
+    [-1], [0, 8, 3, -1], [0, 1, 9, -1], [1, 8, 3, 9, 8, 1, -1], [1, 2, 10, -1], [0, 8, 3, 1, 2, 10, -1],
+    [9, 2, 10, 0, 2, 9, -1], [2, 8, 3, 2, 10, 8, 10, 9, 8, -1], [3, 11, 2, -1], [0, 11, 2, 8, 11, 0, -1],
+    [1, 9, 0, 2, 3, 11, -1], [1, 11, 2, 1, 9, 11, 9, 8, 11, -1], [3, 10, 1, 11, 10, 3, -1],
+    [0, 10, 1, 0, 8, 10, 8, 11, 10, -1], [3, 9, 0, 3, 11, 9, 11, 10, 9, -1], [9, 8, 10, 10, 8, 11, -1],
+    [4, 7, 8, -1], [4, 3, 0, 7, 3, 4, -1], [0, 1, 9, 8, 4, 7, -1], [4, 1, 9, 4, 7, 1, 7, 3, 1, -1],
+    [1, 2, 10, 8, 4, 7, -1], [3, 4, 7, 3, 0, 4, 1, 2, 10, -1], [9, 2, 10, 9, 0, 2, 8, 4, 7, -1],
+    [2, 10, 9, 2, 9, 7, 2, 7, 3, 7, 9, 4, -1], [8, 4, 7, 3, 11, 2, -1], [11, 4, 7, 11, 2, 4, 2, 0, 4, -1],
+    [9, 0, 1, 8, 4, 7, 2, 3, 11, -1], [4, 7, 11, 9, 4, 11, 9, 11, 2, 9, 2, 1, -1], [3, 10, 1, 3, 11, 10, 7, 8, 4, -1],
+    [1, 11, 10, 1, 4, 11, 1, 0, 4, 7, 11, 4, -1], [4, 7, 8, 9, 0, 11, 9, 11, 10, 11, 0, 3, -1],
+    [4, 7, 11, 4, 11, 9, 9, 11, 10, -1], [9, 5, 4, -1], [9, 5, 4, 0, 8, 3, -1], [0, 5, 4, 1, 5, 0, -1],
+    [8, 5, 4, 8, 3, 5, 3, 1, 5, -1], [1, 2, 10, 9, 5, 4, -1], [3, 0, 8, 1, 2, 10, 4, 9, 5, -1],
+    [5, 2, 10, 5, 4, 2, 4, 0, 2, -1], [2, 10, 5, 3, 2, 5, 3, 5, 4, 3, 4, 8, -1], [9, 5, 4, 2, 3, 11, -1],
+    [0, 11, 2, 0, 8, 11, 4, 9, 5, -1], [0, 5, 4, 0, 1, 5, 2, 3, 11, -1], [2, 1, 5, 2, 5, 8, 2, 8, 11, 4, 8, 5, -1],
+    [10, 3, 11, 10, 1, 3, 9, 5, 4, -1], [4, 9, 5, 0, 8, 1, 8, 10, 1, 8, 11, 10, -1],
+    [5, 4, 0, 5, 0, 11, 5, 11, 10, 11, 0, 3, -1], [5, 4, 8, 5, 8, 10, 10, 8, 11, -1],
+   The **Cathedral-Engine Interactive Master Specification & Zero-Trust Runtime** is built and available on Google Drive:
+
+📂 **[Cathedral-Engine Interactive Specification & Zero-Trust Runtime](https://docs.google.com/document/d/1L2X4LTPbMcPJKn-IJiCia82FIqZKH9_v5gjgVDbuD5c/edit?usp=drivesdk&ouid=104121589274219427717)**
+
+---
+
+### Application Architecture & Core Features

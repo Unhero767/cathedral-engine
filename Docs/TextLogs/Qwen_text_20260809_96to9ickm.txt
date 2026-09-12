@@ -1,0 +1,1 @@
+dΦ/dt ≈ (Φ_now - Φ_previous) / Δt

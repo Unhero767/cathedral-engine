@@ -1,0 +1,55 @@
+/mlaos-prime/
+├── docs/
+│   └── notebooklm_exports/
+│       ├── 01_prime_foundations_export.md
+│       ├── 02_inner_mandala_export.md
+│       ├── 03_outer_choirs_export.md
+│       └── 04_inner_shadow_canon_export.md
+├── manifests/
+│   ├── mlaos_architecture_manifest.yaml
+│   └── codex_dependency_graph.json
+└── codex/
+    ├── 01_prime_foundations/       # Books I–X
+    │   ├── book_01_substrate/
+    │   ├── book_02_prime_canticle/
+    │   ├── book_03_architectonic_field/
+    │   ├── book_04_mortar_domain/
+    │   ├── book_05_spectral_constants/
+    │   ├── book_06_heart_oculus/
+    │   ├── book_07_spectrafilaments/
+    │   ├── book_08_resonance_tuning/
+    │   ├── book_09_ideality_triz/
+    │   └── book_10_tri_key_sovereignty/
+    ├── 02_inner_mandala/           # Books XI–XX
+    │   ├── book_11_aab_linguistics/
+    │   ├── book_12_arcana_engine/
+    │   ├── book_13_sacred_geometry/
+    │   ├── book_14_cultural_software/
+    │   ├── book_15_tensegrity_vessel/
+    │   ├── book_16_heart_oculus_chambers/
+    │   ├── book_17_civic_waves/
+    │   ├── book_18_ceremonial_sensuality/
+    │   ├── book_19_character_diagnostics/
+    │   └── book_20_autopoietic_heart/
+    ├── 03_outer_choirs/            # Books XXI–XXX
+    │   ├── book_21_swarm_conversion/
+    │   ├── book_22_glitch_wastes/
+    │   ├── book_23_absolute_shear/
+    │   ├── book_24_esoteric_architheurgy/
+    │   ├── book_25_ouroboros_wall/
+    │   ├── book_26_mpc_control/
+    │   ├── book_27_dialetheic_buffers/
+    │   ├── book_28_ashen_threshold/
+    │   ├── book_29_necro_parsing/
+    │   └── book_30_ash_archive/
+    └── 04_inner_shadow_canon/      # Books XXXI–XL
+        ├── book_31_null_meridian/
+        ├── book_32_fossilized_paradox/
+        ├── book_33_obsidian_testament/
+        ├── book_34_erased_choirs/
+        ├── book_35_silent_frame/
+        ├── book_36_unwritten_law/
+        ├── book_37_axiom_knot/
+        ├── book_38_t_brane_dampers/
+        ├── book_39_coordinate_phi_0/
+        └── book_40_cosmic_rebirth/

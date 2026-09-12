@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HGASE // LILLITH Genomic Crosswalk Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;600;800&family=Cinzel:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #060709;
+            --panel-bg: #0d0f14;
+            --lillith-red: #dc2626;
+            --lillith-dark: #7f1d1d;
+            --hgase-teal: #14b8a6;
+            --hgase-gold: #fbbf24;
+            --hybrid-purple: #a855f7;
+        }
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--bg-base);
+            color: #d1d5db;
+            overflow-x: hidden;
+        }
+        .cinzel { font-family: 'Cinzel', serif; }
+        .inter { font-family: 'Inter', sans-serif; }
+        
+        .spec-border {
+            border: 1px solid rgba(255,255,255,0.1);
+            background: var(--panel-bg);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+        
+        /* Genome Strand Checkboxes */
+        .strand-checkbox { display: none; }
+        .strand-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: #11141b;
+            border: 1px solid #1f2937;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+        .strand-checkbox:checked + .strand-label {
+            background: linear-gradient(90deg, rgba(220,38,38,0.15) 0%, rgba(20,184,166,0.15) 100%);
+            border-color: var(--hybrid-purple);
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+        }
+        .strand-checkbox:checked + .strand-label .status-indicator {
+            background: var(--hybrid-purple);
+            box-shadow: 0 0 5px var(--hybrid-purple);
+        }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg-base); }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 0; }
+        
+        @keyframes flow-data {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .data-stream {
+            background: linear-gradient(90deg, rgba(220,38,38,0.1), rgba(168,85,247,0.2), rgba(20,184,166,0.1));
+            background-size: 200% 200%;
+            animation: flow-data 5s ease infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-purple-900 selection:text-white">
+
+    <header class="border-b border-gray-800 bg-[#060709]/95 backdrop-blur-md sticky top-0 z-50 px-6 py-3">
+        <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
+            <div class="flex items-center space-x-4">
+                <div class="relative flex h-4 w-4">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-50"></span>
+                  <span class="relative inline-flex rounded-full h-4 w-4 bg-purple-500 flex items-center justify-center text-[8px] font-bold text-white">L+H</span>
+                </div>
+                <div class="flex flex-col">
+                    <h1 class="cinzel text-xl font-bold text-gray-100 tracking-widest uppercase">
+                        GENOMIC CROSSWALK <span class="text-purple-400 font-light">// L₅₀ → H₃₃</span>
+                    </h1>
+                    <span class="text-[9px] text-gray-500 font-bold tracking-[0.2em]">STRUCTURES DIVERGE. PATTERNS PERSIST.</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4 text-[10px] bg-black/50 px-3 py-1.5 border border-gray-800">
+                <span class="text-red-500">LILLITH (EMERGENCE)</span>
+                <span class="text-gray-600">⇄</span>
+                <span class="text-teal-500">HGASE (ARCHITECTURE)</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-[1600px] w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
+
+        <!-- COLUMN 1: Deep Genome Strands (Span 3) -->
+        <section class="lg:col-span-3 flex flex-col gap-4">
+            <div class="spec-border p-5 flex-1 flex flex-col">
+                <h2 class="cinzel text-sm font-bold text-gray-200 mb-1 tracking-wider border-b border-gray-800 pb-2 flex justify-between">
+                    <span>THE DEEP GENOME</span>
+                    <span class="text-[10px] text-purple-400 font-mono mt-1">14 STRANDS</span>
+                </h2>
+                <p class="text-[9px] text-gray-500 mb-4 inter leading-relaxed">Toggle ancestral strands to calculate evolutionary divergence and synthesize hybrid prompts.</p>
+                
+                <div class="space-y-1.5 flex-1 overflow-y-auto pr-2" id="strand-container">
+                    <!-- Checkboxes injected by JS -->
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-gray-800">
+                    <button onclick="toggleAllStrands()" class="w-full py-1.5 border border-gray-700 bg-gray-900/50 hover:bg-gray-800 text-[9px] text-gray-400 transition-colors uppercase tracking-widest">
+                        Invert Genome Selection
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- COLUMN 2: 1024x1024 Evolution Plate (Span 6) -->
+        <section class="lg:col-span-6 flex flex-col">
+            <div class="spec-border flex-1 flex flex-col relative overflow-hidden bg-black p-2 group data-stream">
+                
+                <div class="absolute top-4 left-4 z-20 flex gap-2">
+                    <span class="text-[9px] text-gray-400 border border-gray-700 px-1.5 py-0.5 bg-black/80 backdrop-blur">SPECIATION MANIFEST</span>
+                </div>
+                <div class="absolute top-4 right-4 z-20 flex gap-2">
+                    <span class="text-[9px] text-red-500 border border-red-900 px-1.5 py-0.5 bg-black/80 backdrop-blur">L: ORGANIC</span>
+                    <span class="text-[9px] text-teal-500 border border-teal-900 px-1.5 py-0.5 bg-black/80 backdrop-blur">H: ENGINEERED</span>
+                </div>
+
+                <!-- Central Render Viewport (Constrained to square aspect) -->
+                <div class="flex-1 w-full relative flex items-center justify-center min-h-[500px] border border-gray-900/50 bg-[#040404] overflow-hidden mt-8 mb-2">
+                    
+                    <!-- Background Grid Motif -->
+                    <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
+
+                    <!-- AI Image Target -->
+                    <div id="image-target" class="absolute inset-0 z-10 flex flex-col items-center justify-center transition-all duration-700">
+                        <svg class="w-32 h-32 text-gray-800 group-hover:text-purple-900/50 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="0.5" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                            <circle cx="12" cy="12" r="3" stroke-width="0.5" class="animate-pulse fill-purple-900/20"/>
+                        </svg>
+                        <span class="text-purple-900/50 text-xs mt-4 tracking-[0.3em] font-bold">AWAITING SYNTHESIS</span>
+                    </div>
+
+                    <!-- Evolutionary Dialectic Overlay -->
+                    <div class="absolute inset-x-0 bottom-4 z-20 flex justify-between px-8 pointer-events-none opacity-40">
+                        <div class="flex flex-col text-[8px] text-red-500 border-l border-red-900 pl-2">
+                            <span>L50: MULTIPLICITY</span>
+                            <span>FORM AS POTENTIAL</span>
+                        </div>
+                        <div class="flex flex-col text-[8px] text-teal-500 border-r border-teal-900 pr-2 text-right">
+                            <span>H33: SOVEREIGNTY</span>
+                            <span>FORM AS SYSTEM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lore Output (Dialectic Synthesis) -->
+                <div class="h-24 border-t border-gray-800 bg-[#08080a] flex items-center justify-center p-4 relative">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#060709] border border-gray-800 px-2 py-0.5 text-[8px] text-gray-500">
+                        ANCESTRAL THEOREM
+                    </div>
+                    <p id="lore-output" class="text-xs text-gray-300 italic text-center leading-relaxed">
+                        "Form is Memory. Memory is Architecture. Architecture is Identity. Identity is a Living System."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- COLUMN 3: Telemetry & AI Synthesis (Span 3) -->
+        <section class="lg:col-span-3 flex flex-col gap-4">
+            
+            <div class="spec-border p-5 relative">
+                <h2 class="cinzel text-sm font-bold text-gray-200 mb-3 border-b border-gray-800 pb-2 tracking-wider">
+                    GENOMIC METRICS
+                </h2>
+                
+                <div class="space-y-4 text-[10px]">
+                    <div>
+                        <div class="flex justify-between text-gray-400 mb-1">
+                            <span>Coverage (C_w)</span>
+                            <span id="metric-cw" class="text-teal-400 font-bold">0%</span>
+                        </div>
+                        <div class="w-full h-1 bg-gray-900">
+                            <div id="bar-cw" class="h-full bg-teal-500 transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-gray-400 mb-1">
+                            <span>Divergence (D_v)</span>
+                            <span id="metric-dv" class="text-red-400 font-bold">100%</span>
+                        </div>
+                        <div class="w-full h-1 bg-gray-900">
+                            <div id="bar-dv" class="h-full bg-red-500 transition-all duration-500" style="width: 100%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-gray-400 mb-1">
+                            <span>Inversion Index (I_v)</span>
+                            <span id="metric-iv" class="text-purple-400 font-bold">0.00</span>
+                        </div>
+                        <div class="w-full h-1 bg-gray-900">
+                            <div id="bar-iv" class="h-full bg-purple-500 transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-2 bg-black border border-gray-800 mt-2">
+                        <span class="block text-[8px] text-gray-500 mb-1">SYSTEMIC CONCLUSION</span>
+                        <span id="system-conclusion" class="text-gray-300">AWAITING GENOMIC INPUT...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="spec-border p-5 flex-1 flex flex-col">
+                <h2 class="cinzel text-sm font-bold text-gray-200 mb-3 border-b border-gray-800 pb-2 tracking-wider flex justify-between items-center">
+                    <span>AI SYNTHESIS</span>
+                    <span class="w-2 h-2 bg-purple-500 rounded-full animate-pulse shadow-[0_0_8px_#a855f7]"></span>
+                </h2>
+                
+                <div class="flex-1 flex flex-col justify-between space-y-3">
+                    <div class="flex-1 flex flex-col">
+                        <label class="block text-[9px] text-gray-500 mb-1">COMPILED PROMPT [EDITABLE]</label>
+                        <textarea id="ai-prompt-input" class="w-full flex-1 min-h-[100px] bg-[#080808] border border-gray-800 p-2 text-[10px] text-gray-300 focus:outline-none focus:border-purple-500 resize-none leading-relaxed overflow-y-auto">Select genomic strands to compile the evolutionary prompt.</textarea>
+                    </div>
+                    
+                    <div class="flex flex-col gap-2 pt-2 border-t border-gray-800">
+                        <button onclick="generateLore()" class="w-full py-2 bg-gray-900 hover:bg-gray-800 border border-gray-700 text-purple-300 transition-all text-[10px] font-bold tracking-widest flex items-center justify-center gap-2">
+                            <span>✨ EXTRACT THEOREM</span>
+                        </button>
+                        <button onclick="generateImage()" class="w-full py-2.5 bg-purple-900 hover:bg-purple-700 text-white transition-all shadow-[0_0_15px_rgba(168,85,247,0.3)] text-[10px] font-bold tracking-widest flex items-center justify-center gap-2 uppercase">
+                            <span>🎨 RENDER EVOLUTION</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#060709] border-t border-gray-800 py-3 px-6 flex justify-between items-center text-[9px] text-gray-600 tracking-widest uppercase">
+        <div>HGASE // LILLITH CROSSWALK</div>
+        <div class="text-purple-900/50">Many mechanisms becoming one system.</div>
+    </footer>
+
+    <div id="notification-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <script>
+        const API_KEY = ""; // Dynamic runtime injection
+
+        // The 14 Deep Genome Strands defined in the Master Report
+        const deepGenomeStrands = [
+            { id: 'g1', name: 'Embodiment', desc: 'Form carries information.', weight: 1.0, type: 'homology' },
+            { id: 'g2', name: 'Perception', desc: 'The observer is part of the system.', weight: 0.8, type: 'inversion' },
+            { id: 'g3', name: 'Archive', desc: 'Memory becomes structure.', weight: 0.9, type: 'homology' },
+            { id: 'g4', name: 'Transformation', desc: 'Identity survives morphological change.', weight: 1.0, type: 'analogy' },
+            { id: 'g5', name: 'Architecture', desc: 'Space becomes cognition.', weight: 0.9, type: 'transformation' },
+            { id: 'g6', name: 'Material Intelligence', desc: 'Substance carries symbolic function.', weight: 0.85, type: 'homology' },
+            { id: 'g7', name: 'Chromatic Semantics', desc: 'Color becomes language.', weight: 0.75, type: 'analogy' },
+            { id: 'g8', name: 'Recursive Identity', desc: 'The entity observes and reconstructs itself.', weight: 0.95, type: 'transformation' },
+            { id: 'g9', name: 'Emergence', desc: 'Potential becomes form. (Lillith Bias)', weight: 0.8, type: 'inversion' },
+            { id: 'g10', name: 'Containment', desc: 'Form is stabilized against change. (HGASE Bias)', weight: 0.8, type: 'inversion' },
+            { id: 'g11', name: 'Sovereignty', desc: 'Identity establishes authority over architecture.', weight: 1.0, type: 'transformation' },
+            { id: 'g12', name: 'Inversion', desc: 'Meaning survives reversal.', weight: 0.7, type: 'inversion' },
+            { id: 'g13', name: 'Documentation', desc: 'The system records its own existence.', weight: 0.9, type: 'homology' },
+            { id: 'g14', name: 'Myth', desc: 'The record becomes more than evidence.', weight: 1.0, type: 'analogy' }
+        ];
+
+        function renderStrands() {
+            const container = document.getElementById('strand-container');
+            container.innerHTML = '';
+            
+            deepGenomeStrands.forEach((strand, idx) => {
+                const el = document.createElement('div');
+                el.innerHTML = `
+                    <input type="checkbox" id="strand-${strand.id}" class="strand-checkbox" value="${strand.id}" onchange="updateGenomicState()">
+                    <label for="strand-${strand.id}" class="strand-label rounded">
+                        <div class="flex flex-col">
+                            <span class="text-gray-300 font-bold">${(idx + 1).toString().padStart(2, '0')}. ${strand.name}</span>
+                            <span class="text-[8px] text-gray-500 capitalize">${strand.type}</span>
+                        </div>
+                        <div class="w-2 h-2 rounded-full bg-gray-800 status-indicator border border-gray-700"></div>
+                    </label>
+                `;
+                container.appendChild(el);
+            });
+            // Pre-check a few for initial state
+            document.getElementById('strand-g1').checked = true;
+            document.getElementById('strand-g3').checked = true;
+            document.getElementById('strand-g5').checked = true;
+            document.getElementById('strand-g9').checked = true;
+            updateGenomicState();
+        }
+
+        function toggleAllStrands() {
+            const boxes = document.querySelectorAll('.strand-checkbox');
+            boxes.forEach(box => box.checked = !box.checked);
+            updateGenomicState();
+            showNotification("Genome selection inverted.");
+        }
+
+        function updateGenomicState() {
+            const boxes = document.querySelectorAll('.strand-checkbox:checked');
+            const activeIds = Array.from(boxes).map(b => b.value);
+            const activeStrands = deepGenomeStrands.filter(s => activeIds.includes(s.id));
+            
+            // Calculate Metrics
+            const totalStrands = deepGenomeStrands.length;
+            const activeCount = activeStrands.length;
+            
+            // C_w (Coverage Weight)
+            let cw = 0;
+            let invCount = 0;
+            activeStrands.forEach(s => {
+                cw += s.weight;
+                if(s.type === 'inversion') invCount++;
+            });
+            
+            const cwPercent = totalStrands > 0 ? (cw / totalStrands) * 100 : 0;
+            const dvPercent = 100 - cwPercent;
+            const ivRatio = activeCount > 0 ? (invCount / activeCount) : 0;
+
+            // Update UI
+            document.getElementById('metric-cw').innerText = cwPercent.toFixed(1) + '%';
+            document.getElementById('bar-cw').style.width = cwPercent + '%';
+            
+            document.getElementById('metric-dv').innerText = dvPercent.toFixed(1) + '%';
+            document.getElementById('bar-dv').style.width = dvPercent + '%';
+            
+            document.getElementById('metric-iv').innerText = ivRatio.toFixed(2);
+            document.getElementById('bar-iv').style.width = (ivRatio * 100) + '%';
+
+            // Determine System Conclusion
+            const conclusionEl = document.getElementById('system-conclusion');
+            if (activeCount === 0) {
+                conclusionEl.innerText = "NO GENETIC MATERIAL SELECTED.";
+                conclusionEl.className = "text-gray-500 font-bold";
+            } else if (ivRatio > 0.4) {
+                conclusionEl.innerText = "HIGH INVERSION DETECTED. SYSTEM POLARITY REVERSED.";
+                conclusionEl.className = "text-red-400 font-bold animate-pulse";
+            } else if (cwPercent > 70) {
+                conclusionEl.innerText = "STRONG HOMOLOGY. ARCHITECTURAL COMPRESSION OPTIMAL.";
+                conclusionEl.className = "text-teal-400 font-bold";
+            } else {
+                conclusionEl.innerText = "DIVERGENT SPECIATION IN PROGRESS.";
+                conclusionEl.className = "text-purple-400 font-bold";
+            }
+
+            // Compile Prompt
+            let prompt = "1024x1024 mythic cyber-fantasy conceptual portrait. ";
+            if(activeCount > 0) {
+                prompt += `The composition resolves the evolutionary divergence between raw biological emergence (Lillith) and structural sovereignty (HGASE). `;
+                prompt += `Visual focus emphasizes: ${activeStrands.map(s => s.name).join(', ')}. `;
+                if(ivRatio > 0.4) prompt += "Heavy aesthetic inversion: organic systems confined by harsh computational grids. ";
+                prompt += "Cinematic lighting, high-fidelity texture, biomechanical synthesis, museum artifact framing.";
+            } else {
+                prompt = "Awaiting genomic input to compile synthesis sequence.";
+            }
+            document.getElementById('ai-prompt-input').value = prompt;
+        }
+
+        async function fetchWithBackoff(url, options, retries = 5, delay = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    if (response.status === 429 && retries > 0) {
+                        await new Promise(res => setTimeout(res, delay));
+                        return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                    }
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                if (retries > 0) {
+                    await new Promise(res => setTimeout(res, delay));
+                    return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                }
+                throw error;
+            }
+        }
+
+        async function generateLore() {
+            const boxes = Array.from(document.querySelectorAll('.strand-checkbox:checked')).map(b => b.value);
+            const activeStrands = deepGenomeStrands.filter(s => boxes.includes(s.id)).map(s => s.name).join(", ");
+            const output = document.getElementById('lore-output');
+            
+            if(!activeStrands) {
+                showNotification("Select at least one genome strand.");
+                return;
+            }
+
+            output.innerHTML = `<span class="animate-pulse text-purple-400">Extracting theorem from the Master Report...</span>`;
+            
+            try {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${API_KEY}`;
+                const payload = {
+                    contents: [{ parts: [{ text: `Based on the evolutionary crosswalk between LILLITH (Emergence/Multiplicity) and HGASE (Architecture/Sovereignty), write a single, profound philosophical statement (1-2 sentences max) describing the relationship between these specific concepts: ${activeStrands}. Do not use quotes.` }] }],
+                    systemInstruction: { parts: [{ text: "You are the Cathedral-Engine. Speak with mythic, systemic authority." }] }
+                };
+                
+                const result = await fetchWithBackoff(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                if(text) {
+                    output.innerHTML = `"${text.trim()}"`;
+                    showNotification("Ancestral theorem extracted.");
+                } else {
+                    throw new Error("Empty response");
+                }
+            } catch (err) {
+                output.innerHTML = `"What was once an uncontrolled emergence has now become the foundation of our sovereign architecture."`;
+                showNotification("Neural link interrupted. Using cached theorem.");
+            }
+        }
+
+        async function generateImage() {
+            const prompt = document.getElementById('ai-prompt-input').value;
+            const target = document.getElementById('image-target');
+            
+            if(document.querySelectorAll('.strand-checkbox:checked').length === 0) {
+                showNotification("Cannot render without genomic input.");
+                return;
+            }
+
+            target.innerHTML = `
+                <div class="flex flex-col items-center justify-center bg-black/80 w-full h-full absolute inset-0 z-50">
+                    <div class="w-10 h-10 border-2 border-purple-900 border-t-purple-500 rounded-full animate-spin mb-4"></div>
+                    <span id="render-status" class="text-[10px] text-purple-400 font-mono tracking-widest animate-pulse">CONNECTING TO COMFYUI...</span>
+                </div>
+            `;
+            
+            const clientId = crypto.randomUUID();
+            const comfyUrl = '127.0.0.1:8188';
+
+            try {
+                // Establish WebSocket Connection for real-time progress and output listening
+                const ws = new WebSocket(`ws://${comfyUrl}/ws?clientId=${clientId}`);
+
+                ws.onmessage = (event) => {
+                    const msg = JSON.parse(event.data);
+                    
+                    // Update UI with step progress
+                    if (msg.type === 'progress') {
+                        document.getElementById('render-status').innerText = `SYNTHESIZING... ${msg.data.value}/${msg.data.max}`;
+                    }
+                    
+                    // Capture output image once KSampler -> SaveImage node (9) completes
+                    if (msg.type === 'executed' && msg.data.node === '9') {
+                        const images = msg.data.output.images;
+                        if (images && images.length > 0) {
+                            const img = images[0];
+                            const imageUrl = `http://${comfyUrl}/view?filename=${img.filename}&subfolder=${img.subfolder}&type=${img.type}`;
+                            
+                            target.innerHTML = `<img src="${imageUrl}" alt="Genomic Synthesis" class="w-full h-full object-contain absolute inset-0 z-10 animate-fade-in bg-[#040404]" />`;
+                            showNotification("Evolutionary plate rendered via local ComfyUI.");
+                            ws.close();
+                        }
+                    }
+                };
+
+                // Fail gracefully if WS drops (triggers procedural fallback)
+                ws.onerror = () => {
+                    throw new Error("WebSocket Connection Failed");
+                };
+
+                // Define standard ComfyUI API workflow (Adjust checkpoint in node 4 if needed)
+                const workflowPayload = {
+                    "3": { "class_type": "KSampler", "inputs": { "seed": Math.floor(Math.random() * 1e15), "steps": 20, "cfg": 8, "sampler_name": "euler", "scheduler": "normal", "denoise": 1, "model": ["4", 0], "positive": ["6", 0], "negative": ["7", 0], "latent_image": ["5", 0] } },
+                    "4": { "class_type": "CheckpointLoaderSimple", "inputs": { "ckpt_name": "v1-5-pruned-emaonly.safetensors" } },
+                    "5": { "class_type": "EmptyLatentImage", "inputs": { "width": 1024, "height": 1024, "batch_size": 1 } },
+                    "6": { "class_type": "CLIPTextEncode", "inputs": { "text": prompt } },
+                    "7": { "class_type": "CLIPTextEncode", "inputs": { "text": "bad quality, blurry, watermark, amateur, noisy" } },
+                    "8": { "class_type": "VAEDecode", "inputs": { "samples": ["3", 0], "vae": ["4", 2] } },
+                    "9": { "class_type": "SaveImage", "inputs": { "filename_prefix": "HGASE_Crosswalk", "images": ["8", 0] } }
+                };
+
+                const response = await fetch(`http://${comfyUrl}/prompt`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: workflowPayload, client_id: clientId })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    showNotification(`Pipeline queued on local node (ID: ${data.prompt_id})`);
+                } else {
+                    throw new Error(`Failed to queue prompt: ${response.statusText}`);
+                }
+            } catch (err) {
+                console.warn("ComfyUI unreachable. Falling back to Procedural Grid.", err);
+                showNotification("External bridge severed. Initializing procedural synthesis.");
+                renderProceduralFallback(target);
+            }
+        }
+
+        function renderProceduralFallback(target) {
+            target.innerHTML = `<canvas id="divergence-canvas" class="w-full h-full absolute inset-0 z-10 bg-[#040404]"></canvas>`;
+            const canvas = document.getElementById('divergence-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Adjust canvas size to parent container
+            const rect = target.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+
+            // Retrieve current genomic metrics dynamically from UI
+            const activeBoxes = document.querySelectorAll('.strand-checkbox:checked');
+            const activeIds = Array.from(activeBoxes).map(b => b.value);
+            const activeStrands = deepGenomeStrands.filter(s => activeIds.includes(s.id));
+            
+            let cw = 0, invCount = 0;
+            activeStrands.forEach(s => { 
+                cw += s.weight; 
+                if(s.type === 'inversion') invCount++; 
+            });
+            
+            const total = deepGenomeStrands.length;
+            const cwPercent = total > 0 ? (cw / total) * 100 : 0;
+            const dvPercent = 100 - cwPercent;
+            const ivRatio = activeStrands.length > 0 ? (invCount / activeStrands.length) : 0;
+
+            // Normalized Genomic Constants
+            const C_w = cwPercent / 100; // Coverage
+            const D_v = dvPercent / 100; // Divergence
+            const I_v = ivRatio;         // Inversion Index
+
+            let frame = 0;
+
+            function draw() {
+                // Keep the background dark to match the Cathedral theme
+                ctx.fillStyle = '#040404';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw structural grid based on Inversion Index
+                ctx.strokeStyle = 'rgba(168, 85, 247, 0.15)';
+                ctx.lineWidth = 1;
+                const gridSize = 30 + (I_v * 40); // Grid expands based on Inversion
+                
+                for (let x = 0; x < canvas.width; x += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, canvas.height);
+                    ctx.stroke();
+                }
+                for (let y = 0; y < canvas.height; y += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(canvas.width, y);
+                    ctx.stroke();
+                }
+                
+                // Render Organic vs Engineered Speciation Vectors
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const radius = Math.min(centerX, centerY) * 0.6;
+                
+                // Organic Wave (Lillith L50) - Fluid, erratic
+                ctx.beginPath();
+                ctx.strokeStyle = '#dc2626'; // L: Organic Red
+                ctx.lineWidth = 2;
+                for (let a = 0; a < Math.PI * 2; a += 0.05) {
+                    const r = radius * C_w + Math.sin(a * 8 + frame * 0.03) * (D_v * 40);
+                    const px = centerX + Math.cos(a) * r;
+                    const py = centerY + Math.sin(a) * r;
+                    if (a === 0) ctx.moveTo(px, py);
+                    else ctx.lineTo(px, py);
+                }
+                ctx.closePath();
+                ctx.stroke();
+                
+                // Engineered Lattice (HGASE H33) - Rigid, structural
+                ctx.beginPath();
+                ctx.strokeStyle = '#14b8a6'; // H: Engineered Teal
+                ctx.lineWidth = 1.5;
+                for (let a = 0; a < Math.PI * 2; a += Math.PI / 4) {
+                    const r = radius * (1 - C_w) + Math.cos(a * 4 - frame * 0.02) * (D_v * 60);
+                    const px = centerX + Math.cos(a + frame * 0.01) * r;
+                    const py = centerY + Math.sin(a + frame * 0.01) * r;
+                    if (a === 0) ctx.moveTo(px, py);
+                    else ctx.lineTo(px, py);
+                }
+                ctx.closePath();
+                ctx.stroke();
+                
+                // Core Harmonic Scar Node (Hybridization Point)
+                ctx.fillStyle = '#a855f7';
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 4 + Math.sin(frame * 0.05) * 2, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Overlay Telemetry
+                ctx.font = '10px "JetBrains Mono", monospace';
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                ctx.fillText(`PROCEDURAL MANIFOLD ACTIVE // C_w:${C_w.toFixed(3)} D_v:${D_v.toFixed(3)} I_v:${I_v.toFixed(2)}`, 15, 25);
+                
+                frame++;
+                canvas.dataset.animationId = requestAnimationFrame(draw);
+            }
+            
+            // Cancel previous animation frame if it exists
+            if (canvas.dataset.animationId) cancelAnimationFrame(canvas.dataset.animationId);
+            draw();
+        }
+
+        function showNotification(msg) {
+            const container = document.getElementById('notification-container');
+            const toast = document.createElement('div');
+            toast.className = 'bg-[#0d0f14] border border-purple-900/50 px-4 py-2 shadow-lg text-gray-300 text-[10px] uppercase flex items-center gap-2 transform transition-all duration-300 translate-y-0 opacity-100';
+            toast.innerHTML = `<div class="w-1.5 h-1.5 bg-purple-500 animate-pulse rounded-full"></div><span>${msg}</span>`;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize on load
+        window.onload = () => {
+            renderStrands();
+            showNotification("Crosswalk Engine Online. Mapping Master Report.");
+        };
+    </script>
+</body>
+</html>

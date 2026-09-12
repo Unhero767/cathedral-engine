@@ -1,0 +1,43 @@
+CodexInterface
+│   extends Control
+│   script: SovereignInterface.gd
+│
+├── ParaconsistentGate
+│       extends Node
+│       script: ParaconsistentGate.gd
+│
+├── AshArchive
+│       extends Node
+│       script: AshArchive.gd
+│
+├── VaultLedger
+│       extends Node
+│       script: VaultLedger.gd
+│
+└── DialetheicBuffer
+        extends MarginContainer
+        script: DialetheicBuffer.gd
+        │
+        ├── ContradictionHalo
+        │       Label
+        │
+        └── ArchiveStrata
+                Control or VBoxContainer
+                │
+                ├── TectonicNavigator
+                │       TabContainer
+                │       │
+                │       ├── I_X_PrimeFoundations
+                │       │       GridContainer
+                │       │
+                │       ├── XI_XX_InnerMandala
+                │       │       GridContainer
+                │       │
+                │       ├── XXI_XXX_OuterChoirs
+                │       │       GridContainer
+                │       │
+                │       └── XXXI_XL_InnerShadowCanon
+                │               GridContainer
+                │
+                └── TextSurface
+                        RichTextLabel

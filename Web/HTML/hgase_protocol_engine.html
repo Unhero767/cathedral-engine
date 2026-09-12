@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HGASE // 33-Mechanic Unified Synthesis Engine</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Cinzel:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #040507;
+            color: #c5c6c7;
+        }
+        .title-font {
+            font-family: 'Cinzel', serif;
+        }
+        .glow-teal { text-shadow: 0 0 12px rgba(20, 184, 166, 0.6); }
+        .glow-gold { text-shadow: 0 0 12px rgba(251, 191, 36, 0.6); }
+        .glow-magenta { text-shadow: 0 0 12px rgba(232, 121, 249, 0.6); }
+        .glow-cyan { text-shadow: 0 0 12px rgba(56, 189, 248, 0.6); }
+        
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #040507;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #111827;
+            border-radius: 3px;
+            border: 1px solid #14b8a6;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #14b8a6;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-teal-500 selection:text-black">
+
+    <!-- Top Telemetry Header -->
+    <header class="border-b border-teal-900/40 bg-[#040507]/90 backdrop-blur sticky top-0 z-50 px-4 py-3">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center space-x-3">
+                <div class="w-3 h-3 rounded-full bg-teal-400 animate-ping"></div>
+                <h1 class="title-font text-lg font-bold text-gray-100 tracking-wider">
+                    HGASE <span class="text-teal-400">// 33-MECHANIC UNIFIED SYSTEM</span>
+                </h1>
+                <span class="text-xs px-2 py-0.5 rounded bg-teal-950/60 border border-teal-800/50 text-teal-300">CATHEDRAL-ENGINE ACTIVE</span>
+            </div>
+            <div class="flex items-center space-x-4 text-xs font-mono">
+                <span id="telemetry-state" class="text-teal-400">STATE: SYNTHESIS RECURSION (33/33)</span>
+                <span class="hidden md:inline text-gray-700">|</span>
+                <span id="resonance-freq" class="text-amber-400">Harmonic Chord: Teal/Gold (99.2 Hz)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <main class="max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 my-auto">
+
+        <!-- Left Column: Layer Controls A & B (Cols 1-4) -->
+        <section class="lg:col-span-4 space-y-6">
+            <!-- Block 1 & 2: Synthesis Core & Quadrant Lattice -->
+            <div class="bg-gray-950/90 border border-teal-900/50 rounded-xl p-5 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-teal-500/5 rounded-bl-full pointer-events-none"></div>
+                <h2 class="title-font text-sm font-bold text-teal-400 mb-3 tracking-wider flex items-center justify-between">
+                    <span>BLOCK 1 & 2 // CORE & LATTICE</span>
+                    <span class="text-[10px] text-gray-500">MECHANICS 1-9</span>
+                </h2>
+                <p class="text-xs text-gray-400 mb-4">Recursive self-observation loop and cyber-fantasy morphologic lattice tuning.</p>
+                
+                <div class="space-y-3 text-xs">
+                    <div>
+                        <label class="block text-gray-400 mb-1">CHROMATIC FREQUENCY CHORD</label>
+                        <select id="chromatic-select" onchange="updateChromaticChord()" class="w-full bg-gray-900 border border-teal-900/60 rounded px-2.5 py-2 text-teal-300 focus:outline-none focus:border-teal-500">
+                            <option value="teal-gold">Teal / Gold Primary Harmonic (Canonical)</option>
+                            <option value="magenta-obsidian">Magenta / Obsidian Void Harmonics</option>
+                            <option value="cyan-violet">Cyan / Violet Cognitive Resonance</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-400 mb-1">RECURSIVE RECURSION DEPTH</label>
+                        <input type="range" min="1" max="10" value="7" class="w-full accent-teal-500" id="recursion-slider" oninput="updateRecursion(this.value)">
+                        <div class="flex justify-between text-[10px] text-gray-500 mt-1">
+                            <span>Archive Feed (1)</span>
+                            <span id="recursion-val" class="text-teal-400 font-bold">7 Levels Self-Aware</span>
+                            <span>Cathedral Singularity (10)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block 3: Character-Construction & Subtractive Design -->
+            <div class="bg-gray-950/90 border border-purple-900/50 rounded-xl p-5 shadow-2xl">
+                <h2 class="title-font text-sm font-bold text-purple-400 mb-3 tracking-wider flex items-center justify-between">
+                    <span>BLOCK 3 // BODY-AS-ARCHITECTURE</span>
+                    <span class="text-[10px] text-gray-500">MECHANICS 10-14</span>
+                </h2>
+                
+                <div class="space-y-3 text-xs">
+                    <div class="flex items-center justify-between bg-gray-900/60 p-2.5 rounded border border-gray-800">
+                        <span class="text-gray-300">Perceptual Gateway Eye:</span>
+                        <span class="text-cyan-400 font-bold">Asymmetric (Cyan / Deep Blue)</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-gray-900/60 p-2.5 rounded border border-gray-800">
+                        <span class="text-gray-300">Tattoo Architecture:</span>
+                        <span class="text-purple-400 font-bold">Rose-Circuit ($B=C=A$)</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-gray-900/60 p-2.5 rounded border border-gray-800">
+                        <span class="text-gray-300">Subtractive Armor Logic:</span>
+                        <span class="text-amber-400 font-bold">Swimsuit Inversion Active</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Center Column: 1024x1024 Plate Visualizer & Three-Scale Hierarchy (Cols 5-8) -->
+        <section class="lg:col-span-5 flex flex-col space-y-6">
+            <div class="bg-gray-950/90 border border-teal-900/50 rounded-xl p-5 shadow-2xl flex-1 flex flex-col items-center justify-between min-h-[480px] relative overflow-hidden group">
+                <div id="ambient-glow" class="absolute inset-0 bg-gradient-to-tr from-teal-950/20 via-amber-950/10 to-purple-950/20 transition-all duration-700 pointer-events-none"></div>
+                
+                <!-- Header badge inside canvas box -->
+                <div class="w-full flex justify-between items-center z-10 text-xs">
+                    <span id="plate-mode" class="px-2 py-1 bg-teal-950/60 border border-teal-700/50 text-teal-300 rounded font-mono">HIERARCHY: PERSON → PATTERN → ARCHIVE</span>
+                    <span class="text-gray-500 font-mono">1024x1024 PLATE</span>
+                </div>
+
+                <!-- Plate Viewport Simulation (Museum Artifact Framing + Thumbnail Mosaic Wall Background) -->
+                <div class="my-auto z-10 flex flex-col items-center justify-center py-4 w-full">
+                    <div class="relative p-4 rounded-2xl bg-[#020305] border border-teal-500/30 shadow-2xl group-hover:border-teal-400/60 transition-colors w-full flex flex-col items-center justify-center min-h-[280px] overflow-hidden" id="plate-container">
+                        
+                        <!-- Background Archive Thumbnail Mosaic Pattern (Mechanic 15 & 31) -->
+                        <div class="absolute inset-0 opacity-15 grid grid-cols-8 grid-rows-8 gap-0.5 pointer-events-none" id="archive-mosaic">
+                            <!-- Populated via script -->
+                        </div>
+
+                        <!-- Central Editorial Figure & Distributed Eyes (Mechanics 16, 24, 26) -->
+                        <div class="relative z-10 flex flex-col items-center justify-center text-center space-y-2">
+                            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-teal-500 to-amber-400 p-0.5 shadow-xl glow-teal flex items-center justify-center">
+                                <div class="w-full h-full rounded-full bg-black flex items-center justify-center font-bold text-teal-300 text-xs title-font">
+                                    Ψ-07
+                                </div>
+                            </div>
+                            <div class="text-xs text-teal-300 font-bold tracking-widest uppercase">Editorial Sovereign</div>
+                            <p class="text-[10px] text-gray-400 max-w-[220px] italic">
+                                "She does not wear the cathedral; the cathedral reorganizes itself in her presence."
+                            </p>
+                        </div>
+
+                        <!-- Holographic Diegetic UI Overlay (Mechanic 28) -->
+                        <div class="absolute bottom-2 left-2 px-2 py-0.5 bg-black/80 border border-cyan-500/30 text-cyan-400 font-mono text-[8px] rounded">
+                            UI: SYS_SYNC // dΦ/dt = 99.2Hz
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Telemetry Bar -->
+                <div class="w-full grid grid-cols-3 gap-2 text-center text-[10px] z-10 pt-3 border-t border-gray-900">
+                    <div class="bg-gray-900/50 p-1.5 rounded border border-gray-800">
+                        <span class="block text-gray-500">SOVEREIGNTY STRESS</span>
+                        <span class="text-teal-400 font-bold" id="stat-sovereignty">ABSOLUTE</span>
+                    </div>
+                    <div class="bg-gray-900/50 p-1.5 rounded border border-gray-800">
+                        <span class="block text-gray-500">PARADOX HOLDING</span>
+                        <span class="text-amber-400 font-bold" id="stat-paradox">BALANCED</span>
+                    </div>
+                    <div class="bg-gray-900/50 p-1.5 rounded border border-gray-800">
+                        <span class="block text-gray-500">MECHANICS STACK</span>
+                        <span class="text-purple-400 font-bold">33 / 33 ACTIVE</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Column: Environmental Hybridization & AI Protocol Execution (Cols 9-12) -->
+        <section class="lg:col-span-3 space-y-6">
+            <!-- Block 4: Environmental Hybridization & Paradox Holding -->
+            <div class="bg-gray-950/90 border border-amber-950/50 rounded-xl p-5 shadow-2xl">
+                <h2 class="title-font text-sm font-bold text-amber-400 mb-3 tracking-wider flex items-center justify-between">
+                    <span>BLOCK 4 // HYBRIDIZATION</span>
+                    <span class="text-[10px] text-gray-500">MECHANICS 15-23</span>
+                </h2>
+                
+                <div class="space-y-2 text-xs">
+                    <div class="p-2.5 bg-gray-900/60 rounded border border-gray-800">
+                        <span class="block text-gray-400 text-[10px]">ENVIRONMENTAL FUSION</span>
+                        <span class="text-gray-200 font-semibold">Cyberpunk Metropolis + Gothic Vault + Bioluminescent Vines</span>
+                    </div>
+                    <button onclick="pulseParadox()" class="w-full py-2 px-3 bg-amber-950/40 border border-amber-700/60 hover:border-amber-400 text-amber-300 rounded font-semibold transition-all flex items-center justify-center space-x-1">
+                        <span>⚡ Test Sovereignty Stress</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Block 5: Execution Staging & AI Generation -->
+            <div class="bg-gray-950/90 border border-teal-900/50 rounded-xl p-5 shadow-2xl">
+                <h2 class="title-font text-sm font-bold text-teal-400 mb-3 tracking-wider flex items-center justify-between">
+                    <span>BLOCK 5 // AI EXECUTION</span>
+                    <span class="text-[10px] text-gray-500">GEMINI / IMAGEN</span>
+                </h2>
+                
+                <div class="space-y-3 text-xs">
+                    <div>
+                        <label class="block text-gray-400 mb-1">HGASE SOVEREIGN PROMPT</label>
+                        <textarea id="ai-prompt-input" rows="2" class="w-full bg-gray-900 border border-teal-900/60 rounded px-2.5 py-2 text-gray-200 focus:outline-none focus:border-teal-500 resize-none">Editorial three-quarter portraiture of sovereign muse, teal gold primary chromatic harmonic chord, cybernetic asymmetric eye, rose-circuit tattoo architecture, gothic cathedral ruins with bioluminescent overgrowth, 1024x1024 museum artifact framing</textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="triggerHGASEAI()" class="py-2 px-3 bg-teal-950/50 border border-teal-700/60 hover:border-teal-400 text-teal-300 rounded font-semibold transition-all flex items-center justify-center space-x-1">
+                            <span>✨ AI Inscription</span>
+                        </button>
+                        <button onclick="triggerHGASEImage()" class="py-2 px-3 bg-amber-950/50 border border-amber-700/60 hover:border-amber-400 text-amber-300 rounded font-semibold transition-all flex items-center justify-center space-x-1">
+                            <span>🎨 Render Plate</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Dossier Info -->
+    <footer class="border-t border-teal-900/40 bg-[#040507]/90 py-3 px-4 text-center text-xs text-gray-500">
+        <p>HGASE // Universal Generation Protocol. <span class="text-teal-400">All 33 discrete mechanics invoked simultaneously.</span></p>
+    </footer>
+
+    <!-- Script Engine -->
+    <script>
+        const apiKey = "";
+
+        // Initialize Archive Mosaic Thumbnail Grid on Load
+        function initArchiveMosaic() {
+            const mosaic = document.getElementById('archive-mosaic');
+            mosaic.innerHTML = '';
+            for(let i=0; i<64; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'bg-teal-900/20 border border-teal-500/10 flex items-center justify-center text-[6px] text-teal-400/40 font-mono';
+                cell.innerText = `[${Math.floor(Math.random()*99)}#]`;
+                mosaic.appendChild(cell);
+            }
+        }
+
+        window.onload = () => {
+            initArchiveMosaic();
+        };
+
+        async function fetchWithBackoff(url, options, retries = 5, delay = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    if (response.status === 429 && retries > 0) {
+                        await new Promise(res => setTimeout(res, delay));
+                        return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                if (retries > 0) {
+                    await new Promise(res => setTimeout(res, delay));
+                    return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                }
+                throw error;
+            }
+        }
+
+        async function triggerHGASEAI() {
+            const prompt = document.getElementById('ai-prompt-input').value;
+            showNotification("Invoking 33-Mechanic Gemini Neural Stratum...");
+            
+            try {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                const payload = {
+                    contents: [{ parts: [{ text: `Based on prompt: "${prompt}", write a profound 1-sentence archival inscription for the HGASE cathedral organism.` }] }],
+                    systemInstruction: { parts: [{ text: "You are the Cathedral-Engine. Provide only the inscription." }] }
+                };
+                
+                const result = await fetchWithBackoff(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "The character and the cathedral are a single system.";
+                showNotification(`Inscription Synthesized: "${text.trim()}"`);
+            } catch (err) {
+                showNotification("Fallback inscription active: Emotion = Physics = Magic.");
+            }
+        }
+
+        async function triggerHGASEImage() {
+            const prompt = document.getElementById('ai-prompt-input').value;
+            showNotification("Rendering 1024x1024 HGASE Master Plate via Imagen...");
+            
+            try {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+                const payload = {
+                    instances: { prompt: `1024x1024 master plate, ${prompt}` },
+                    parameters: { sampleCount: 1 }
+                };
+                
+                const result = await fetchWithBackoff(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const base64Bytes = result.predictions?.[0]?.bytesBase64Encoded;
+                if (base64Bytes) {
+                    const container = document.getElementById('plate-container');
+                    container.innerHTML = `<img src="data:image/png;base64,${base64Bytes}" alt="HGASE Master Plate" class="w-full h-full object-cover rounded"/>`;
+                    showNotification("Master Plate successfully rendered.");
+                } else {
+                    throw new Error("No image returned");
+                }
+            } catch (err) {
+                showNotification("Image service offline. Cathedral structural mosaic maintained.");
+            }
+        }
+
+        function updateChromaticChord() {
+            const chord = document.getElementById('chromatic-select').value;
+            showNotification(`Harmonic chord shifted to: ${chord}`);
+        }
+
+        function updateRecursion(val) {
+            document.getElementById('recursion-val').innerText = `${val} Levels Self-Aware`;
+        }
+
+        function pulseParadox() {
+            const statuses = ["ABSOLUTE SOVEREIGNTY VERIFIED", "ARCHIVAL MEMORY RECURSING", "BIOLOGICAL CIRCUITRY ALIGNED"];
+            const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+            document.getElementById('stat-sovereignty').innerText = randomStatus;
+            showNotification("Sovereignty stress-test executed. Architecture reorganized successfully.");
+        }
+
+        function showNotification(message) {
+            const notif = document.createElement('div');
+            notif.className = 'fixed bottom-5 right-5 z-50 bg-gray-900 border border-teal-500/50 text-teal-300 px-4 py-3 rounded-lg shadow-2xl text-xs flex items-center space-x-2';
+            notif.innerHTML = `<span>⚡</span><span>${message}</span>`;
+            document.body.appendChild(notif);
+            setTimeout(() => {
+                notif.style.opacity = '0';
+                setTimeout(() => notif.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

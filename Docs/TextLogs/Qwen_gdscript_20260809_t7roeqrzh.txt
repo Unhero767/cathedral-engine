@@ -1,0 +1,44 @@
+class_name AshArchive
+extends Node
+
+@export var archive_root: String = "res://mlaos/vaults/"
+@export var use_sqlite: bool = false
+@export var sqlite_path: String = "user://mlaos_prime_ash_archive.sqlite"
+
+
+func fetch(book_id: StringName) -> VaultPayload:
+    if use_sqlite:
+        return _fetch_sqlite(book_id)
+
+    return _fetch_file(book_id)
+
+
+func _fetch_file(book_id: StringName) -> VaultPayload:
+    var path := archive_root.path_join(str(book_id) + ".md")
+
+    if not FileAccess.file_exists(path):
+        return VaultPayload.invalid(book_id)
+
+    var file := FileAccess.open(path, FileAccess.READ)
+
+    if file == null:
+        return VaultPayload.invalid(book_id)
+
+    var text := file.get_as_text()
+    var revision_hash := text.sha256_text()
+
+    return VaultPayload.sealed(book_id, text, revision_hash)
+
+
+func _fetch_sqlite(book_id: StringName) -> VaultPayload:
+    # Implementation contract for a SQLite plugin:
+    #
+    # SELECT canonical_text, revision_hash
+    # FROM vault_text
+    # WHERE book_id = ?
+    # LIMIT 1;
+    #
+    # This query must be read-only.
+    # No UPDATE. No DELETE. No canonical mutation.
+
+    return VaultPayload.invalid(book_id)
