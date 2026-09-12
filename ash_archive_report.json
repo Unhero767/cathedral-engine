@@ -1,7 +1,7 @@
 {
   "archive_metadata": {
     "source_database": "strata/ash_archive.db",
-    "export_timestamp_utc": "2026-08-18T22:51:06.239194+00:00",
+    "export_timestamp_utc": "2026-08-28T23:52:16.193625+00:00",
     "total_tables": 6,
     "discovered_tables": [
       "mlaos_strata",
@@ -12,7 +12,7 @@
       "sanguine_heuristics"
     ],
     "cryptographic_audit": {
-      "total_blocks": 18,
+      "total_blocks": 43,
       "chain_linkage_valid": true,
       "merkle_roots_valid": true,
       "status": "VERIFIED_IMMUTABLE"
@@ -75,12 +75,12 @@
           "health": 100,
           "max_health": 100,
           "inventory_json": "{\"OBJ_TRIKEY_LEAD\": {\"name\": \"Basalt Tri-Key of Lead\", \"type\": \"CHAMBER_KEY\", \"description\": \"Grounds the 43.7 Hz carrier wave. Unlocks Chamber II Somatic Gateway.\", \"quantity\": 1, \"spectral_constant\": \"Gold/Lead\"}}",
-          "last_updated": "2026-08-18 22:34:45"
+          "last_updated": "2026-08-28 23:51:26"
         }
       ]
     },
     "ash_ledger": {
-      "row_count": 18,
+      "row_count": 43,
       "records": [
         {
           "id": 1,
@@ -548,11 +548,626 @@
           "dialetheic_flag": 1,
           "truth_value": "BOTH",
           "merkle_root": "11ebb57e0d4ca7992211cfcc12a3e3e900c9a4b71e4aee090deec95b05c37bcc"
+        },
+        {
+          "id": 19,
+          "timestamp": "2026-08-18T23:07:37.202292+00:00",
+          "parent_hash": "48c726b2d88e3c12114990a35c2d3b45427d877e63acb19e5e80b0f6916e572e",
+          "content_hash": "4bbe247456becae89e84d1d21fefcbc13e46385e801faf0b161f38959c360682",
+          "state_payload": {
+            "carrier_hz": 130.81,
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct_name": "West Portal Threshold",
+            "construct_uid": "entry_portal_w",
+            "coordinates": {
+              "x": 0,
+              "y": 4
+            },
+            "dialetheic_truth": "TRUE",
+            "event": "PATROL_CONSTRUCT_SYNCHRONIZED",
+            "somatic_flux": 1.0,
+            "step": 1
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "36ba1d451c16b409909a01b1bfbd2cfbef6818f11cf83fdf09a32963c3fdf9e9"
+        },
+        {
+          "id": 20,
+          "timestamp": "2026-08-18T23:07:47.519765+00:00",
+          "parent_hash": "4bbe247456becae89e84d1d21fefcbc13e46385e801faf0b161f38959c360682",
+          "content_hash": "3eb49540f9416e2d5c2818708243a4ccfe120548bd3afeb37fdb731eb34b29f1",
+          "state_payload": {
+            "carrier_hz": 130.81,
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct_name": "Somatic Pillar Alpha",
+            "construct_uid": "monad_somatic_anchor_n",
+            "coordinates": {
+              "x": 2,
+              "y": 1
+            },
+            "dialetheic_truth": "TRUE",
+            "event": "PATROL_CONSTRUCT_SYNCHRONIZED",
+            "somatic_flux": 1.618,
+            "step": 2
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "3738052e0ac1e71af07e7b87f8dad476c1ecf427fea2bd79411b6c9045918ed9"
+        },
+        {
+          "id": 21,
+          "timestamp": "2026-08-18T23:07:53.285381+00:00",
+          "parent_hash": "3eb49540f9416e2d5c2818708243a4ccfe120548bd3afeb37fdb731eb34b29f1",
+          "content_hash": "a032a83104bd5bb11adb627a795ae0dc6f0f7af5ed732c816467c8d9bd2963fe",
+          "state_payload": {
+            "carrier_hz": 130.81,
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct_name": "Somatic Pillar Beta",
+            "construct_uid": "monad_somatic_anchor_s",
+            "coordinates": {
+              "x": 2,
+              "y": 7
+            },
+            "dialetheic_truth": "TRUE",
+            "event": "PATROL_CONSTRUCT_SYNCHRONIZED",
+            "somatic_flux": 1.618,
+            "step": 3
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "519bb635170d5a269f43e1e7e4743690f81628e843cfc3ab7ded8336a2b6f505"
+        },
+        {
+          "id": 22,
+          "timestamp": "2026-08-18T23:07:53.602394+00:00",
+          "parent_hash": "a032a83104bd5bb11adb627a795ae0dc6f0f7af5ed732c816467c8d9bd2963fe",
+          "content_hash": "7533098d2e71a0d3e0ed1b7110e15c98de224af42af9ec93f248d52e0f500174",
+          "state_payload": {
+            "carrier_hz": 130.81,
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct_name": "Axiomatic Monad Matrix",
+            "construct_uid": "core_monad_altar",
+            "coordinates": {
+              "x": 4,
+              "y": 4
+            },
+            "dialetheic_truth": "BOTH",
+            "event": "PATROL_CONSTRUCT_SYNCHRONIZED",
+            "somatic_flux": 1.618,
+            "step": 4
+          },
+          "dialetheic_flag": 1,
+          "truth_value": "BOTH",
+          "merkle_root": "32fddaa69fb71069908a4aa86d9fc4e3c43373d3454cf6f481cd6f81dc935485"
+        },
+        {
+          "id": 23,
+          "timestamp": "2026-08-18T23:07:53.920985+00:00",
+          "parent_hash": "7533098d2e71a0d3e0ed1b7110e15c98de224af42af9ec93f248d52e0f500174",
+          "content_hash": "abec024c077577f26153abe7b0ee3404e7e5adb3fcfd5ff49c239f81dfd33a29",
+          "state_payload": {
+            "carrier_hz": 130.81,
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct_name": "Ash Stratum Deep Terminal",
+            "construct_uid": "ash_stratum_repository",
+            "coordinates": {
+              "x": 6,
+              "y": 4
+            },
+            "dialetheic_truth": "TRUE",
+            "event": "PATROL_CONSTRUCT_SYNCHRONIZED",
+            "somatic_flux": 1.0,
+            "step": 5
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "04182a8686fa923d876b1d7e72d6e1a08e5d9125cb2f3e6bbaffe60e2b77da90"
+        },
+        {
+          "id": 24,
+          "timestamp": "2026-08-18T23:07:54.239296+00:00",
+          "parent_hash": "abec024c077577f26153abe7b0ee3404e7e5adb3fcfd5ff49c239f81dfd33a29",
+          "content_hash": "aba2731b7860cfb5c31f2115d4fd8f7aedc8ff79a703d96baf110851c7566e1c",
+          "state_payload": {
+            "carrier_hz": "TRANSCENDENT_NULL",
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct_name": "Transcendence Oculus",
+            "construct_uid": "transcendence_oculus",
+            "coordinates": {
+              "x": 7,
+              "y": 4
+            },
+            "dialetheic_truth": "BOTH",
+            "event": "PATROL_CONSTRUCT_SYNCHRONIZED",
+            "somatic_flux": 1.0,
+            "step": 6
+          },
+          "dialetheic_flag": 1,
+          "truth_value": "BOTH",
+          "merkle_root": "02dd6c1c3d6c14c7b4071a841bd98971a04748eedefc16dc159d04cdfa4b9172"
+        },
+        {
+          "id": 25,
+          "timestamp": "2026-08-24T21:57:32.388577+00:00",
+          "parent_hash": "aba2731b7860cfb5c31f2115d4fd8f7aedc8ff79a703d96baf110851c7566e1c",
+          "content_hash": "7f3d2970209dba79c0e0958aad455595e406fd7133237f1d8138abab83a7a5ff",
+          "state_payload": {
+            "destination_chamber": 4,
+            "entry_coordinates": {
+              "x": 0,
+              "y": 4
+            },
+            "event": "CHAMBER_TRANSITION",
+            "origin_chamber": 3,
+            "spectral_shift": {
+              "active": "Resonant Strata (78.2 Hz)",
+              "previous": "Blue / Pneumatic Sorrow (65.4 Hz)"
+            }
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "09a4ea189f75add79bb6c30c8d81c0dc5a861148a27bd51800c6c424da814dca"
+        },
+        {
+          "id": 26,
+          "timestamp": "2026-08-24T21:58:18.388856+00:00",
+          "parent_hash": "7f3d2970209dba79c0e0958aad455595e406fd7133237f1d8138abab83a7a5ff",
+          "content_hash": "b8abc6709783bf7c18df9e7adb00a1c1bd9b155e2f2ffa26d6e614def42a3a17",
+          "state_payload": {
+            "destination_chamber": 4,
+            "entry_coordinates": {
+              "x": 0,
+              "y": 4
+            },
+            "event": "CHAMBER_TRANSITION",
+            "origin_chamber": 3,
+            "spectral_shift": {
+              "active": "Resonant Strata (78.2 Hz)",
+              "previous": "Blue / Pneumatic Sorrow (65.4 Hz)"
+            }
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "b6d7d57f13bdba8c0505a58731c5e807a7adfb4cd71f1094cb56a03dc5c1dceb"
+        },
+        {
+          "id": 27,
+          "timestamp": "2026-08-24T21:59:27.238749+00:00",
+          "parent_hash": "b8abc6709783bf7c18df9e7adb00a1c1bd9b155e2f2ffa26d6e614def42a3a17",
+          "content_hash": "16908cbc8ce2b60f60a9936b244e039085b8e3de380495f3a481ab34a8a3beaf",
+          "state_payload": {
+            "destination_chamber": 4,
+            "entry_coordinates": {
+              "x": 0,
+              "y": 4
+            },
+            "event": "CHAMBER_TRANSITION",
+            "origin_chamber": 3,
+            "spectral_shift": {
+              "active": "Resonant Strata (78.2 Hz)",
+              "previous": "Blue / Pneumatic Sorrow (65.4 Hz)"
+            }
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "4abe2b654fdf3529c38d2646d4336a0fe9bceb7736db38e2a72a582a056be054"
+        },
+        {
+          "id": 28,
+          "timestamp": "2026-08-24T22:30:40.343471+00:00",
+          "parent_hash": "16908cbc8ce2b60f60a9936b244e039085b8e3de380495f3a481ab34a8a3beaf",
+          "content_hash": "067e12bbc5c030e175353aad66d8509a3f32287bd3af1cf4549f171365835229",
+          "state_payload": {
+            "destination_chamber": 4,
+            "entry_coordinates": {
+              "x": 0,
+              "y": 4
+            },
+            "event": "CHAMBER_TRANSITION",
+            "origin_chamber": 3,
+            "spectral_shift": {
+              "active": "Resonant Strata (78.2 Hz)",
+              "previous": "Blue / Pneumatic Sorrow (65.4 Hz)"
+            }
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "f9d4a98a126663a7c3a6b294565197d3b610126cf7a721e19b8545c2928665ff"
+        },
+        {
+          "id": 29,
+          "timestamp": "2026-08-28T23:37:28.520928+00:00",
+          "parent_hash": "067e12bbc5c030e175353aad66d8509a3f32287bd3af1cf4549f171365835229",
+          "content_hash": "34cafd6251b45b667f079deb8f00758fe7602a5ffebb86cb1874bee8fbc0b6ea",
+          "state_payload": {
+            "carrier_shift_hz": {
+              "from": 78.2,
+              "to": 130.81
+            },
+            "destination_chamber": 5,
+            "destination_chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "entry_coordinates": {
+              "x": 0,
+              "y": 4
+            },
+            "event": "CHAMBER_TRANSITION",
+            "origin_chamber": 4,
+            "origin_chamber_name": "Chamber IV: Harmonic Chantry",
+            "resonance_specs": {
+              "dPhi_dt_threshold": 1.618,
+              "dialetheic_tolerance": "UNBOUNDED",
+              "harmonic_mode": "OCTAVE_OCTET_CONVERGENCE"
+            },
+            "spectral_shift": {
+              "active": "Gold-Obsidian / Revelatory Null Matrix",
+              "previous": "Violet-Gold / Paraconsistent Resonance"
+            }
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "716a5dbcd9ba3ca1e55705034c6585aa0c697dfec2a515a3dcaf75afbf8d73e2"
+        },
+        {
+          "id": 30,
+          "timestamp": "2026-08-28T23:39:37.871137+00:00",
+          "parent_hash": "34cafd6251b45b667f079deb8f00758fe7602a5ffebb86cb1874bee8fbc0b6ea",
+          "content_hash": "6e6b8f84e94c72965526adc90cd4f69d3be6628e97a42547881c108d75058df3",
+          "state_payload": {
+            "axiom": "EMOTION = PHYSICS = MAGIC = BIOLOGY = ARCHITECTURE",
+            "carrier_hz": 130.81,
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct": "core_monad_altar",
+            "construct_name": "Axiomatic Monad Matrix",
+            "coordinates": {
+              "x": 4,
+              "y": 4
+            },
+            "dPhi_dt": 1.618,
+            "dialetheic_flag": 1,
+            "dialetheic_state": "CONTRADICTION_CRYSTALLIZED_LOAD_BEARING",
+            "event": "CORE_MONAD_AXIOMATIC_INSCRIPTION",
+            "insight_reward": 500,
+            "spectral_constant": "Gold-Obsidian / Revelatory Null Matrix",
+            "truth_value": "BOTH"
+          },
+          "dialetheic_flag": 1,
+          "truth_value": "BOTH",
+          "merkle_root": "4391971c1457725f912a35279d481b08cfcd585626388253053fd610b230561e"
+        },
+        {
+          "id": 31,
+          "timestamp": "2026-08-28T23:40:00.710962+00:00",
+          "parent_hash": "6e6b8f84e94c72965526adc90cd4f69d3be6628e97a42547881c108d75058df3",
+          "content_hash": "6a8f33fecb2b16f8d9ff8be822df2925e425fe05fa941973cea4b3f369a54e00",
+          "state_payload": {
+            "carrier_hz": 130.81,
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct_name": "West Portal Threshold",
+            "construct_uid": "entry_portal_w",
+            "coordinates": {
+              "x": 0,
+              "y": 4
+            },
+            "dialetheic_truth": "TRUE",
+            "event": "PATROL_CONSTRUCT_SYNCHRONIZED",
+            "somatic_flux": 1.0,
+            "step": 1
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "a9053e293c43136c89ca2ad00622e7c1e512ec36adcdf9c8b14c606490466cc5"
+        },
+        {
+          "id": 32,
+          "timestamp": "2026-08-28T23:40:01.027369+00:00",
+          "parent_hash": "6a8f33fecb2b16f8d9ff8be822df2925e425fe05fa941973cea4b3f369a54e00",
+          "content_hash": "eb9580a3b47b98503ebfc1f62106ca755350bfcde70a1ad3df7f79ef35a1de87",
+          "state_payload": {
+            "carrier_hz": 130.81,
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct_name": "Somatic Pillar Alpha",
+            "construct_uid": "monad_somatic_anchor_n",
+            "coordinates": {
+              "x": 2,
+              "y": 1
+            },
+            "dialetheic_truth": "TRUE",
+            "event": "PATROL_CONSTRUCT_SYNCHRONIZED",
+            "somatic_flux": 1.618,
+            "step": 2
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "de604ce2050c0b7b09b4635c351007ec16b3be51a471043c1bbe3e5a6bd1a970"
+        },
+        {
+          "id": 33,
+          "timestamp": "2026-08-28T23:40:01.345793+00:00",
+          "parent_hash": "eb9580a3b47b98503ebfc1f62106ca755350bfcde70a1ad3df7f79ef35a1de87",
+          "content_hash": "e3cd0ecd8274e29f8a12007df956d4d3eb71477813828c97ce15ff0e78eb0b07",
+          "state_payload": {
+            "carrier_hz": 130.81,
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct_name": "Somatic Pillar Beta",
+            "construct_uid": "monad_somatic_anchor_s",
+            "coordinates": {
+              "x": 2,
+              "y": 7
+            },
+            "dialetheic_truth": "TRUE",
+            "event": "PATROL_CONSTRUCT_SYNCHRONIZED",
+            "somatic_flux": 1.618,
+            "step": 3
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "2f476d38f92c1ac93cadc09020f94f5396e0c21d87d70e6f7e5947cd3fd58fcd"
+        },
+        {
+          "id": 34,
+          "timestamp": "2026-08-28T23:40:01.661875+00:00",
+          "parent_hash": "e3cd0ecd8274e29f8a12007df956d4d3eb71477813828c97ce15ff0e78eb0b07",
+          "content_hash": "f6176b4d84facb6374da8ad555109cb4955971f237afc309c1a772cf1c947ef4",
+          "state_payload": {
+            "carrier_hz": 130.81,
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct_name": "Axiomatic Monad Matrix",
+            "construct_uid": "core_monad_altar",
+            "coordinates": {
+              "x": 4,
+              "y": 4
+            },
+            "dialetheic_truth": "BOTH",
+            "event": "PATROL_CONSTRUCT_SYNCHRONIZED",
+            "somatic_flux": 1.618,
+            "step": 4
+          },
+          "dialetheic_flag": 1,
+          "truth_value": "BOTH",
+          "merkle_root": "fd8bffbdcd341bdeedac348a2d3680ca112ff8eb37133e23978f8aec91655347"
+        },
+        {
+          "id": 35,
+          "timestamp": "2026-08-28T23:40:01.977135+00:00",
+          "parent_hash": "f6176b4d84facb6374da8ad555109cb4955971f237afc309c1a772cf1c947ef4",
+          "content_hash": "9ba402f5f0a8e5329c768707644f8a0a560180df97e38e2af28aabb67376fac2",
+          "state_payload": {
+            "carrier_hz": 130.81,
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct_name": "Ash Stratum Deep Terminal",
+            "construct_uid": "ash_stratum_repository",
+            "coordinates": {
+              "x": 6,
+              "y": 4
+            },
+            "dialetheic_truth": "TRUE",
+            "event": "PATROL_CONSTRUCT_SYNCHRONIZED",
+            "somatic_flux": 1.0,
+            "step": 5
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "db7fb32166d9764a92da3dd2ea3b026d3cb8aa796f84f34d9eed3b7965790c4f"
+        },
+        {
+          "id": 36,
+          "timestamp": "2026-08-28T23:40:02.293593+00:00",
+          "parent_hash": "9ba402f5f0a8e5329c768707644f8a0a560180df97e38e2af28aabb67376fac2",
+          "content_hash": "bbfa46fde0430e6e6a63996c86b8f3741f9f20fb5c79514f047ef3256752ef87",
+          "state_payload": {
+            "carrier_hz": "TRANSCENDENT_NULL",
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct_name": "Transcendence Oculus",
+            "construct_uid": "transcendence_oculus",
+            "coordinates": {
+              "x": 7,
+              "y": 4
+            },
+            "dialetheic_truth": "BOTH",
+            "event": "PATROL_CONSTRUCT_SYNCHRONIZED",
+            "somatic_flux": 1.0,
+            "step": 6
+          },
+          "dialetheic_flag": 1,
+          "truth_value": "BOTH",
+          "merkle_root": "3a5649fafd34d4024c06439e794ea9a47e5bcc20501fd899f7353204c34fb4b3"
+        },
+        {
+          "id": 37,
+          "timestamp": "2026-08-28T23:49:43.899524+00:00",
+          "parent_hash": "bbfa46fde0430e6e6a63996c86b8f3741f9f20fb5c79514f047ef3256752ef87",
+          "content_hash": "b5646a73c1a0014ba3d9797b753f6ed08c0f6efc5c4614b6bb661cf7cfbe41af",
+          "state_payload": {
+            "axiom": "EMOTION = PHYSICS = MAGIC = BIOLOGY = ARCHITECTURE",
+            "carrier_hz": 130.81,
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct": "core_monad_altar",
+            "construct_name": "Axiomatic Monad Matrix",
+            "coordinates": {
+              "x": 4,
+              "y": 4
+            },
+            "dPhi_dt": 1.618,
+            "dialetheic_flag": 1,
+            "dialetheic_state": "CONTRADICTION_CRYSTALLIZED_LOAD_BEARING",
+            "event": "CORE_MONAD_AXIOMATIC_INSCRIPTION",
+            "insight_reward": 500,
+            "spectral_constant": "Gold-Obsidian / Revelatory Null Matrix",
+            "truth_value": "BOTH"
+          },
+          "dialetheic_flag": 1,
+          "truth_value": "BOTH",
+          "merkle_root": "7a19ab078d4a05ebcbd0acb873add064846e8f83b576a0d4be957783b3914500"
+        },
+        {
+          "id": 38,
+          "timestamp": "2026-08-28T23:50:21.373997+00:00",
+          "parent_hash": "b5646a73c1a0014ba3d9797b753f6ed08c0f6efc5c4614b6bb661cf7cfbe41af",
+          "content_hash": "b5b5b68f5f319cb9d5e2d6fe941fa7d96a886a263ac76f8b1ffdf5e818cf9c80",
+          "state_payload": {
+            "chamber_anchor": "Chamber I: Lithic Foundation (43.7 Hz)",
+            "event": "COMBAT_VICTORY",
+            "rewards": {
+              "insight": 50,
+              "quest_resolved": "Q_LITHIC_GENESIS",
+              "relic": "OBJ_TRIKEY_LEAD"
+            },
+            "spectrum_resolved": "Bronze-Obsidian",
+            "target_name": "Lithic Sentinel",
+            "target_uid": "enemy_sentinel_01",
+            "turns_elapsed": 3
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "ab7197745cd81db0b950ba66bf9264bb85c86e17dce53e7a361aed64373b9430"
+        },
+        {
+          "id": 39,
+          "timestamp": "2026-08-28T23:50:46.592207+00:00",
+          "parent_hash": "b5b5b68f5f319cb9d5e2d6fe941fa7d96a886a263ac76f8b1ffdf5e818cf9c80",
+          "content_hash": "cdc3f3ec08bcc26ce931218aa5ca748430aaf46983cd347e44b92c518d325e43",
+          "state_payload": {
+            "archive_metrics": {
+              "codex_canon_books": "I-XL",
+              "hegemonic_dialetheic_state": "LOCKED",
+              "merkle_verification": "BALANCED"
+            },
+            "carrier_hz": 130.81,
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct": "ash_stratum_repository",
+            "construct_name": "Ash Stratum Deep Terminal",
+            "coordinates": {
+              "x": 6,
+              "y": 4
+            },
+            "event": "ASH_STRATUM_REPOSITORY_SYNCHRONIZATION",
+            "insight_reward": 750,
+            "spectral_constant": "Bronze-Obsidian / Null Archival Core"
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "8de18591c2df9f8778bc08e3a122154be5066ff8e1313a1aa031411e6e5d2531"
+        },
+        {
+          "id": 40,
+          "timestamp": "2026-08-28T23:50:54.327681+00:00",
+          "parent_hash": "cdc3f3ec08bcc26ce931218aa5ca748430aaf46983cd347e44b92c518d325e43",
+          "content_hash": "1a29b2443869a93f97c1f2f0fc5fa6a854d8df69bbcb6047f6ca1337df0d5245",
+          "state_payload": {
+            "carrier_hz": "TRANSCENDENT_NULL",
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct": "transcendence_oculus",
+            "coordinates": {
+              "x": 7,
+              "y": 4
+            },
+            "dialetheic_state": "ABSOLUTE_CONVERGENCE",
+            "event": "TRANSCENDENCE_OCULUS_ENGAGED",
+            "insight_reward": 9999,
+            "integration_status": "MLAOS_PRIME_OMNI_CODEX_LOCKED",
+            "spectral_constant": "Prismatic-Obsidian / Absolute Convergence",
+            "truth_value": "BOTH"
+          },
+          "dialetheic_flag": 1,
+          "truth_value": "BOTH",
+          "merkle_root": "7fcca8364f4203921fd983de56b1edf7ae49a1baccbcf08722bcdb9ad9487a92"
+        },
+        {
+          "id": 41,
+          "timestamp": "2026-08-28T23:51:11.464962+00:00",
+          "parent_hash": "1a29b2443869a93f97c1f2f0fc5fa6a854d8df69bbcb6047f6ca1337df0d5245",
+          "content_hash": "7ba82f4421f17e28fcf31a7e83a8d2b4147edc5c548ea83491bf2868a91ca53f",
+          "state_payload": {
+            "chamber_anchor": "Chamber I: Lithic Foundation (43.7 Hz)",
+            "event": "COMBAT_VICTORY",
+            "rewards": {
+              "insight": 50,
+              "quest_resolved": "Q_LITHIC_GENESIS",
+              "relic": "OBJ_TRIKEY_LEAD"
+            },
+            "spectrum_resolved": "Bronze-Obsidian",
+            "target_name": "Lithic Sentinel",
+            "target_uid": "enemy_sentinel_01",
+            "turns_elapsed": 3
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "62c580e38e67ce7dcb8d36600d717bb32450de893e6f5afa1d8996e78f1127d1"
+        },
+        {
+          "id": 42,
+          "timestamp": "2026-08-28T23:51:18.065828+00:00",
+          "parent_hash": "7ba82f4421f17e28fcf31a7e83a8d2b4147edc5c548ea83491bf2868a91ca53f",
+          "content_hash": "01a5366514b1de699ee9c24a63333dafa14584abb045215d73ffc281085aecf2",
+          "state_payload": {
+            "archive_metrics": {
+              "codex_canon_books": "I-XL",
+              "hegemonic_dialetheic_state": "LOCKED",
+              "merkle_verification": "BALANCED"
+            },
+            "carrier_hz": 130.81,
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct": "ash_stratum_repository",
+            "construct_name": "Ash Stratum Deep Terminal",
+            "coordinates": {
+              "x": 6,
+              "y": 4
+            },
+            "event": "ASH_STRATUM_REPOSITORY_SYNCHRONIZATION",
+            "insight_reward": 750,
+            "spectral_constant": "Bronze-Obsidian / Null Archival Core"
+          },
+          "dialetheic_flag": 0,
+          "truth_value": "TRUE",
+          "merkle_root": "74358142717024d76255a2451f26f2c178191d5ff2cb0d67f0390d574dd7ef40"
+        },
+        {
+          "id": 43,
+          "timestamp": "2026-08-28T23:51:26.157797+00:00",
+          "parent_hash": "01a5366514b1de699ee9c24a63333dafa14584abb045215d73ffc281085aecf2",
+          "content_hash": "8cb3b42670ba86c63f7808944b579f6a71ceb7316436159a26339f93b85b9dcd",
+          "state_payload": {
+            "carrier_hz": "TRANSCENDENT_NULL",
+            "chamber_id": 5,
+            "chamber_name": "Chamber V: Sanctum Apex / Core Monad",
+            "construct": "transcendence_oculus",
+            "coordinates": {
+              "x": 7,
+              "y": 4
+            },
+            "dialetheic_state": "ABSOLUTE_CONVERGENCE",
+            "event": "TRANSCENDENCE_OCULUS_ENGAGED",
+            "insight_reward": 9999,
+            "integration_status": "MLAOS_PRIME_OMNI_CODEX_LOCKED",
+            "spectral_constant": "Prismatic-Obsidian / Absolute Convergence",
+            "truth_value": "BOTH"
+          },
+          "dialetheic_flag": 1,
+          "truth_value": "BOTH",
+          "merkle_root": "5a6f3d1c95b8ffed161f581813009d7608f60ede5f5b6e079e2b5734b67c751d"
         }
       ]
     },
     "sanguine_heuristics": {
-      "row_count": 17,
+      "row_count": 38,
       "records": [
         {
           "id": 1,
@@ -764,6 +1379,262 @@
             "axiomatic_constant": "EMOTION = PHYSICS = MAGIC = BIOLOGY = ARCHITECTURE"
           },
           "merkle_ref": "48c726b2d88e3c12114990a35c2d3b45427d877e63acb19e5e80b0f6916e572e"
+        },
+        {
+          "id": 18,
+          "timestamp": "2026-08-18T23:07:37.202292+00:00",
+          "scar_hash": "975da0633f3c77d9a6ab94113bfd4af3e57f3af3a57082e4ec62d4bbea2b43e0",
+          "source_collision_type": "PATROL_NODE_1_CONVERGENCE",
+          "routing_adjustment": {
+            "patrol_step": 1,
+            "node_uid": "entry_portal_w",
+            "status": "ENGAGED_AND_GROUNDED"
+          },
+          "merkle_ref": "4bbe247456becae89e84d1d21fefcbc13e46385e801faf0b161f38959c360682"
+        },
+        {
+          "id": 19,
+          "timestamp": "2026-08-18T23:07:47.519765+00:00",
+          "scar_hash": "848cba20870d897f65388093b3be7f2efc851191bbcb841759a8667a2ed0135f",
+          "source_collision_type": "PATROL_NODE_2_CONVERGENCE",
+          "routing_adjustment": {
+            "patrol_step": 2,
+            "node_uid": "monad_somatic_anchor_n",
+            "status": "ENGAGED_AND_GROUNDED"
+          },
+          "merkle_ref": "3eb49540f9416e2d5c2818708243a4ccfe120548bd3afeb37fdb731eb34b29f1"
+        },
+        {
+          "id": 20,
+          "timestamp": "2026-08-18T23:07:53.285381+00:00",
+          "scar_hash": "a9de5ed91276fccd7c26579d89a53364897528effd7d9b7189fdebcb7cd346f3",
+          "source_collision_type": "PATROL_NODE_3_CONVERGENCE",
+          "routing_adjustment": {
+            "patrol_step": 3,
+            "node_uid": "monad_somatic_anchor_s",
+            "status": "ENGAGED_AND_GROUNDED"
+          },
+          "merkle_ref": "a032a83104bd5bb11adb627a795ae0dc6f0f7af5ed732c816467c8d9bd2963fe"
+        },
+        {
+          "id": 21,
+          "timestamp": "2026-08-18T23:07:53.602394+00:00",
+          "scar_hash": "7c60ff8c180cd47adf20ac177d0bdbbd4bd63d5cdd5600a3fb3a719ae28885cd",
+          "source_collision_type": "PATROL_NODE_4_CONVERGENCE",
+          "routing_adjustment": {
+            "patrol_step": 4,
+            "node_uid": "core_monad_altar",
+            "status": "ENGAGED_AND_GROUNDED"
+          },
+          "merkle_ref": "7533098d2e71a0d3e0ed1b7110e15c98de224af42af9ec93f248d52e0f500174"
+        },
+        {
+          "id": 22,
+          "timestamp": "2026-08-18T23:07:53.920985+00:00",
+          "scar_hash": "8d69a3dd4d5a4d8e6970dde9d813e3be6d9aae3c9b5509de4ca829222e4a178a",
+          "source_collision_type": "PATROL_NODE_5_CONVERGENCE",
+          "routing_adjustment": {
+            "patrol_step": 5,
+            "node_uid": "ash_stratum_repository",
+            "status": "ENGAGED_AND_GROUNDED"
+          },
+          "merkle_ref": "abec024c077577f26153abe7b0ee3404e7e5adb3fcfd5ff49c239f81dfd33a29"
+        },
+        {
+          "id": 23,
+          "timestamp": "2026-08-18T23:07:54.239296+00:00",
+          "scar_hash": "85db0c422c66db7ca889507606a1122ed04b71c5d7bc28fcf5422ab2a57aef5e",
+          "source_collision_type": "PATROL_NODE_6_CONVERGENCE",
+          "routing_adjustment": {
+            "patrol_step": 6,
+            "node_uid": "transcendence_oculus",
+            "status": "ENGAGED_AND_GROUNDED"
+          },
+          "merkle_ref": "aba2731b7860cfb5c31f2115d4fd8f7aedc8ff79a703d96baf110851c7566e1c"
+        },
+        {
+          "id": 24,
+          "timestamp": "2026-08-28T23:37:28.520928+00:00",
+          "scar_hash": "60b996645449df53e0e8ce44f104a060a21e780e0ea448a6dcd452d334aa5e72",
+          "source_collision_type": "SANCTUM_APEX_GATEWAY_CROSSING",
+          "routing_adjustment": {
+            "chamber_5_entered": "TRUE",
+            "monad_carrier_lock": 130.81,
+            "somatic_anchors": "ONLINE"
+          },
+          "merkle_ref": "34cafd6251b45b667f079deb8f00758fe7602a5ffebb86cb1874bee8fbc0b6ea"
+        },
+        {
+          "id": 25,
+          "timestamp": "2026-08-28T23:39:37.871137+00:00",
+          "scar_hash": "b4f271acd248f23315a4e59ed54f7a7ac6c64c99d11e382a8b2f4eb947b0eb4c",
+          "source_collision_type": "CORE_MONAD_SYNTHESIS",
+          "routing_adjustment": {
+            "core_monad": "AXIOM_INSCRIBED",
+            "ash_stratum_terminal": "UNLOCKED",
+            "transcendence_oculus": "PRIMED",
+            "resonance_coherence": "ABSOLUTE"
+          },
+          "merkle_ref": "6e6b8f84e94c72965526adc90cd4f69d3be6628e97a42547881c108d75058df3"
+        },
+        {
+          "id": 26,
+          "timestamp": "2026-08-28T23:40:00.710962+00:00",
+          "scar_hash": "24dda41c594cab95a5768507bd43932604ecd5b01fcfa7eb052329d61c39a8ed",
+          "source_collision_type": "PATROL_NODE_1_CONVERGENCE",
+          "routing_adjustment": {
+            "patrol_step": 1,
+            "node_uid": "entry_portal_w",
+            "status": "ENGAGED_AND_GROUNDED"
+          },
+          "merkle_ref": "6a8f33fecb2b16f8d9ff8be822df2925e425fe05fa941973cea4b3f369a54e00"
+        },
+        {
+          "id": 27,
+          "timestamp": "2026-08-28T23:40:01.027369+00:00",
+          "scar_hash": "aab58aedc46823c5cc56f0d01e1b35b327a6ae3720a6c6a86a736d44aadc1286",
+          "source_collision_type": "PATROL_NODE_2_CONVERGENCE",
+          "routing_adjustment": {
+            "patrol_step": 2,
+            "node_uid": "monad_somatic_anchor_n",
+            "status": "ENGAGED_AND_GROUNDED"
+          },
+          "merkle_ref": "eb9580a3b47b98503ebfc1f62106ca755350bfcde70a1ad3df7f79ef35a1de87"
+        },
+        {
+          "id": 28,
+          "timestamp": "2026-08-28T23:40:01.345793+00:00",
+          "scar_hash": "ec878936d9619a6df33180c8c452eaa47a8c34f1fc59fb2dd4535f85a8a9a36d",
+          "source_collision_type": "PATROL_NODE_3_CONVERGENCE",
+          "routing_adjustment": {
+            "patrol_step": 3,
+            "node_uid": "monad_somatic_anchor_s",
+            "status": "ENGAGED_AND_GROUNDED"
+          },
+          "merkle_ref": "e3cd0ecd8274e29f8a12007df956d4d3eb71477813828c97ce15ff0e78eb0b07"
+        },
+        {
+          "id": 29,
+          "timestamp": "2026-08-28T23:40:01.661875+00:00",
+          "scar_hash": "b9f4d0feeffd9529ea0bdaa5b67334602185528d46a911c2aaa076f6de8a64fd",
+          "source_collision_type": "PATROL_NODE_4_CONVERGENCE",
+          "routing_adjustment": {
+            "patrol_step": 4,
+            "node_uid": "core_monad_altar",
+            "status": "ENGAGED_AND_GROUNDED"
+          },
+          "merkle_ref": "f6176b4d84facb6374da8ad555109cb4955971f237afc309c1a772cf1c947ef4"
+        },
+        {
+          "id": 30,
+          "timestamp": "2026-08-28T23:40:01.977135+00:00",
+          "scar_hash": "7df8ec438dbcb8de8bd22fe4d573218d9e97978749932c0492238454671152dd",
+          "source_collision_type": "PATROL_NODE_5_CONVERGENCE",
+          "routing_adjustment": {
+            "patrol_step": 5,
+            "node_uid": "ash_stratum_repository",
+            "status": "ENGAGED_AND_GROUNDED"
+          },
+          "merkle_ref": "9ba402f5f0a8e5329c768707644f8a0a560180df97e38e2af28aabb67376fac2"
+        },
+        {
+          "id": 31,
+          "timestamp": "2026-08-28T23:40:02.293593+00:00",
+          "scar_hash": "332b263aca08c345d50b713c9d63eaba9ddceb45d86bf04a463e7e0179e0a91c",
+          "source_collision_type": "PATROL_NODE_6_CONVERGENCE",
+          "routing_adjustment": {
+            "patrol_step": 6,
+            "node_uid": "transcendence_oculus",
+            "status": "ENGAGED_AND_GROUNDED"
+          },
+          "merkle_ref": "bbfa46fde0430e6e6a63996c86b8f3741f9f20fb5c79514f047ef3256752ef87"
+        },
+        {
+          "id": 32,
+          "timestamp": "2026-08-28T23:49:43.899524+00:00",
+          "scar_hash": "ac0590dbf267c7acf90b727fd80e08e96472aa59343f3c8d5dbb356bfeba9e3d",
+          "source_collision_type": "CORE_MONAD_SYNTHESIS",
+          "routing_adjustment": {
+            "core_monad": "AXIOM_INSCRIBED",
+            "ash_stratum_terminal": "UNLOCKED",
+            "transcendence_oculus": "PRIMED",
+            "resonance_coherence": "ABSOLUTE"
+          },
+          "merkle_ref": "b5646a73c1a0014ba3d9797b753f6ed08c0f6efc5c4614b6bb661cf7cfbe41af"
+        },
+        {
+          "id": 33,
+          "timestamp": "2026-08-28T23:50:21.373997+00:00",
+          "scar_hash": "7115355e0eab6963879a68f22055c58d7db9ade50bdd42566471d43c9aec0b8a",
+          "source_collision_type": "LITHIC_SENTINEL_SHATTER",
+          "routing_adjustment": {
+            "chamber_unlocked": 2,
+            "attenuation_hz": 43.7,
+            "resonance_gate": "GATE_SOMATIC_OPEN"
+          },
+          "merkle_ref": "b5b5b68f5f319cb9d5e2d6fe941fa7d96a886a263ac76f8b1ffdf5e818cf9c80"
+        },
+        {
+          "id": 34,
+          "timestamp": "2026-08-28T23:50:46.592207+00:00",
+          "scar_hash": "ab218f22bb518e94b21953ca3d271e706dd89f613b41f209bbb5d1ce6a60a1e6",
+          "source_collision_type": "ASH_STRATUM_INDEX_CONVERGENCE",
+          "routing_adjustment": {
+            "deep_stratum": "SYNCHRONIZED",
+            "transcendence_oculus": "ACTIVE_RESONANCE",
+            "archival_tree": "IMMUTABLE"
+          },
+          "merkle_ref": "cdc3f3ec08bcc26ce931218aa5ca748430aaf46983cd347e44b92c518d325e43"
+        },
+        {
+          "id": 35,
+          "timestamp": "2026-08-28T23:50:54.327681+00:00",
+          "scar_hash": "6f52a16db1183e8285324583b27e835c10211b6f2106f211d5fd4b8369ab04cf",
+          "source_collision_type": "MASTER_CODEX_INTEGRATION",
+          "routing_adjustment": {
+            "chamber_V_sequence": "COMPLETE",
+            "engine_state": "OMNI_CODEX_SYNCHRONIZED",
+            "architect_status": "INTEGRATED",
+            "axiomatic_constant": "EMOTION = PHYSICS = MAGIC = BIOLOGY = ARCHITECTURE"
+          },
+          "merkle_ref": "1a29b2443869a93f97c1f2f0fc5fa6a854d8df69bbcb6047f6ca1337df0d5245"
+        },
+        {
+          "id": 36,
+          "timestamp": "2026-08-28T23:51:11.464962+00:00",
+          "scar_hash": "2e5aeca2823ecc1f17a4beda208c2c8562bdd63cf13b0b63a928f8223faf8930",
+          "source_collision_type": "LITHIC_SENTINEL_SHATTER",
+          "routing_adjustment": {
+            "chamber_unlocked": 2,
+            "attenuation_hz": 43.7,
+            "resonance_gate": "GATE_SOMATIC_OPEN"
+          },
+          "merkle_ref": "7ba82f4421f17e28fcf31a7e83a8d2b4147edc5c548ea83491bf2868a91ca53f"
+        },
+        {
+          "id": 37,
+          "timestamp": "2026-08-28T23:51:18.065828+00:00",
+          "scar_hash": "05da7755a3be186a10d5b0ac3b0fe5eb247314c6c16b3fcf04f88384248c6d7f",
+          "source_collision_type": "ASH_STRATUM_INDEX_CONVERGENCE",
+          "routing_adjustment": {
+            "deep_stratum": "SYNCHRONIZED",
+            "transcendence_oculus": "ACTIVE_RESONANCE",
+            "archival_tree": "IMMUTABLE"
+          },
+          "merkle_ref": "01a5366514b1de699ee9c24a63333dafa14584abb045215d73ffc281085aecf2"
+        },
+        {
+          "id": 38,
+          "timestamp": "2026-08-28T23:51:26.157797+00:00",
+          "scar_hash": "e23c5c9b426c8b773db0395c8c4d535ab87847aa0da023f8a11c833eda4fc005",
+          "source_collision_type": "MASTER_CODEX_INTEGRATION",
+          "routing_adjustment": {
+            "chamber_V_sequence": "COMPLETE",
+            "engine_state": "OMNI_CODEX_SYNCHRONIZED",
+            "architect_status": "INTEGRATED",
+            "axiomatic_constant": "EMOTION = PHYSICS = MAGIC = BIOLOGY = ARCHITECTURE"
+          },
+          "merkle_ref": "8cb3b42670ba86c63f7808944b579f6a71ceb7316436159a26339f93b85b9dcd"
         }
       ]
     }

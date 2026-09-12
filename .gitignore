@@ -22,3 +22,21 @@ outputs/
 output/
 dataset/
 *.mlvox
+
+# Dependencies & Caches
+node_modules/
+**/node_modules/
+.godot/
+*.tmp
+.DS_Store
+
+# OS & Python artifacts
+.DS_Store
+__pycache__/
+*.pyc
+*.bak
+*.err
+
+# Godot generated imports & caches
+*.import
+.godot/
