@@ -47,3 +47,16 @@ __pycache__/
 .DS_Store
 __pycache__/
 *.pyc
+
+# Local multi-gigabyte archives & backups
+Archives/
+Zip/
+.quarantine_loose_scripts/
+quarantine_archive/
+
+# Transient directories & local data stores
+csv/
+diffusers/
+cosmo/
+CathedralEngine.Core
+CathedralEngine.Systems
