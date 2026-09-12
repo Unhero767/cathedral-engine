@@ -1,0 +1,24 @@
+{
+  "stratum": "Inner Mandala - Stratum I",
+  "book_coverage": "Books XI-XV",
+  "verses": [
+    {
+      "verse_id": "IM-XI-01",
+      "claim": "The Cathedral was precipitated from the A-Field.",
+      "counter_claim": "The Cathedral was not precipitated from the A-Field.",
+      "spectral_affinity": "TEAL"
+    },
+    {
+      "verse_id": "IM-XI-02",
+      "claim": "The scar bears the permanent physical load of opposing truths.",
+      "counter_claim": "The scar dissolves logical friction into ambient void.",
+      "spectral_affinity": "BRONZE_OBSIDIAN"
+    },
+    {
+      "verse_id": "IM-XII-01",
+      "claim": "Luminous emotional organization induces inward gravitational curvature.",
+      "counter_claim": "Gravitational curvature attenuates luminous emotional organization.",
+      "spectral_affinity": "GOLD"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+{"ts": "2026-08-07T01:49:29.639245Z", "event": "scar_upsert", "data": {"scar_id": "test_scar_101", "instance_id": "aurelia-05", "spectrum": "BRONZE_OBSIDIAN", "paradox_load": 8.7, "capacity": 4.5}}
+{"ts": "2026-08-07T01:49:40.304950Z", "event": "scar_upsert", "data": {"scar_id": "test_scar_101", "instance_id": "aurelia-05", "spectrum": "BRONZE_OBSIDIAN", "paradox_load": 8.7, "capacity": 4.5}}

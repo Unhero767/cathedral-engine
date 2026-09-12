@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLAOS-Prime // Master Civilization & Spatial Triad Engine (EAS-03)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.5/cdn.min.js" defer></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cathedral: {
+                            obsidian: '#0a0b0e',
+                            slate: '#12151c',
+                            border: '#232936',
+                            gold: '#d4af37',
+                            amber: '#f59e0b',
+                            crimson: '#dc2626',
+                            emerald: '#059669',
+                            cyan: '#06b6d4',
+                            ash: '#94a3b8',
+                            purple: '#8b5cf6',
+                            teal: '#0d9488'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'monospace'],
+                        serif: ['Cinzel', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        .glass-panel {
+            background: rgba(18, 21, 28, 0.90);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.18);
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0a0b0e;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #232936;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-cathedral-obsidian text-slate-200 font-mono min-h-screen selection:bg-cathedral-gold selection:text-black flex flex-col" x-data="mlaosMasterEngine()" x-init="initShader(); initWorldSimulation(); initTriadGrid()">
+
+    <header class="border-b border-cathedral-border bg-cathedral-slate/90 sticky top-0 z-50 px-6 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-3 h-3 rounded-full animate-ping" :class="systemFault ? 'bg-cathedral-crimson' : 'bg-cathedral-emerald'"></div>
+            <div>
+                <h1 class="font-serif tracking-widest text-cathedral-gold text-sm md:text-base font-bold">MLAOS-PRIME // SOVEREIGN ENGINE & EAS-03 KINEMATICS</h1>
+                <p class="text-[11px] text-cathedral-ash tracking-wider">TELEMETRY: <span class="text-cathedral-cyan font-bold">166.8 RPS</span> • LATTICE: <span class="text-cathedral-gold font-bold">FOUR = {T, F, B, N}</span> • STATE: <span :class="systemFault ? 'text-cathedral-crimson font-bold' : 'text-cathedral-emerald font-bold'" x-text="systemStatus"></span></p>
+            </div>
+        </div>
+
+        <div class="hidden xl:flex items-center gap-2 text-xs bg-black/40 px-4 py-1.5 rounded border border-cathedral-border text-cathedral-ash">
+            <span class="text-cathedral-gold font-bold">AXIOM:</span> $\text{Emotion} \equiv \text{Physics} \equiv \text{Magic} \equiv \text{Biology} \equiv \text{Architecture}$
+        </div>
+
+        <div class="flex items-center gap-3 text-xs">
+            <button @click="activeTab = 'dashboard'" :class="activeTab === 'dashboard' ? 'bg-cathedral-gold/20 text-cathedral-gold border-cathedral-gold/50' : 'text-cathedral-ash hover:text-white border-cathedral-border'" class="px-3 py-1.5 rounded border transition font-bold">🏛️ MASTER DASHBOARD</button>
+            <button @click="activeTab = 'triad'" :class="activeTab === 'triad' ? 'bg-cathedral-gold/20 text-cathedral-gold border-cathedral-gold/50' : 'text-cathedral-ash hover:text-white border-cathedral-border'" class="px-3 py-1.5 rounded border transition font-bold">⚡ EAS-03 SPATIAL TRIAD</button>
+            <button @click="activeTab = 'settlers'" :class="activeTab === 'settlers' ? 'bg-cathedral-gold/20 text-cathedral-gold border-cathedral-gold/50' : 'text-cathedral-ash hover:text-white border-cathedral-border'" class="px-3 py-1.5 rounded border transition font-bold">⚡ SETTLER NEURONS</button>
+            <button @click="activeTab = 'shader'" :class="activeTab === 'shader' ? 'bg-cathedral-gold/20 text-cathedral-gold border-cathedral-gold/50' : 'text-cathedral-ash hover:text-white border-cathedral-border'" class="px-3 py-1.5 rounded border transition font-bold">🌌 AFFECTIVE SHADER</button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-6 flex-grow w-full space-y-6">
+
+        <!-- VIEW 1: MASTER DASHBOARD -->
+        <div x-show="activeTab === 'dashboard'" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="space-y-6">
+                <!-- Subsumption Safety Stack -->
+                <div class="glass-panel rounded-xl p-5 shadow-xl space-y-4">
+                    <h2 class="font-serif text-sm font-bold text-cathedral-gold flex justify-between items-center">
+                        <span>[ SUBSUMPTION STACK (L0–L2) ]</span>
+                        <span class="text-xs font-mono text-cathedral-ash">Safety Envelope</span>
+                    </h2>
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <div class="flex justify-between mb-1 text-cathedral-ash">
+                                <span>L0: Signal-to-Noise (SNR)</span>
+                                <span class="font-bold" :class="snr < 3.0 ? 'text-cathedral-crimson' : 'text-cathedral-emerald'" x-text="snr.toFixed(1) + ' dB'"></span>
+                            </div>
+                            <input type="range" min="1.0" max="8.0" step="0.1" x-model.number="snr" class="w-full accent-cathedral-gold bg-cathedral-obsidian">
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1 text-cathedral-ash">
+                                <span>L1: Core Temperature</span>
+                                <span class="font-bold" :class="coreTemp > 39.0 ? 'text-cathedral-crimson' : 'text-cathedral-emerald'" x-text="coreTemp.toFixed(1) + ' °C'"></span>
+                            </div>
+                            <input type="range" min="36.0" max="41.0" step="0.1" x-model.number="coreTemp" class="w-full accent-cathedral-gold bg-cathedral-obsidian">
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1 text-cathedral-ash">
+                                <span>L2: Operator Fatigue Index</span>
+                                <span class="font-bold" :class="fatigue > 0.85 ? 'text-cathedral-amber' : 'text-cathedral-emerald'" x-text="fatigue.toFixed(2)"></span>
+                            </div>
+                            <input type="range" min="0.0" max="1.0" step="0.01" x-model.number="fatigue" class="w-full accent-cathedral-gold bg-cathedral-obsidian">
+                        </div>
+                    </div>
+                    <div class="p-2.5 rounded border text-xs" :class="isSafeState ? 'bg-cathedral-emerald/10 border-cathedral-emerald/30 text-cathedral-emerald' : 'bg-cathedral-crimson/10 border-cathedral-crimson/30 text-cathedral-crimson'">
+                        <p class="font-bold" x-text="isSafeState ? 'STATUS: SAFE STATE ACTIVE' : 'STATUS: PROTECTIVE CRYSTALLIZATION'"></p>
+                    </div>
+                </div>
+
+                <!-- Transient Status Effects Ring Buffer -->
+                <div class="glass-panel rounded-xl p-5 shadow-xl space-y-3">
+                    <h2 class="font-serif text-sm font-bold text-cathedral-gold flex justify-between items-center">
+                        <span>[ STATUS EFFECT BUFFER ]</span>
+                        <span class="text-xs font-mono text-cathedral-amber">Max: 9 Slots</span>
+                    </h2>
+                    <div class="flex flex-wrap gap-1.5">
+                        <template x-for="status in activeStatuses">
+                            <span class="px-2 py-1 bg-cathedral-slate border border-cathedral-border rounded text-[10px] font-bold text-cathedral-gold flex items-center gap-1">
+                                <span x-text="status"></span>
+                                <button @click="removeStatus(status)" class="text-cathedral-crimson hover:text-white">×</button>
+                            </span>
+                        </template>
+                    </div>
+                    <div class="flex gap-2 pt-1">
+                        <button @click="injectStatus('BLESSED')" class="flex-1 py-1 bg-cathedral-emerald/20 hover:bg-cathedral-emerald/30 text-cathedral-emerald border border-cathedral-emerald/40 rounded text-[10px] font-bold uppercase">Blessed</button>
+                        <button @click="injectStatus('CURSED')" class="flex-1 py-1 bg-cathedral-crimson/20 hover:bg-cathedral-crimson/30 text-cathedral-crimson border border-cathedral-crimson/40 rounded text-[10px] font-bold uppercase">Cursed</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2 & 3: Simulation Map & Ledger Stream -->
+            <div class="space-y-6 lg:col-span-2 flex flex-col">
+                <div class="glass-panel rounded-xl p-5 shadow-xl relative overflow-hidden h-72 flex flex-col">
+                    <div class="flex justify-between items-center mb-3 z-10">
+                        <span class="text-xs font-serif font-bold text-cathedral-gold">[ WORLD VIEW: SIMULATED CIVILIZATION TOPOLOGY ]</span>
+                        <div class="flex items-center gap-2">
+                            <button @click="triggerCataclysm()" class="px-2.5 py-1 bg-cathedral-crimson/20 hover:bg-cathedral-crimson/30 text-cathedral-crimson rounded border border-cathedral-crimson/40 text-[10px] font-bold uppercase">⚡ Trigger Cataclysm</button>
+                            <span class="text-[10px] text-cathedral-ash bg-black/60 px-2 py-1 rounded border border-cathedral-border" x-text="'Agents: ' + agents.length"></span>
+                        </div>
+                    </div>
+                    <div class="flex-grow relative rounded overflow-hidden border border-cathedral-border bg-black/60">
+                        <canvas id="worldCanvas" class="w-full h-full cursor-pointer" @click="spawnAgent($event)"></canvas>
+                        <div class="absolute bottom-2 left-3 text-[10px] text-cathedral-ash bg-black/70 px-2 py-1 rounded pointer-events-none">
+                            Click canvas to spawn autonomous agents • Gold = Kingdoms, Cyan = Nomads
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-grow">
+                    <div class="glass-panel rounded-xl p-4 shadow-xl relative overflow-hidden h-52 flex flex-col">
+                        <span class="text-[11px] font-serif font-bold text-cathedral-gold mb-2">[ SHADER CATHEDRAL RAYMARCH ]</span>
+                        <div class="flex-grow relative rounded overflow-hidden border border-cathedral-border bg-black">
+                            <canvas id="shaderCanvas" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel rounded-xl p-4 shadow-xl flex flex-col h-52">
+                        <span class="text-[11px] font-serif font-bold text-cathedral-cyan mb-2">[ JBP LEDGER & ASH CHRONICLE ]</span>
+                        <div class="space-y-2 overflow-y-auto pr-1 text-[11px] flex-grow custom-scrollbar">
+                            <template x-for="block in ledgerBlocks">
+                                <div class="p-2 bg-cathedral-obsidian rounded border border-cathedral-border">
+                                    <div class="flex justify-between text-cathedral-gold text-[10px]">
+                                        <span x-text="block.hash"></span>
+                                        <span x-text="block.time"></span>
+                                    </div>
+                                    <p class="text-slate-300 mt-0.5" x-text="'Action: ' + block.action + ' | Narrative: ' + block.narrative"></p>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: EAS-03 SPATIAL TRIAD KINEMATICS -->
+        <div x-show="activeTab === 'triad'" class="space-y-6">
+            <div class="glass-panel rounded-xl p-6 shadow-xl space-y-4">
+                <div class="flex justify-between items-center pb-2 border-b border-cathedral-border">
+                    <h2 class="font-serif text-base font-bold text-cathedral-gold">[ EAS-03 SPATIAL TRIAD ENGINE: PARACONSISTENT KINEMATICS ]</h2>
+                    <span class="text-xs text-cathedral-cyan">Cost Ceiling: $c \le 0.30$</span>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Evaluates spatial truth via Belnap-Dunn lattice matrix $\mathcal{M}: \mathbb{Z}^2 \rightarrow \{T, F, B, N\}$. Dialetheic intersections ($B$) trigger the <strong>Metamorphic Squeeze</strong> protocol, petrifying contradictions into load-bearing Harmonic Scars ($L \ge 1/c$).
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                    <!-- Matrix Grid -->
+                    <div class="bg-black/40 p-4 rounded-xl border border-cathedral-border space-y-3 md:col-span-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-cathedral-gold">Coordinate Truth Matrix ($5 \times 5$)</span>
+                            <span class="text-[10px] text-cathedral-ash">Click node to cycle state: T ➔ F ➔ B ➔ N</span>
+                        </div>
+                        <div class="grid grid-cols-5 gap-2 py-2">
+                            <template x-for="(cell, index) in triadGrid" :key="index">
+                                <button @click="cycleCellState(index)" class="h-16 rounded border flex flex-col items-center justify-center p-1 transition font-mono text-xs"
+                                    :class="cell.state === 'T' ? 'bg-cathedral-emerald/20 border-cathedral-emerald text-cathedral-emerald' : (cell.state === 'F' ? 'bg-cathedral-crimson/20 border-cathedral-crimson text-cathedral-crimson' : (cell.state === 'B' ? 'bg-cathedral-purple/30 border-cathedral-purple text-cathedral-purple animate-pulse' : 'bg-slate-800 border-slate-700 text-slate-400'))">
+                                    <span class="font-bold text-sm" x-text="cell.state"></span>
+                                    <span class="text-[9px]" x-text="'(' + cell.x + ',' + cell.y + ')'"></span>
+                                </button>
+                            </template>
+                        </div>
+                        <div class="flex gap-3 pt-2">
+                            <button @click="executeMetamorphicSqueeze()" class="flex-1 py-2.5 bg-cathedral-purple/20 hover:bg-cathedral-purple/30 text-cathedral-purple border border-cathedral-purple/40 rounded text-xs font-bold uppercase transition">
+                                ⚡ Execute Metamorphic Squeeze ($B \rightarrow \text{Scar}$)$
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Triad Telemetry & Metrics -->
+                    <div class="bg-black/40 p-4 rounded-xl border border-cathedral-border space-y-4 text-xs flex flex-col justify-between">
+                        <div class="space-y-3">
+                            <span class="font-serif font-bold text-cathedral-gold">[ TELEMETRY INVARIANTS ]</span>
+                            <div class="space-y-2 font-mono text-[11px]">
+                                <div class="flex justify-between"><span class="text-cathedral-ash">Harmonic Scars:</span> <span class="text-cathedral-gold font-bold" x-text="triadMetrics.scarsCount"></span></div>
+                                <div class="flex justify-between"><span class="text-cathedral-ash">Algorithmic Cost ($c$):</span> <span class="text-cathedral-cyan font-bold" x-text="triadMetrics.cost.toFixed(2)"></span></div>
+                                <div class="flex justify-between"><span class="text-cathedral-ash">Load Capacity ($L$):</span> <span class="text-cathedral-emerald font-bold" x-text="triadMetrics.loadCap.toFixed(2)"></span></div>
+                                <div class="flex justify-between"><span class="text-cathedral-ash">Ash Archive Hash:</span> <span class="text-cathedral-gold font-mono" x-text="triadMetrics.latestHash"></span></div>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-cathedral-obsidian rounded border border-cathedral-border text-[11px] text-cathedral-ash">
+                            <p>Lex I Enforced: Historical coordinate mutations are hashed and chained immutably.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 3: SETTLER NEURON ANIMATIONS -->
+        <div x-show="activeTab === 'settlers'" class="space-y-6">
+            <div class="glass-panel rounded-xl p-6 shadow-xl space-y-4">
+                <div class="flex justify-between items-center pb-2 border-b border-cathedral-border">
+                    <h2 class="font-serif text-base font-bold text-cathedral-gold">[ WORLD_BOX SETTLER NEURON KINEMATICS & EXPONENTIAL WEIGHTING ]</h2>
+                    <div class="flex gap-2">
+                        <button @click="spawnSettler()" class="px-3 py-1 bg-cathedral-gold/20 text-cathedral-gold border border-cathedral-gold/40 rounded text-xs font-bold uppercase">+ Spawn Settler</button>
+                        <button @click="triggerFamine()" class="px-3 py-1 bg-cathedral-crimson/20 text-cathedral-crimson border border-cathedral-crimson/40 rounded text-xs font-bold uppercase">🚨 Trigger Famine</button>
+                    </div>
+                </div>
+                <div class="relative w-full h-[420px] bg-black rounded-lg border border-cathedral-border overflow-hidden">
+                    <canvas id="settlerCanvas" class="w-full h-full block cursor-crosshair"></canvas>
+                    <div class="absolute bottom-3 left-3 bg-cathedral-slate/90 border border-cathedral-border px-3 py-1.5 rounded text-[11px] text-slate-300 pointer-events-none space-y-0.5">
+                        <div>🔴 <span class="text-rose-400 font-bold">try_to_eat_city_food</span> (Critical, w=4.2) | 🟠 <span class="text-amber-400 font-bold">try_to_start_new_civilization</span> (High, w=4.6)</div>
+                        <div>🔵 <span class="text-indigo-400 font-bold">try_to_read_culture</span> (Moderate, w=4.4) | ⚪ <span class="text-slate-400 font-bold">random_wander_idle</span> (Minimal, w=3.6)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 4: AFFECTIVE SHADER SUITE -->
+        <div x-show="activeTab === 'shader'" class="space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="glass-panel rounded-xl p-5 shadow-xl space-y-4 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center pb-2 mb-3 border-b border-cathedral-border">
+                            <span class="font-serif text-xs font-bold text-cathedral-gold">[ AFFECTIVE UNIFORM CONTROLS ]</span>
+                        </div>
+                        <div class="space-y-4 text-xs">
+                            <div>
+                                <div class="flex justify-between mb-1 text-cathedral-ash"><span>Color Shift ($u_{\text{color}}$)</span> <span class="text-cathedral-gold font-bold" x-text="uniforms.colorFreq.toFixed(2)"></span></div>
+                                <input type="range" min="0.1" max="5.0" step="0.1" x-model.number="uniforms.colorFreq" class="w-full accent-cathedral-gold bg-cathedral-obsidian">
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1 text-cathedral-ash"><span>Liquify Distort ($u_{\text{liquify}}$)</span> <span class="text-cathedral-gold font-bold" x-text="uniforms.liquify.toFixed(2)"></span></div>
+                                <input type="range" min="0.0" max="3.0" step="0.05" x-model.number="uniforms.liquify" class="w-full accent-cathedral-gold bg-cathedral-obsidian">
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1 text-cathedral-ash"><span>Pulse Rate ($u_{\text{pulse}}$)</span> <span class="text-cathedral-gold font-bold" x-text="uniforms.pulseRate.toFixed(2)"></span></div>
+                                <input type="range" min="0.1" max="4.0" step="0.1" x-model.number="uniforms.pulseRate" class="w-full accent-cathedral-gold bg-cathedral-obsidian">
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1 text-cathedral-ash"><span>Fractal Octaves ($u_{\text{fractal}}$)</span> <span class="text-cathedral-gold font-bold" x-text="uniforms.octaves"></span></div>
+                                <input type="range" min="1" max="8" step="1" x-model.number="uniforms.octaves" class="w-full accent-cathedral-gold bg-cathedral-obsidian">
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1 text-cathedral-ash"><span>Kaleidoscope Symmetries ($u_{\text{kaleido}}$)</span> <span class="text-cathedral-gold font-bold" x-text="uniforms.kaleidoscope"></span></div>
+                                <input type="range" min="1" max="12" step="1" x-model.number="uniforms.kaleidoscope" class="w-full accent-cathedral-gold bg-cathedral-obsidian">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-xl p-5 shadow-xl flex flex-col lg:col-span-2 h-[550px] space-y-3">
+                    <div class="flex justify-between items-center pb-2 border-b border-cathedral-border">
+                        <span class="font-serif text-xs font-bold text-cathedral-cyan">[ WEBGL REAL-TIME SENSORIUM VIEWPORT ]</span>
+                        <span class="text-[10px] text-cathedral-emerald font-bold">STATUS: ACTIVE</span>
+                    </div>
+                    <div class="flex-grow relative rounded-lg overflow-hidden border border-cathedral-border bg-black">
+                        <canvas id="liveShaderCanvas" class="w-full h-full"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="max-w-7xl mx-auto px-6 py-6 border-t border-cathedral-border mt-auto text-center text-xs text-cathedral-ash">
+        <p>MLAOS-Prime // EAS-03 Master Engine • Safety ➔ Permission ➔ Meaning ➔ Choice ➔ Action ➔ Memory ➔ History</p>
+    </footer>
+
+    <!-- ALPINE & ENGINE RUNTIME -->
+    <script>
+        class SettlerAgent {
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.vy = (Math.random() - 0.5) * 2;
+                this.radius = 8;
+                this.neurons = {
+                    'eat_food': { weight: 4.2, layer: 'Critical', color: '#e11d48' },
+                    'found_civ': { weight: 4.6, layer: 'High', color: '#f59e0b' },
+                    'read_culture': { weight: 4.4, layer: 'Moderate', color: '#6366f1' },
+                    'wander_idle': { weight: 3.6, layer: 'Minimal', color: '#94a3b8' }
+                };
+                this.activeNeuron = 'wander_idle';
+                this.stateTimer = 0;
+                this.animPhase = Math.random() * Math.PI * 2;
+                this.pulseRadius = 0;
+            }
+            update(width, height, forceEat = false) {
+                this.stateTimer++;
+                this.animPhase += 0.1;
+                if (this.stateTimer > 120 || forceEat) {
+                    this.stateTimer = 0;
+                    if (forceEat) {
+                        this.activeNeuron = 'eat_food';
+                    } else {
+                        const keys = Object.keys(this.neurons);
+                        const expWeights = keys.map(k => Math.exp(this.neurons[k].weight));
+                        const totalExp = expWeights.reduce((a, b) => a + b, 0);
+                        let r = Math.random() * totalExp, cumulative = 0;
+                        for (let i = 0; i < keys.length; i++) {
+                            cumulative += expWeights[i];
+                            if (r <= cumulative) { this.activeNeuron = keys[i]; break; }
+                        }
+                    }
+                    if (this.activeNeuron === 'found_civ') this.pulseRadius = 5;
+                }
+                if (this.activeNeuron === 'eat_food') {
+                    const angle = Math.atan2(height / 2 - this.y, width / 2 - this.x);
+                    this.vx = Math.cos(angle) * 3.5; this.vy = Math.sin(angle) * 3.5;
+                } else if (this.activeNeuron === 'found_civ') {
+                    this.vx *= 0.8; this.vy *= 0.8;
+                    if (this.pulseRadius > 0) { this.pulseRadius += 0.8; if (this.pulseRadius > 40) this.pulseRadius = 0; }
+                } else if (this.activeNeuron === 'read_culture') {
+                    this.vx *= 0.5; this.vy *= 0.5;
+                } else {
+                    if (Math.random() < 0.05) { this.vx = (Math.random() - 0.5) * 1.5; this.vy = (Math.random() - 0.5) * 1.5; }
+                }
+                this.x += this.vx; this.y += this.vy;
+                if (this.x < 15) { this.x = 15; this.vx *= -1; }
+                if (this.x > width - 15) { this.x = width - 15; this.vx *= -1; }
+                if (this.y < 15) { this.y = 15; this.vy *= -1; }
+                if (this.y > height - 15) { this.y = height - 15; this.vy *= -1; }
+            }
+            draw(ctx) {
+                ctx.save(); ctx.translate(this.x, this.y);
+                if (this.activeNeuron === 'found_civ' && this.pulseRadius > 0) {
+                    ctx.strokeStyle = 'rgba(245, 158, 11, ' + (1 - this.pulseRadius / 40) + ')';
+                    ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(0, 0, this.pulseRadius, 0, Math.PI * 2); ctx.stroke();
+                }
+                let scale = 1.0;
+                if (this.activeNeuron === 'eat_food') scale = 1.0 + Math.sin(this.animPhase * 3) * 0.3;
+                else if (this.activeNeuron === 'read_culture') ctx.translate(0, Math.sin(this.animPhase) * 3);
+                ctx.scale(scale, scale);
+                ctx.fillStyle = this.neurons[this.activeNeuron].color;
+                ctx.beginPath(); ctx.arc(0, 0, this.radius, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(0, 0, 3, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#cbd5e1'; ctx.font = '10px JetBrains Mono, monospace'; ctx.textAlign = 'center';
+                ctx.fillText(this.activeNeuron, 0, -14);
+                ctx.restore();
+            }
+        }
+
+        function mlaosMasterEngine() {
+            return {
+                activeTab: 'dashboard',
+                snr: 4.5,
+                coreTemp: 37.4,
+                fatigue: 0.42,
+                systemFault: false,
+                activeStatuses: ['BLESSED', 'CAFFEINATED'],
+                agents: [],
+                disasters: [],
+                ledgerBlocks: [
+                    { hash: '4b9d57294f76...', time: 'T-00:15:20', action: 'SYSTEM_BOOT', narrative: 'Sovereign terminal substrate mounted across 4 topological strata.' },
+                    { hash: '304ddf762f64...', time: 'T-00:10:04', action: 'HARMONIC_SCAR', narrative: 'Dialetheic contradiction at x=5 petrified into load-bearing pier.' }
+                ],
+                triadGrid: [],
+                triadMetrics: { scarsCount: 1, cost: 0.28, loadCap: 3.57, latestHash: '304ddf762f64...' },
+                uniforms: { colorFreq: 1.2, liquify: 1.0, pulseRate: 1.0, octaves: 5, kaleidoscope: 4 },
+                settlers: [],
+                startTime: Date.now(),
+
+                initTriadGrid() {
+                    const states = ['T', 'F', 'B', 'N'];
+                    for (let y = 0; y < 5; y++) {
+                        for (let x = 0; x < 5; x++) {
+                            let initial = (x === 2 && y === 2) ? 'B' : (Math.random() < 0.4 ? 'T' : 'F');
+                            this.triadGrid.push({ x: x, y: y, state: initial });
+                        }
+                    }
+                },
+
+                cycleCellState(index) {
+                    const cycle = {'T': 'F', 'F': 'B', 'B': 'N', 'N': 'T'};
+                    this.triadGrid[index].state = cycle[this.triadGrid[index].state];
+                },
+
+                executeMetamorphicSqueeze() {
+                    let bCount = this.triadGrid.filter(c => c.state === 'B').length;
+                    if (bCount === 0) {
+                        // Force one cell to B to demonstrate
+                        this.triadGrid[12].state = 'B';
+                    }
+                    this.triadGrid.forEach(c => {
+                        if (c.state === 'B') c.state = 'T'; // petrify into harmonic scar
+                    });
+                    this.triadMetrics.scarsCount++;
+                    this.triadMetrics.cost = Number((Math.random() * 0.08 + 0.21).toFixed(2)); // c <= 0.30
+                    this.triadMetrics.loadCap = Number((1 / this.triadMetrics.cost).toFixed(2));
+                    this.triadMetrics.latestHash = Array.from({length: 12}, () => Math.floor(Math.random()*16).toString(16)).join('') + '...';
+                    
+                    this.ledgerBlocks.unshift({
+                        hash: this.triadMetrics.latestHash,
+                        time: 'Just now',
+                        action: 'METAMORPHIC_SQUEEZE',
+                        narrative: `EAS-03 resolved dialetheic intersection into Harmonic Scar (cost c=${this.triadMetrics.cost}).`
+                    });
+                },
+
+                initWorldSimulation() {
+                    const canvas = document.getElementById('worldCanvas');
+                    const ctx = canvas.getContext('2d');
+                    for(let i=0; i<14; i++) {
+                        this.agents.push({
+                            x: Math.random() * 500, y: Math.random() * 220,
+                            vx: (Math.random() - 0.5) * 1.5, vy: (Math.random() - 0.5) * 1.5,
+                            type: i < 5 ? 'Kingdom' : 'Nomad', color: i < 5 ? '#d4af37' : '#06b6d4'
+                        });
+                    }
+                    const renderWorld = () => {
+                        canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
+                        ctx.fillStyle = '#0a0b0e'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        ctx.strokeStyle = '#151b26'; ctx.lineWidth = 1;
+                        for(let x=0; x<canvas.width; x+=40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
+                        for(let y=0; y<canvas.height; y+=40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+                        this.agents.forEach(agent => {
+                            agent.x += agent.vx; agent.y += agent.vy;
+                            if(agent.x < 10 || agent.x > canvas.width - 10) agent.vx *= -1;
+                            if(agent.y < 10 || agent.y > canvas.height - 10) agent.vy *= -1;
+                            ctx.fillStyle = agent.color; ctx.beginPath(); ctx.arc(agent.x, agent.y, 4, 0, Math.PI * 2); ctx.fill();
+                        });
+                        requestAnimationFrame(renderWorld);
+                    };
+                    renderWorld();
+
+                    // Settler Canvas
+                    const settlerCanvas = document.getElementById('settlerCanvas');
+                    const sCtx = settlerCanvas.getContext('2d');
+                    for(let i=0; i<8; i++) {
+                        this.settlers.push(new SettlerAgent(Math.random() * 500 + 50, Math.random() * 250 + 50));
+                    }
+                    const renderSettlers = () => {
+                        settlerCanvas.width = settlerCanvas.clientWidth; settlerCanvas.height = settlerCanvas.clientHeight;
+                        sCtx.fillStyle = '#020617'; sCtx.fillRect(0, 0, settlerCanvas.width, settlerCanvas.height);
+                        sCtx.fillStyle = 'rgba(225, 29, 72, 0.15)'; sCtx.beginPath(); sCtx.arc(settlerCanvas.width/2, settlerCanvas.height/2, 35, 0, Math.PI*2); sCtx.fill();
+                        this.settlers.forEach(s => { s.update(settlerCanvas.width, settlerCanvas.height); s.draw(sCtx); });
+                        requestAnimationFrame(renderSettlers);
+                    };
+                    renderSettlers();
+                },
+
+                spawnAgent(event) {
+                    const rect = event.target.getBoundingClientRect();
+                    this.agents.push({ x: event.clientX - rect.left, y: event.clientY - rect.top, vx: (Math.random() - 0.5)*2, vy: (Math.random() - 0.5)*2, type: 'Kingdom', color: '#d4af37' });
+                },
+
+                spawnSettler() {
+                    const canvas = document.getElementById('settlerCanvas');
+                    this.settlers.push(new SettlerAgent(canvas.width / 2, canvas.height / 2));
+                },
+
+                triggerFamine() {
+                    const canvas = document.getElementById('settlerCanvas');
+                    this.settlers.forEach(s => s.update(canvas.width, canvas.height, true));
+                },
+
+                triggerCataclysm() {
+                    this.agents.forEach(a => { a.vx += (Math.random() - 0.5) * 5; a.vy += (Math.random() - 0.5) * 5; });
+                },
+
+                injectStatus(status) { if (this.activeStatuses.length < 9 && !this.activeStatuses.includes(status)) this.activeStatuses.push(status); },
+                removeStatus(status) { this.activeStatuses = this.activeStatuses.filter(s => s !== status); },
+
+                get isSafeState() { return !this.systemFault && this.snr >= 3.0 && this.coreTemp <= 39.0 && this.fatigue < 0.85; },
+                get systemStatus() { return this.isSafeState ? 'OPERATIONAL' : 'PROTECTIVE_CRYSTALLIZATION'; },
+
+                initShader() {
+                    const canvas = document.getElementById('shaderCanvas');
+                    const gl = canvas.getContext('webgl');
+                    if (!gl) return;
+                    const vsSource = `attribute vec2 aPosition; void main() { gl_Position = vec4(aPosition, 0.0, 1.0); }`;
+                    const fsSource = `
+                        precision mediump float;
+                        uniform vec2 u_resolution;
+                        uniform float u_time;
+                        void main() {
+                            vec2 p = (gl_FragCoord.xy * 2.0 - u_resolution.xy) / min(u_resolution.x, u_resolution.y);
+                            float wave = sin(length(p) * 8.0 - u_time * 2.0) * 0.5 + 0.5;
+                            vec3 color = vec3(0.04, 0.06, 0.1) + vec3(0.83, 0.68, 0.21) * wave * 0.4;
+                            gl_FragColor = vec4(color, 1.0);
+                        }
+                    `;
+                    const vs = gl.createShader(gl.VERTEX_SHADER); gl.shaderSource(vs, vsSource); gl.compileShader(vs);
+                    const fs = gl.createShader(gl.FRAGMENT_SHADER); gl.shaderSource(fs, fsSource); gl.compileShader(fs);
+                    const program = gl.createProgram(); gl.attachShader(program, vs); gl.attachShader(program, fs); gl.linkProgram(program);
+                    const positionBuffer = gl.createBuffer();
+                    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+
+                    // Live affective shader canvas
+                    const liveCanvas = document.getElementById('liveShaderCanvas');
+                    const lGl = liveCanvas.getContext('webgl');
+                    const lProgram = program; // reuse program for simplicity
+
+                    const render = () => {
+                        if (canvas) {
+                            canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
+                            gl.viewport(0, 0, canvas.width, canvas.height);
+                            gl.useProgram(program);
+                            gl.uniform2f(gl.getUniformLocation(program, "u_resolution"), canvas.width, canvas.height);
+                            gl.uniform1f(gl.getUniformLocation(program, "u_time"), (Date.now() - this.startTime) * 0.001);
+                            gl.drawArrays(gl.TRIANGLES, 0, 6);
+                        }
+                        if (liveCanvas && lGl) {
+                            liveCanvas.width = liveCanvas.clientWidth; liveCanvas.height = liveCanvas.clientHeight;
+                            lGl.viewport(0, 0, liveCanvas.width, liveCanvas.height);
+                            lGl.useProgram(lProgram);
+                            lGl.uniform2f(lGl.getUniformLocation(lProgram, "u_resolution"), liveCanvas.width, liveCanvas.height);
+                            lGl.uniform1f(lGl.getUniformLocation(lProgram, "u_time"), (Date.now() - this.startTime) * 0.001);
+                            lGl.drawArrays(lGl.TRIANGLES, 0, 6);
+                        }
+                        requestAnimationFrame(render);
+                    };
+                    render();
+                }
+            }
+        }
+    </script>
+</body>
+</html>

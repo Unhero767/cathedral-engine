@@ -1,0 +1,59 @@
+{
+  "3": {
+    "class_type": "KSampler",
+    "inputs": {
+      "cfg": 7.5,
+      "denoise": 1,
+      "latent_image": ["5", 0],
+      "model": ["4", 0],
+      "negative": ["7", 0],
+      "positive": ["6", 0],
+      "sampler_name": "dpmpp_2m",
+      "scheduler": "karras",
+      "seed": 42069,
+      "steps": 28
+    }
+  },
+  "4": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "dreamshaper_8.safetensors"
+    }
+  },
+  "5": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "batch_size": 1,
+      "height": 576,
+      "width": 1024
+    }
+  },
+  "6": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": ["4", 1],
+      "text": "A massive multi-lineage apex predator, mammalian quadrupedal chassis, muscular feline panther base anatomy, dermal armor made of compressed diamond-hard bark and crystalline leaves, glowing amber Mycelial-Vascular Crucible embedded in the flank, pulsing internal bioluminescence, thermodynamic heat distortion, standing on jagged dark geometric Post-Perovskite crystals, Khet-deployed anchor zone, volumetric smoke, geophysical static in the air, dark moody atmosphere, cinematic lighting, Unreal Engine 5 render, 8k resolution, macro photography details, sharp focus, dramatic rim lighting"
+    }
+  },
+  "7": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": ["4", 1],
+      "text": "deformed, extra limbs, missing limbs, bad anatomy, cartoon, illustration, flat lighting, blurry, watermark, text, low resolution, ugly, poorly drawn"
+    }
+  },
+  "8": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["3", 0],
+      "vae": ["4", 2]
+    }
+  },
+  "9": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "filename_prefix": "MLAOS_Titan_Snap",
+      "images": ["8", 0]
+    }
+  }
+}

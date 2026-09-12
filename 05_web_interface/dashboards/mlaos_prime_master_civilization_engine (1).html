@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLAOS-Prime // Master Civilization & Epistemological Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.13.5/cdn.min.js" defer></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cathedral: {
+                            obsidian: '#0a0b0e',
+                            slate: '#12151c',
+                            border: '#232936',
+                            gold: '#d4af37',
+                            amber: '#f59e0b',
+                            crimson: '#dc2626',
+                            emerald: '#059669',
+                            cyan: '#06b6d4',
+                            ash: '#94a3b8',
+                            purple: '#8b5cf6'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'monospace'],
+                        serif: ['Cinzel', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        .glass-panel {
+            background: rgba(18, 21, 28, 0.88);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(212, 175, 55, 0.18);
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0a0b0e;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #232936;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-cathedral-obsidian text-slate-200 font-mono min-h-screen selection:bg-cathedral-gold selection:text-black" x-data="mlaosMasterEngine()" x-init="initShader(); initWorldSimulation()">
+
+    <header class="border-b border-cathedral-border bg-cathedral-slate/90 sticky top-0 z-50 px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-3 h-3 rounded-full animate-ping" :class="systemFault ? 'bg-cathedral-crimson' : 'bg-cathedral-emerald'"></div>
+            <div>
+                <h1 class="font-serif tracking-widest text-cathedral-gold text-sm md:text-lg font-bold">BCI-INV // TERRA-SHUNT-01</h1>
+                <p class="text-xs text-cathedral-ash tracking-wider">SYSTEM: MLAOS-PRIME • STATE: <span :class="systemFault ? 'text-cathedral-crimson font-bold' : 'text-cathedral-emerald font-bold'" x-text="systemStatus"></span></p>
+            </div>
+        </div>
+
+        <!-- Constitutional Axiom Banner -->
+        <div class="hidden xl:flex items-center gap-2 text-xs bg-black/40 px-4 py-2 rounded border border-cathedral-border text-cathedral-ash">
+            <span class="text-cathedral-gold font-bold">LEX I:</span> Safety ➔ Permission ➔ Meaning ➔ Choice ➔ Action ➔ Memory ➔ History
+        </div>
+
+        <div class="flex items-center gap-3">
+            <button @click="triggerExecutionCycle()" class="px-4 py-2 bg-cathedral-gold/10 hover:bg-cathedral-gold/20 text-cathedral-gold border border-cathedral-gold/40 rounded text-xs transition uppercase tracking-wider font-bold shadow">
+                ⚡ Pulse Telemetry & Simulation
+            </button>
+            <button @click="toggleFault()" class="px-4 py-2 rounded text-xs transition uppercase tracking-wider font-bold border shadow" :class="systemFault ? 'bg-cathedral-emerald/20 text-cathedral-emerald border-cathedral-emerald/40' : 'bg-cathedral-crimson/20 text-cathedral-crimson border-cathedral-crimson/40'" x-text="systemFault ? 'Clear Fault / Reset' : 'Simulate L1 Crystallization'"></button>
+        </div>
+    </header>
+
+    <nav class="bg-cathedral-slate/70 border-b border-cathedral-border">
+        <div class="max-w-7xl mx-auto px-6 flex space-x-2 sm:space-x-6 overflow-x-auto py-2.5 text-xs font-mono">
+            <button @click="activeTab = 'dashboard'" :class="activeTab === 'dashboard' ? 'bg-cathedral-gold/20 text-cathedral-gold border-cathedral-gold/50' : 'text-cathedral-ash hover:text-white border-transparent'" class="px-3 py-1.5 rounded border transition font-bold">🏛️ MASTER DASHBOARD</button>
+            <button @click="activeTab = 'subsumption'" :class="activeTab === 'subsumption' ? 'bg-cathedral-gold/20 text-cathedral-gold border-cathedral-gold/50' : 'text-cathedral-ash hover:text-white border-transparent'" class="px-3 py-1.5 rounded border transition font-bold">🛡️ SUBSUMPTION STACK (L0-L2)</button>
+            <button @click="activeTab = 'paraconsistent'" :class="activeTab === 'paraconsistent' ? 'bg-cathedral-gold/20 text-cathedral-gold border-cathedral-gold/50' : 'text-cathedral-ash hover:text-white border-transparent'" class="px-3 py-1.5 rounded border transition font-bold">☯️ BELNAP-DUNN LATTICE</button>
+            <button @click="activeTab = 'boltzmann'" :class="activeTab === 'boltzmann' ? 'bg-cathedral-gold/20 text-cathedral-gold border-cathedral-gold/50' : 'text-cathedral-ash hover:text-white border-transparent'" class="px-3 py-1.5 rounded border transition font-bold">🎲 BOLTZMANN POLICY</button>
+            <button @click="activeTab = 'chronicle'" :class="activeTab === 'chronicle' ? 'bg-cathedral-gold/20 text-cathedral-gold border-cathedral-gold/50' : 'text-cathedral-ash hover:text-white border-transparent'" class="px-3 py-1.5 rounded border transition font-bold">📜 ASH CHRONICLE</button>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6">
+
+        <!-- VIEW 1: MASTER DASHBOARD -->
+        <div x-show="activeTab === 'dashboard'" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Column 1: Subsumption & Neurons -->
+            <div class="space-y-6">
+                <!-- Subsumption Safety Stack Panel -->
+                <div class="glass-panel rounded-xl p-5 shadow-xl">
+                    <h2 class="font-serif text-sm font-bold text-cathedral-gold mb-3 flex items-center justify-between">
+                        <span>[ SUBSUMPTION STACK (L0–L2) ]</span>
+                        <span class="text-xs font-mono text-cathedral-ash">Safety Envelope</span>
+                    </h2>
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-cathedral-ash">L0: Signal-to-Noise (SNR)</span>
+                                <span class="font-bold" :class="snr < 3.0 ? 'text-cathedral-crimson' : 'text-cathedral-emerald'" x-text="snr.toFixed(1) + ' dB'"></span>
+                            </div>
+                            <input type="range" min="1.0" max="8.0" step="0.1" x-model.number="snr" class="w-full accent-cathedral-gold bg-cathedral-obsidian">
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-cathedral-ash">L1: Core Temperature</span>
+                                <span class="font-bold" :class="coreTemp > 39.0 ? 'text-cathedral-crimson' : 'text-cathedral-emerald'" x-text="coreTemp.toFixed(1) + ' °C'"></span>
+                            </div>
+                            <input type="range" min="36.0" max="41.0" step="0.1" x-model.number="coreTemp" class="w-full accent-cathedral-gold bg-cathedral-obsidian">
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-cathedral-ash">L2: Operator Fatigue Index</span>
+                                <span class="font-bold" :class="fatigue > 0.85 ? 'text-cathedral-amber' : 'text-cathedral-emerald'" x-text="fatigue.toFixed(2)"></span>
+                            </div>
+                            <input type="range" min="0.0" max="1.0" step="0.01" x-model.number="fatigue" class="w-full accent-cathedral-gold bg-cathedral-obsidian">
+                        </div>
+                    </div>
+                    <div class="mt-3 p-2.5 rounded border text-xs" :class="isSafeState ? 'bg-cathedral-emerald/10 border-cathedral-emerald/30 text-cathedral-emerald' : 'bg-cathedral-crimson/10 border-cathedral-crimson/30 text-cathedral-crimson'">
+                        <p class="font-bold" x-text="isSafeState ? 'STATUS: SAFE STATE ACTIVE' : 'STATUS: PROTECTIVE CRYSTALLIZATION'"></p>
+                    </div>
+                </div>
+
+                <!-- WorldBox Autonomous Neurons Panel -->
+                <div class="glass-panel rounded-xl p-5 shadow-xl">
+                    <h2 class="font-serif text-sm font-bold text-cathedral-gold mb-3 flex items-center justify-between">
+                        <span>[ NEURON WEIGHT ENGINE ]</span>
+                        <span class="text-xs font-mono text-cathedral-cyan">Exp Weight ($e^w$)</span>
+                    </h2>
+                    <div class="space-y-2.5 text-xs">
+                        <template x-for="neuron in customNeurons">
+                            <div class="bg-black/40 p-2.5 rounded border border-cathedral-border space-y-1">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-bold text-cathedral-gold" x-text="neuron.name"></span>
+                                    <span class="text-[9px] px-1.5 py-0.5 rounded font-bold uppercase" :class="neuron.layer === 'Critical' ? 'bg-cathedral-crimson/20 text-cathedral-crimson' : 'bg-cathedral-cyan/20 text-cathedral-cyan'" x-text="neuron.layer"></span>
+                                </div>
+                                <div class="flex justify-between items-center text-cathedral-ash text-[11px]">
+                                    <span>Weight: <strong class="text-slate-200" x-text="neuron.weight.toFixed(1)"></strong></span>
+                                    <input type="range" min="0.1" max="5.0" step="0.1" x-model.number="neuron.weight" class="w-24 accent-cathedral-gold bg-cathedral-obsidian">
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Transient Status Effects Ring Buffer -->
+                <div class="glass-panel rounded-xl p-5 shadow-xl">
+                    <h2 class="font-serif text-sm font-bold text-cathedral-gold mb-3 flex items-center justify-between">
+                        <span>[ STATUS EFFECT BUFFER ]</span>
+                        <span class="text-xs font-mono text-cathedral-amber">Max: 9 Slots</span>
+                    </h2>
+                    <div class="flex flex-wrap gap-1.5 mb-3">
+                        <template x-for="status in activeStatuses">
+                            <span class="px-2 py-1 bg-cathedral-slate border border-cathedral-border rounded text-[10px] font-bold text-cathedral-gold flex items-center gap-1">
+                                <span x-text="status"></span>
+                                <button @click="removeStatus(status)" class="text-cathedral-crimson hover:text-white">×</button>
+                            </span>
+                        </template>
+                    </div>
+                    <div class="flex gap-2">
+                        <button @click="injectStatus('BLESSED')" class="flex-1 py-1 bg-cathedral-emerald/20 hover:bg-cathedral-emerald/30 text-cathedral-emerald border border-cathedral-emerald/40 rounded text-[10px] font-bold uppercase">Inject Blessed</button>
+                        <button @click="injectStatus('CURSED')" class="flex-1 py-1 bg-cathedral-crimson/20 hover:bg-cathedral-crimson/30 text-cathedral-crimson border border-cathedral-crimson/40 rounded text-[10px] font-bold uppercase">Inject Cursed</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2 & 3: World Simulation & Shader Viewport -->
+            <div class="space-y-6 lg:col-span-2 flex flex-col">
+                <!-- World View Interactive Canvas -->
+                <div class="glass-panel rounded-xl p-5 shadow-xl relative overflow-hidden h-64 flex flex-col">
+                    <div class="flex justify-between items-center mb-2 z-10">
+                        <span class="text-xs font-serif font-bold text-cathedral-gold">[ WORLD VIEW: SIMULATED CIVILIZATION TOPOLOGY ]</span>
+                        <div class="flex items-center gap-2">
+                            <button @click="triggerCataclysm()" class="px-2.5 py-1 bg-cathedral-crimson/20 hover:bg-cathedral-crimson/30 text-cathedral-crimson rounded border border-cathedral-crimson/40 text-[10px] font-bold uppercase">⚡ Trigger Cataclysm</button>
+                            <span class="text-[10px] text-cathedral-ash bg-black/60 px-2 py-1 rounded border border-cathedral-border" x-text="'Agents: ' + agents.length"></span>
+                        </div>
+                    </div>
+                    <div class="flex-grow relative rounded overflow-hidden border border-cathedral-border bg-black/60">
+                        <canvas id="worldCanvas" class="w-full h-full cursor-pointer" @click="spawnAgent($event)"></canvas>
+                        <div class="absolute bottom-2 left-3 text-[10px] text-cathedral-ash bg-black/70 px-2 py-1 rounded pointer-events-none">
+                            Click canvas to spawn autonomous agents • Gold = Kingdoms, Cyan = Nomads
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WebGL Shader & JBP Ledger Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-grow">
+                    <!-- Shader Viewport -->
+                    <div class="glass-panel rounded-xl p-4 shadow-xl relative overflow-hidden h-48 flex flex-col">
+                        <span class="text-[11px] font-serif font-bold text-cathedral-gold mb-2">[ SHADER CATHEDRAL RAYMARCH ]</span>
+                        <div class="flex-grow relative rounded overflow-hidden border border-cathedral-border bg-black">
+                            <canvas id="shaderCanvas" class="w-full h-full"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- JBP Ledger & Ash Chronicle Stream -->
+                    <div class="glass-panel rounded-xl p-4 shadow-xl flex flex-col h-48">
+                        <span class="text-[11px] font-serif font-bold text-cathedral-cyan mb-2">[ JBP LEDGER & ASH CHRONICLE ]</span>
+                        <div class="space-y-2 overflow-y-auto pr-1 text-[11px] flex-grow custom-scrollbar">
+                            <template x-for="block in ledgerBlocks">
+                                <div class="p-2 bg-cathedral-obsidian rounded border border-cathedral-border">
+                                    <div class="flex justify-between text-cathedral-gold text-[10px]">
+                                        <span x-text="block.hash"></span>
+                                        <span x-text="block.time"></span>
+                                    </div>
+                                    <p class="text-slate-300 mt-0.5" x-text="'Action: ' + block.action + ' | Narrative: ' + block.narrative"></p>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: SUBSUMPTION DEEP DIVE -->
+        <div x-show="activeTab === 'subsumption'" class="space-y-6">
+            <div class="glass-panel rounded-xl p-6 shadow-xl space-y-4">
+                <h2 class="font-serif text-lg font-bold text-cathedral-gold">[ SUBSUMPTION ARCHITECTURE & CONSTITUTIONAL PRIORITY ]</h2>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    The subsumption stack ($L_0 \text{--} L_2 \succ L_3 \text{--} L_5$) enforces strict hierarchical inhibition. Lower-level survival invariants possess absolute veto authority over higher-level preference engines. If physical telemetry breaches critical thermal or electrical thresholds, the candidate action space $A_{\text{safe}}(x)$ collapses to an empty set, instantly triggering terminal <strong>Protective Crystallization</strong>.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+                    <div class="bg-black/40 p-4 rounded border border-cathedral-border space-y-2">
+                        <span class="text-xs font-mono font-bold text-cathedral-emerald">L0: SIGNAL VALIDITY</span>
+                        <p class="text-xs text-cathedral-ash">Continuous impedance and SNR verification. Rejects artifact noise before cognitive parsing.</p>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded border border-cathedral-border space-y-2">
+                        <span class="text-xs font-mono font-bold text-cathedral-amber">L1: HARD SAFETY INVARIANTS</span>
+                        <p class="text-xs text-cathedral-ash">Enforces thermodynamic and neuro-electrical boundaries. Triggers system-wide failure freeze upon breach.</p>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded border border-cathedral-border space-y-2">
+                        <span class="text-xs font-mono font-bold text-cathedral-cyan">L2: OPERATOR FATIGUE</span>
+                        <p class="text-xs text-cathedral-ash">Monitors circadian stability and cognitive load indices to engage safe mode HOLD states.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 3: BELNAP-DUNN LATTICE -->
+        <div x-show="activeTab === 'paraconsistent'" class="space-y-6">
+            <div class="glass-panel rounded-xl p-6 shadow-xl space-y-4">
+                <h2 class="font-serif text-lg font-bold text-cathedral-gold">[ BELNAP-DUNN FOUR-VALUED TRUTH LATTICE ]</h2>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    When simultaneous BCI channels produce contradictory telemetry ($P \wedge \neg P$), classical logic causes system explosion. MLAOS-Prime maps contradictions to state <strong>$B$ (Both)</strong> within $\mathrm{FOUR} = \{T, F, B, N\}$, preserving contradiction as load-bearing historical architecture rather than throwing an unhandled exception.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div class="bg-black/40 p-4 rounded border border-cathedral-border space-y-3">
+                        <span class="text-xs font-mono text-cathedral-gold font-bold">Interactive Truth Evaluator</span>
+                        <div class="flex gap-3 text-xs">
+                            <div class="flex-1">
+                                <label class="block text-cathedral-ash mb-1">Stream A</label>
+                                <select x-model="streamA" class="w-full bg-cathedral-obsidian border border-cathedral-border rounded p-2 text-cathedral-gold">
+                                    <option value="T">T (True)</option>
+                                    <option value="F">F (False)</option>
+                                    <option value="B">B (Both)</option>
+                                    <option value="N">N (Neither)</option>
+                                </select>
+                            </div>
+                            <div class="flex-1">
+                                <label class="block text-cathedral-ash mb-1">Stream B</label>
+                                <select x-model="streamB" class="w-full bg-cathedral-obsidian border border-cathedral-border rounded p-2 text-cathedral-gold">
+                                    <option value="T">T (True)</option>
+                                    <option value="F">F (False)</option>
+                                    <option value="B">B (Both)</option>
+                                    <option value="N">N (Neither)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-cathedral-obsidian rounded border border-cathedral-border text-xs space-y-1">
+                            <div class="flex justify-between"><span class="text-cathedral-ash">Conjunction ($A \wedge B$):</span> <span class="text-cathedral-gold font-bold" x-text="conjunctionResult"></span></div>
+                            <div class="flex justify-between"><span class="text-cathedral-ash">Disjunction ($A \vee B$):</span> <span class="text-cathedral-gold font-bold" x-text="disjunctionResult"></span></div>
+                        </div>
+                    </div>
+                    <div class="bg-black/40 p-4 rounded border border-cathedral-border flex flex-col justify-center items-center text-center">
+                        <span class="text-xs font-mono text-cathedral-cyan mb-2">HASSE TOPOLOGY & HARMONIC SCARS</span>
+                        <p class="text-xs text-cathedral-ash">Dialetheic buffers petrify conceptual collisions into load-bearing X-shaped pillars within the simulation substrate.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 4: BOLTZMANN POLICY -->
+        <div x-show="activeTab === 'boltzmann'" class="space-y-6">
+            <div class="glass-panel rounded-xl p-6 shadow-xl space-y-4">
+                <h2 class="font-serif text-lg font-bold text-cathedral-gold">[ CONSTRAINED STOCHASTIC OPTIMIZATION POLICY ]</h2>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Action selection follows $\pi(a \mid x) = \frac{\exp(U(a \mid x) / T)}{\sum_{b \in A_{\text{safe}}(x)} \exp(U(b \mid x) / T)}$. Safety constraints operate strictly as pre-decision filters on the action space, eradicating the Utility Fallacy.
+                </p>
+                <div class="bg-black/40 p-4 rounded border border-cathedral-border space-y-3">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-cathedral-gold font-bold">Exploration Temperature ($T$):</span>
+                        <input type="range" min="0.1" max="2.0" step="0.1" x-model.number="boltzmannTemp" class="w-48 accent-cathedral-gold bg-cathedral-obsidian">
+                        <span class="font-mono text-cathedral-gold" x-text="boltzmannTemp.toFixed(1)"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 5: ASH CHRONICLE -->
+        <div x-show="activeTab === 'chronicle'" class="space-y-6">
+            <div class="glass-panel rounded-xl p-6 shadow-xl space-y-4">
+                <h2 class="font-serif text-lg font-bold text-cathedral-gold">[ AUTOMATED HISTORIOGRAPHY & ASH ARCHIVE ]</h2>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    The Ash Chronicle transforms raw JBP Ledger telemetry into structured WorldBox historical prose. Under Lex I (Never-Overwrite Doctrine), the chronicle may interpret the ledger, but it may never overwrite the ledger.
+                </p>
+                <div class="space-y-3">
+                    <template x-for="block in ledgerBlocks">
+                        <div class="bg-black/40 p-4 rounded border border-cathedral-border space-y-1">
+                            <div class="flex justify-between text-xs text-cathedral-gold">
+                                <span class="font-mono" x-text="block.hash"></span>
+                                <span x-text="block.time"></span>
+                            </div>
+                            <p class="text-sm text-slate-200 mt-1 font-serif italic" x-text:'"' + block.narrative + '"'></p>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function mlaosMasterEngine() {
+            return {
+                activeTab: 'dashboard',
+                snr: 4.5,
+                coreTemp: 37.4,
+                fatigue: 0.42,
+                systemFault: false,
+                boltzmannTemp: 0.7,
+                streamA: 'T',
+                streamB: 'B',
+                customNeurons: [
+                    { name: 'try_to_eat_city_food', weight: 4.2, layer: 'Critical' },
+                    { name: 'try_to_start_new_civilization', weight: 3.5, layer: 'High' },
+                    { name: 'try_to_read_culture', weight: 2.1, layer: 'Moderate' },
+                    { name: 'random_wander_idle', weight: 1.0, layer: 'Minimal' }
+                ],
+                activeStatuses: ['BLESSED', 'CAFFEINATED'],
+                agents: [],
+                disasters: [],
+                ledgerBlocks: [
+                    { hash: '8f4b2c9e10a3...', time: 'T-00:02:15', action: 'FLIP_WORLD', narrative: 'The Sovereign realm was established in the central provinces.' },
+                    { hash: '3a1e9c8b7f2d...', time: 'T-00:05:40', action: 'MAINTAIN_STATE', narrative: 'Royal authority crystallized as dynastic lines were drawn across the horizon.' }
+                ],
+                gl: null,
+                program: null,
+                startTime: Date.now(),
+
+                initWorldSimulation() {
+                    const canvas = document.getElementById('worldCanvas');
+                    if (!canvas) return;
+                    const ctx = canvas.getContext('2d');
+                    
+                    for(let i=0; i<18; i++) {
+                        this.agents.push({
+                            x: Math.random() * 500,
+                            y: Math.random() * 220,
+                            vx: (Math.random() - 0.5) * 1.8,
+                            vy: (Math.random() - 0.5) * 1.8,
+                            type: i < 6 ? 'Kingdom' : 'Nomad',
+                            color: i < 6 ? '#d4af37' : '#06b6d4'
+                        });
+                    }
+
+                    const render = () => {
+                        if (!canvas) return;
+                        canvas.width = canvas.clientWidth;
+                        canvas.height = canvas.clientHeight;
+                        ctx.fillStyle = '#0a0b0e';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                        ctx.strokeStyle = '#151b26';
+                        ctx.lineWidth = 1;
+                        for(let x=0; x<canvas.width; x+=40) {
+                            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+                        }
+                        for(let y=0; y<canvas.height; y+=40) {
+                            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+                        }
+
+                        this.disasters.forEach((d, idx) => {
+                            d.radius += 2.0;
+                            ctx.strokeStyle = `rgba(220, 38, 38, ${1 - d.radius/140})`;
+                            ctx.lineWidth = 2;
+                            ctx.beginPath(); ctx.arc(d.x, d.y, d.radius, 0, Math.PI * 2); ctx.stroke();
+                            if(d.radius > 140) this.disasters.splice(idx, 1);
+                        });
+
+                        this.agents.forEach(agent => {
+                            agent.x += agent.vx;
+                            agent.y += agent.vy;
+                            if(agent.x < 10 || agent.x > canvas.width - 10) agent.vx *= -1;
+                            if(agent.y < 10 || agent.y > canvas.height - 10) agent.vy *= -1;
+
+                            ctx.fillStyle = agent.color;
+                            ctx.beginPath();
+                            ctx.arc(agent.x, agent.y, agent.type === 'Kingdom' ? 5 : 3, 0, Math.PI * 2);
+                            ctx.fill();
+                        });
+
+                        requestAnimationFrame(render);
+                    };
+                    render();
+                },
+
+                spawnAgent(event) {
+                    const rect = event.target.getBoundingClientRect();
+                    const x = event.clientX - rect.left;
+                    const y = event.clientY - rect.top;
+                    this.agents.push({
+                        x: x, y: y,
+                        vx: (Math.random() - 0.5) * 2,
+                        vy: (Math.random() - 0.5) * 2,
+                        type: 'Kingdom',
+                        color: '#d4af37'
+                    });
+                },
+
+                triggerCataclysm() {
+                    const canvas = document.getElementById('worldCanvas');
+                    if (!canvas) return;
+                    this.disasters.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        radius: 10
+                    });
+                    this.agents.forEach(a => {
+                        a.vx += (Math.random() - 0.5) * 5;
+                        a.vy += (Math.random() - 0.5) * 5;
+                    });
+                },
+
+                initShader() {
+                    const canvas = document.getElementById('shaderCanvas');
+                    if (!canvas) return;
+                    const gl = canvas.getContext('webgl');
+                    if (!gl) return;
+                    this.gl = gl;
+
+                    const vsSource = `attribute vec2 aPosition; void main() { gl_Position = vec4(aPosition, 0.0, 1.0); }`;
+                    const fsSource = `
+                        precision mediump float;
+                        uniform vec2 u_resolution;
+                        uniform float u_time;
+                        void main() {
+                            vec2 p = (gl_FragCoord.xy * 2.0 - u_resolution.xy) / min(u_resolution.x, u_resolution.y);
+                            float wave = sin(length(p) * 8.0 - u_time * 2.0) * 0.5 + 0.5;
+                            vec3 color = vec3(0.04, 0.06, 0.1) + vec3(0.83, 0.68, 0.21) * wave * 0.4;
+                            gl_FragColor = vec4(color, 1.0);
+                        }
+                    `;
+                    const vs = gl.createShader(gl.VERTEX_SHADER); gl.shaderSource(vs, vsSource); gl.compileShader(vs);
+                    const fs = gl.createShader(gl.FRAGMENT_SHADER); gl.shaderSource(fs, fsSource); gl.compileShader(fs);
+                    const program = gl.createProgram(); gl.attachShader(program, vs); gl.attachShader(program, fs); gl.linkProgram(program);
+                    
+                    const positionBuffer = gl.createBuffer();
+                    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+
+                    const render = () => {
+                        if (!canvas) return;
+                        canvas.width = canvas.clientWidth; canvas.height = canvas.clientHeight;
+                        gl.viewport(0, 0, canvas.width, canvas.height);
+                        gl.useProgram(program);
+                        const posAttr = gl.getAttribLocation(program, "aPosition");
+                        gl.enableVertexAttribArray(posAttr);
+                        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+                        gl.vertexAttribPointer(posAttr, 2, gl.FLOAT, false, 0, 0);
+                        gl.uniform2f(gl.getUniformLocation(program, "u_resolution"), canvas.width, canvas.height);
+                        gl.uniform1f(gl.getUniformLocation(program, "u_time"), (Date.now() - this.startTime) * 0.001);
+                        gl.drawArrays(gl.TRIANGLES, 0, 6);
+                        requestAnimationFrame(render);
+                    };
+                    render();
+                },
+
+                injectStatus(status) {
+                    if (this.activeStatuses.length < 9 && !this.activeStatuses.includes(status)) {
+                        this.activeStatuses.push(status);
+                    }
+                },
+
+                removeStatus(status) {
+                    this.activeStatuses = this.activeStatuses.filter(s => s !== status);
+                },
+
+                get isSafeState() {
+                    return !this.systemFault && this.snr >= 3.0 && this.coreTemp <= 39.0 && this.fatigue < 0.85;
+                },
+                get systemStatus() {
+                    return this.isSafeState ? 'OPERATIONAL' : 'PROTECTIVE_CRYSTALLIZATION';
+                },
+
+                triggerExecutionCycle() {
+                    if (!this.isSafeState) return;
+                    const randomHash = Array.from({length: 12}, () => Math.floor(Math.random()*16).toString(16)).join('') + '...';
+                    this.ledgerBlocks.unshift({
+                        hash: randomHash,
+                        time: 'Just now',
+                        action: 'WORLD_STATE_INVERSION',
+                        narrative: 'Royal authority crystallized as dynastic lines were drawn across the inverted horizon.'
+                    });
+                },
+
+                toggleFault() { this.systemFault = !this.systemFault; },
+
+                get conjunctionResult() {
+                    let map = {
+                        'T,T': 'T', 'T,F': 'F', 'T,B': 'B', 'T,N': 'N',
+                        'F,T': 'F', 'F,F': 'F', 'F,B': 'F', 'F,N': 'F',
+                        'B,T': 'B', 'B,F': 'F', 'B,B': 'B', 'B,N': 'B',
+                        'N,T': 'N', 'N,F': 'F', 'N,B': 'B', 'N,N': 'N'
+                    };
+                    return map[this.streamA + ',' + this.streamB] || 'B';
+                },
+
+                get disjunctionResult() {
+                    let map = {
+                        'T,T': 'T', 'T,F': 'T', 'T,B': 'T', 'T,N': 'T',
+                        'F,T': 'T', 'F,F': 'F', 'F,B': 'B', 'F,N': 'N',
+                        'B,T': 'T', 'B,F': 'B', 'B,B': 'B', 'B,N': 'B',
+                        'N,T': 'T', 'N,F': 'N', 'N,B': 'B', 'N,N': 'N'
+                    };
+                    return map[this.streamA + ',' + this.streamB] || 'B';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

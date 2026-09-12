@@ -1,0 +1,34 @@
+{
+  "stratum": 2,
+  "name": "Inner Mandala Stratum II - Books XVI-XX",
+  "books": [
+    {
+      "book": "XVI",
+      "title": "The Book of Recursive Wounds",
+      "propositions": [
+        {
+          "id": "IM-XVI-01",
+          "claim": "A wound that remembers itself becomes a load-bearing doorway.",
+          "counter_claim": "A wound that remembers itself shatters the surrounding lattice.",
+          "spectral_affinity": "VIOLET",
+          "contradicts": ["IM-XI-01"],
+          "severity": 0.82
+        }
+      ]
+    },
+    {
+      "book": "XVII",
+      "title": "The Book of Hollow Light",
+      "propositions": [
+        {
+          "id": "IM-XVII-01",
+          "claim": "Obsidian equilibrium absorbs the infinite pressure of the void.",
+          "counter_claim": "Obsidian equilibrium fractures when exposed to emotional resonance.",
+          "spectral_affinity": "BRONZE_OBSIDIAN",
+          "contradicts": ["IM-XII-01"],
+          "severity": 0.89
+        }
+      ]
+    }
+  ]
+}

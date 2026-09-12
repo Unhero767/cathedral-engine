@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cathedral-Engine :: Ash Archive Live Tension Graph Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --card-bg: #1f2833;
+            --text-main: #c5c6c7;
+            --accent-teal: #66fcf1;
+            --accent-gold: #ffd700;
+            --accent-red: #ff4d4d;
+            --accent-obsidian: #8b4513;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            border-bottom: 2px solid var(--accent-teal);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            color: var(--accent-teal);
+            margin: 0 0 5px 0;
+            font-size: 1.6rem;
+        }
+
+        .status-badge {
+            background: #16a765;
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .metrics-bar {
+            display: flex;
+            gap: 20px;
+            background: var(--card-bg);
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .metric-item {
+            flex: 1;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .metric-val {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .graph-container {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 15px;
+            height: 480px;
+            position: relative;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            background: #11151c;
+            border-radius: 4px;
+        }
+
+        .scar-list {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 15px;
+            max-height: 480px;
+            overflow-y: auto;
+        }
+
+        .scar-card {
+            border-left: 4px solid var(--accent-teal);
+            background: #11151c;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 2px;
+        }
+
+        .scar-title {
+            font-weight: bold;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .load-bar-bg {
+            background: #333;
+            height: 8px;
+            border-radius: 4px;
+            margin: 6px 0;
+            overflow: hidden;
+        }
+
+        .load-bar-fill {
+            background: var(--accent-teal);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>
+            <h1>CATHEDRAL-ENGINE :: ASH ARCHIVE VISUALIZATION</h1>
+            <div style="font-size: 0.9rem; color: #888;">Paraconsistent Dialetheic Buffer & Live Telemetry Stream</div>
+        </div>
+        <div id="live-status" class="status-badge">CONNECTING...</div>
+    </header>
+
+    <div class="metrics-bar">
+        <div class="metric-item">
+            <div class="metric-label">A-FIELD TEMP</div>
+            <div class="metric-val" id="metric-temp">300.0 K</div>
+        </div>
+        <div class="metric-item">
+            <div class="metric-label">ACTIVE SCARS</div>
+            <div class="metric-val" id="metric-scars">0</div>
+        </div>
+        <div class="metric-item">
+            <div class="metric-label">CURRENT FLUX</div>
+            <div class="metric-val" id="metric-flux">0.00</div>
+        </div>
+        <div class="metric-item">
+            <div class="metric-label">PERMISSION STATE</div>
+            <div class="metric-val" id="metric-permission" style="color: var(--accent-teal);">INACTIVE</div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="graph-container">
+            <canvas id="graphCanvas"></canvas>
+        </div>
+
+        <div class="scar-list" id="scarListContainer">
+            <h3 style="margin-top:0; color: var(--accent-teal); font-size: 1rem;">HARMONIC SCAR MATRIX</h3>
+            <div id="scar-cards-root">Loading scars...</div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = "http://127.0.0.1:8000";
+        const canvas = document.getElementById('graphCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const SPECTRAL_COLOR_MAP = {
+            "GOLD": "#ffd700",
+            "TEAL": "#66fcf1",
+            "BLUE": "#4169e1",
+            "RED": "#ff4d4d",
+            "VIOLET": "#8a2be2",
+            "EMERALD": "#50c878",
+            "BRONZE_OBSIDIAN": "#8b4513"
+        };
+
+        let currentScars = [];
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+            renderGraph();
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        async function fetchSystemState() {
+            try {
+                const res = await fetch(`${API_BASE}/state`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+
+                document.getElementById('live-status').innerText = "LIVE :: 8000";
+                document.getElementById('live-status').style.background = "#16a765";
+
+                document.getElementById('metric-temp').innerText = `${data.afield.temp.toFixed(1)} K`;
+                document.getElementById('metric-scars').innerText = data.active_scars_count;
+                document.getElementById('metric-flux').innerText = data.afield.flux.toFixed(2);
+                document.getElementById('metric-permission').innerText = data.afield.is_permission_active ? "KEYSTONE_ACTIVE" : "INACTIVE";
+
+                currentScars = data.scars || [];
+                renderScarCards(currentScars);
+                renderGraph();
+
+            } catch (err) {
+                document.getElementById('live-status').innerText = "OFFLINE";
+                document.getElementById('live-status').style.background = "#ff4d4d";
+            }
+        }
+
+        function renderScarCards(scars) {
+            const root = document.getElementById('scar-cards-root');
+            if (!scars.length) {
+                root.innerHTML = `<div style="color:#666;">No active scars recorded.</div>`;
+                return;
+            }
+
+            root.innerHTML = scars.map(scar => {
+                const color = SPECTRAL_COLOR_MAP[scar.spectrum] || "#66fcf1";
+                const pct = Math.min(100, (scar.contradiction_degree / 10.0) * 100);
+                return `
+                    <div class="scar-card" style="border-left-color: ${color};">
+                        <div class="scar-title">${scar.scar_id} [${scar.spectrum}]</div>
+                        <div style="font-size:0.8rem; color:#aaa; margin-top:2px;">Load: ${scar.contradiction_degree.toFixed(2)}/10.0</div>
+                        <div class="load-bar-bg">
+                            <div class="load-bar-fill" style="width: ${pct}%; background: ${color};"></div>
+                        </div>
+                        <div style="font-size:0.75rem; color:#888;">Cap: ${scar.load_bearing_capacity.toFixed(3)}</div>
+                        <div style="font-size:0.75rem; color:#ccc; margin-top:4px;">${scar.proposition_p}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderGraph() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const hubX = canvas.width / 2;
+            const hubY = 70;
+
+            // Draw Singularity Hub
+            ctx.beginPath();
+            ctx.arc(hubX, hubY, 16, 0, Math.PI * 2);
+            ctx.fillStyle = "#66fcf1";
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = "#66fcf1";
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            ctx.fillStyle = "#fff";
+            ctx.font = "12px Courier New";
+            ctx.fillText("A-Field Singularity", hubX - 65, hubY - 25);
+
+            if (!currentScars.length) {
+                ctx.fillStyle = "#666";
+                ctx.fillText("Awaiting dialectic ingestion...", hubX - 100, canvas.height / 2);
+                return;
+            }
+
+            // Draw Scars
+            currentScars.forEach((scar, idx) => {
+                const nx = (idx + 1) * (canvas.width / (currentScars.length + 1));
+                const ny = 260;
+                const color = SPECTRAL_COLOR_MAP[scar.spectrum] || "#66fcf1";
+
+                // Tension Line
+                ctx.beginPath();
+                ctx.moveTo(hubX, hubY);
+                ctx.lineTo(nx, ny);
+                ctx.strokeStyle = color;
+                ctx.lineWidth = Math.max(1.5, scar.contradiction_degree * 0.9);
+                ctx.stroke();
+
+                // Node Circle
+                ctx.beginPath();
+                ctx.arc(nx, ny, 12 + scar.contradiction_degree, 0, Math.PI * 2);
+                ctx.fillStyle = color;
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = color;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                // Label
+                ctx.fillStyle = "#c5c6c7";
+                ctx.font = "11px Courier New";
+                ctx.fillText(`${scar.scar_id}`, nx - 20, ny + 30);
+                ctx.fillText(`(${scar.contradiction_degree.toFixed(1)})`, nx - 20, ny + 45);
+            });
+        }
+
+        resizeCanvas();
+        fetchSystemState();
+        setInterval(fetchSystemState, 2000);
+    </script>
+</body>
+</html>

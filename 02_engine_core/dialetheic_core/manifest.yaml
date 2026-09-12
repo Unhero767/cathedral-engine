@@ -1,0 +1,12 @@
+module_id: "dialetheic-core"
+classification: "Inner Mandala - Stratum I"
+domain: "Paraconsistent Dialetheic Buffer & Vector Mapping"
+version: "1.0.0-omega"
+spectral_dominant: "BRONZE_OBSIDIAN"
+governing_axioms:
+  - "Emotion = Physics = Magic = Biology = Architecture"
+  - "Never-Overwrite Doctrine (Lex I)"
+components:
+  cathedral_engine: "src/cathedral_engine.py"
+  vector_mapper: "src/vector_mapper.py"
+  inner_mandala_codex: "codex/inner_mandala_stratum_1.json"
