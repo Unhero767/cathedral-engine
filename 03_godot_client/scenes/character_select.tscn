@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/character_selector.gd" id="1_selector"]
+
+[node name="CharacterSelectRoot" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_selector")
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 100.0
+offset_right = 350.0
+offset_bottom = 550.0
+
+[node name="AvatarRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 130.0
+offset_right = 325.0
+offset_bottom = 380.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 395.0
+offset_right = 330.0
+offset_bottom = 425.0
+text = "SOVEREIGN INTERFACE // MR. LAOS"
+
+[node name="SelectButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 460.0
+offset_right = 300.0
+offset_bottom = 500.0
+text = "INITIALIZE RESONANCE"

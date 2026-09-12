@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/scale_pulse_node.tscn" id="1_pulse_scene"]
+[ext_resource type="Shader" path="res://shaders/hd2d_biomechanical.gdshader" id="2_shader"]
+[ext_resource type="Script" path="res://scripts/state_orchestrator.gd" id="3_orchestrator"]
+[ext_resource type="Script" path="res://scripts/resonance_receiver.gd" id="4_receiver"]
+[ext_resource type="Script" path="res://scripts/resonance_inspector.gd" id="5_inspector"]
+[ext_resource type="Script" path="res://scripts/resonance_logger.gd" id="6_logger"]
+[ext_resource type="PackedScene" path="res://scenes/character_select.tscn" id="7_char_select"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hd2d"]
+shader = ExtResource("2_shader")
+shader_parameter/chromatic_aberration_amount = 0.005
+shader_parameter/color_depth_steps = 16.0
+
+[node name="MasterRoot" type="Node"]
+
+[node name="StateOrchestrator" type="Node" parent="."]
+script = ExtResource("3_orchestrator")
+
+[node name="ResonanceReceiver" type="Node" parent="."]
+script = ExtResource("4_receiver")
+
+[node name="ResonanceLogger" type="Node" parent="."]
+script = ExtResource("6_logger")
+
+[node name="CharacterSelectRoot" parent="." instance=ExtResource("7_char_select")]
+
+[node name="ResonanceInspector" type="CanvasLayer" parent="."]
+script = ExtResource("5_inspector")
+
+[node name="ScalePulseRoot" parent="." instance=ExtResource("1_pulse_scene")]
+
+[node name="PostProcessingLayer" type="CanvasLayer" parent="."]
+layer = 128
+
+[node name="ShaderScreenOverlay" type="ColorRect" parent="PostProcessingLayer"]
+material = SubResource("ShaderMaterial_hd2d")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

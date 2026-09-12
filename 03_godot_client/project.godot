@@ -1,0 +1,41 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="cathedral_engine_full_project"
+run/main_scene="res://scenes/chambers/chamber_v.tscn"
+config/features=PackedStringArray("4.7", "Forward Plus")
+config/icon="res://icon.svg"
+
+[autoload]
+
+EventBus="*res://autoload/event_bus.gd"
+SpectralConstants="*res://core/spectral_constants.gd"
+VirtualFileSystem="*res://autoload/virtual_file_system.gd"
+VFS="*res://autoload/virtual_file_system.gd"
+TerminalTick="*res://autoload/terminal_tick.gd"
+AshArchive="*res://core/ash_archive.gd"
+AFieldManager="*res://core/a_field_manager.gd"
+CathedralSync="*res://core/sync/cathedral_sync.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.043, 0.043, 0.063, 1)

@@ -1,0 +1,113 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://godot_client/ChamberV.gd" id="1_chamb"]
+[ext_resource type="PackedScene" path="res://scenes/terminal/gothic_terminal.tscn" id="2_term"]
+
+[sub_resource type="Environment" id="Environment_noir"]
+background_mode = 1
+background_color = Color(0.043, 0.043, 0.063, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.12, 0.12, 0.18, 1)
+ambient_light_energy = 0.6
+tonemap_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="Mat_ObsidianFloor"]
+albedo_color = Color(0.07, 0.07, 0.1, 1)
+roughness = 0.2
+metallic = 0.8
+
+[sub_resource type="BoxMesh" id="Mesh_Floor"]
+material = SubResource("Mat_ObsidianFloor")
+size = Vector3(16, 0.5, 16)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Altar"]
+albedo_color = Color(0.15, 0.12, 0.08, 1)
+emission_enabled = true
+emission = Color(0.83, 0.68, 0.21, 1)
+emission_energy_multiplier = 0.4
+
+[sub_resource type="BoxMesh" id="Mesh_Altar"]
+material = SubResource("Mat_Altar")
+size = Vector3(3, 1.2, 2)
+
+[sub_resource type="CylinderMesh" id="Mesh_Pillar"]
+material = SubResource("Mat_ObsidianFloor")
+top_radius = 0.4
+bottom_radius = 0.5
+height = 6.0
+
+[node name="ChamberV" type="Node3D"]
+script = ExtResource("1_chamb")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_noir")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 3.8, 6.5)
+current = true
+fov = 60.0
+
+[node name="AltarLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+light_color = Color(1, 0.84, 0.4, 1)
+light_energy = 3.5
+omni_range = 9.0
+shadow_enabled = true
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+mesh = SubResource("Mesh_Floor")
+
+[node name="Altar" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+mesh = SubResource("Mesh_Altar")
+
+[node name="Pillar_NW" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 3, -5)
+mesh = SubResource("Mesh_Pillar")
+
+[node name="Pillar_NE" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, -5)
+mesh = SubResource("Mesh_Pillar")
+
+[node name="Pillar_SW" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 3, 5)
+mesh = SubResource("Mesh_Pillar")
+
+[node name="Pillar_SE" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 3, 5)
+mesh = SubResource("Mesh_Pillar")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_bottom = 28
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="DrawButton" type="Button" parent="HUD/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(240, 52)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0.2, 1)
+theme_override_font_sizes/font_size = 16
+text = "DRAW ORACLE CARD"
+
+[node name="ResultLabel" type="Label" parent="HUD/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.85, 0.9, 1)
+text = "[Active Stratum: Chamber V | Press ` (tilde) or F1 for Terminal]"
+
+[node name="TerminalOverlay" type="CanvasLayer" parent="."]
+layer = 100
+visible = false
+
+[node name="GothicTerminal" parent="TerminalOverlay" instance=ExtResource("2_term")]

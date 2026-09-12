@@ -1,0 +1,14 @@
+{
+  "specimen_id": "SS-PSI-04",
+  "archetype_name": "Sovereign Seraph",
+  "caste": "Cognitive Vanguard",
+  "spectral_constant": "CURIOSITY_TEAL_PSI",
+  "dialetheic_afield": 1.5,
+  "master_texture_path": "res://assets/portraits/master_atlas_strip.png",
+  "silhouette_preset": "seraph_halo",
+  "anatomical_parameters": {
+    "cranial_vault_depth": 1.1,
+    "resonance_ocular_cyan_luminosity": 2.2,
+    "resonance_synaptic_latency_index": 0.95
+  }
+}

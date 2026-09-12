@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/Engine/SomaticStateMachine.cs" id="1_state"]
+[ext_resource type="Script" path="res://src/Engine/CathedralSpriteController.cs" id="2_sprite"]
+[ext_resource type="Script" path="res://src/Engine/SomaticTestHarness.cs" id="3_harness"]
+[ext_resource type="Shader" path="res://src/Shaders/CathedralHD2D.gdshader" id="4_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hd2d"]
+shader = ExtResource("4_shader")
+
+[node name="SovereignRoot" type="Node2D"]
+
+[node name="CanvasLayerBG" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BackgroundColor" type="ColorRect" parent="CanvasLayerBG"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0470588, 0.054902, 0.0705882, 1)
+
+[node name="SovereignAvatar" type="Sprite2D" parent="."]
+position = Vector2(576, 324)
+scale = Vector2(3, 3)
+script = ExtResource("2_sprite")
+
+[node name="SomaticStateMachine" type="Node" parent="SovereignAvatar"]
+script = ExtResource("1_state")
+
+[node name="SomaticTestHarness" type="Node" parent="."]
+script = ExtResource("3_harness")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 324)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="HD2DOverlay" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_hd2d")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

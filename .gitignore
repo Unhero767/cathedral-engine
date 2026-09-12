@@ -40,3 +40,10 @@ __pycache__/
 # Godot generated imports & caches
 *.import
 .godot/
+
+# Godot caches and imports
+.godot/
+*.import
+.DS_Store
+__pycache__/
+*.pyc

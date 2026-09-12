@@ -1,0 +1,14 @@
+{
+  "specimen_id": "PM-DELTA-03",
+  "archetype_name": "Penitent Monad",
+  "caste": "Ascetic Anchor",
+  "spectral_constant": "SORROW_BLUE_DELTA",
+  "dialetheic_afield": 0.6,
+  "master_texture_path": "res://assets/portraits/master_atlas_strip.png",
+  "silhouette_preset": "ascetic_hood",
+  "anatomical_parameters": {
+    "adipose_distribution_visceral": 0.7,
+    "dermal_collagen_density": 0.8,
+    "osteology_lumbar_lordosis_angle": 0.6
+  }
+}

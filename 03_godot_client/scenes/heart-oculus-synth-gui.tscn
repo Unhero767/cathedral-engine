@@ -1,0 +1,159 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx4s_synth_terminal"]
+
+[ext_resource type="Script" path="res://heart-oculus-synth-gui.gd" id="1_gui_script"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_obsidian_terminal"]
+bg_color = Color(0.0509804, 0.0509804, 0.0705882, 0.882353)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6, 0.360784, 0.819608, 0.588235)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.235294)
+shadow_size = 8
+
+[node name="SynthTerminal" type="Control" node_paths=PackedStringArray("primary_vol_slider", "sub_vol_slider", "detune_width_slider", "dialetheism_slider", "sweep_duration_slider", "status_text", "primary_freq_text", "sub_freq_text", "beating_rate_text", "trigger_sweep_btn", "loop_sub_toggle")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gui_script")
+primary_vol_slider = NodePath("CenterMargin/PanelContainer/MainLayout/ControlsLayout/PrimaryVolLayout/PrimaryVolSlider")
+sub_vol_slider = NodePath("CenterMargin/PanelContainer/MainLayout/ControlsLayout/SubVolLayout/SubVolSlider")
+detune_width_slider = NodePath("CenterMargin/PanelContainer/MainLayout/ControlsLayout/DetuneLayout/DetuneSlider")
+dialetheism_slider = NodePath("CenterMargin/PanelContainer/MainLayout/ControlsLayout/DialetheismLayout/DialetheismSlider")
+sweep_duration_slider = NodePath("CenterMargin/PanelContainer/MainLayout/ControlsLayout/DurationLayout/DurationSlider")
+status_text = NodePath("CenterMargin/PanelContainer/MainLayout/HeaderPanel/StatusLabel")
+primary_freq_text = NodePath("CenterMargin/PanelContainer/MainLayout/TelemetryPanel/TelemetryLayout/PrimaryFreqLabel")
+sub_freq_text = NodePath("CenterMargin/PanelContainer/MainLayout/TelemetryPanel/TelemetryLayout/SubFreqLabel")
+beating_rate_text = NodePath("CenterMargin/PanelContainer/MainLayout/TelemetryPanel/TelemetryLayout/BeatingLabel")
+trigger_sweep_btn = NodePath("CenterMargin/PanelContainer/MainLayout/ButtonsLayout/TriggerSweepBtn")
+loop_sub_toggle = NodePath("CenterMargin/PanelContainer/MainLayout/ButtonsLayout/LoopSubToggle")
+
+[node name="CenterMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 48
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterMargin"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_obsidian_terminal")
+
+[node name="MainLayout" type="VBoxContainer" parent="CenterMargin/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="HeaderPanel" type="PanelContainer" parent="CenterMargin/PanelContainer/MainLayout"]
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="CenterMargin/PanelContainer/MainLayout/HeaderPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "SYNTHESIS INTERFACE ACTIVE // SPECTRAL: BLUE/SORROW"
+horizontal_alignment = 1
+
+[node name="ControlsLayout" type="VBoxContainer" parent="CenterMargin/PanelContainer/MainLayout"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="PrimaryVolLayout" type="VBoxContainer" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout/PrimaryVolLayout"]
+layout_mode = 2
+text = "Primary Glide Voice Volume (%)"
+
+[node name="PrimaryVolSlider" type="HSlider" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout/PrimaryVolLayout"]
+layout_mode = 2
+value = 80.0
+
+[node name="SubVolLayout" type="VBoxContainer" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout/SubVolLayout"]
+layout_mode = 2
+text = "Sub-Bass Resonance Mix (%)"
+
+[node name="SubVolSlider" type="HSlider" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout/SubVolLayout"]
+layout_mode = 2
+value = 50.0
+
+[node name="DetuneLayout" type="VBoxContainer" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout/DetuneLayout"]
+layout_mode = 2
+text = "Maximum Detuning Width multiplier"
+
+[node name="DetuneSlider" type="HSlider" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout/DetuneLayout"]
+layout_mode = 2
+max_value = 50.0
+value = 15.0
+
+[node name="DialetheismLayout" type="VBoxContainer" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout/DialetheismLayout"]
+layout_mode = 2
+text = "Manual Dialetheism (D) State Modulator (%)"
+
+[node name="DialetheismSlider" type="HSlider" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout/DialetheismLayout"]
+layout_mode = 2
+
+[node name="DurationLayout" type="VBoxContainer" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout/DurationLayout"]
+layout_mode = 2
+text = "Sweep Decay Duration (seconds)"
+
+[node name="DurationSlider" type="HSlider" parent="CenterMargin/PanelContainer/MainLayout/ControlsLayout/DurationLayout"]
+layout_mode = 2
+min_value = 1.0
+max_value = 30.0
+value = 3.0
+
+[node name="TelemetryPanel" type="PanelContainer" parent="CenterMargin/PanelContainer/MainLayout"]
+layout_mode = 2
+
+[node name="TelemetryLayout" type="VBoxContainer" parent="CenterMargin/PanelContainer/MainLayout/TelemetryPanel"]
+layout_mode = 2
+
+[node name="PrimaryFreqLabel" type="Label" parent="CenterMargin/PanelContainer/MainLayout/TelemetryPanel/TelemetryLayout"]
+layout_mode = 2
+text = "Primary Glide: 880.00 Hz"
+
+[node name="SubFreqLabel" type="Label" parent="CenterMargin/PanelContainer/MainLayout/TelemetryPanel/TelemetryLayout"]
+layout_mode = 2
+text = "Sub-Voices: Voice A: 440.00 Hz | Voice B: 440.00 Hz"
+
+[node name="BeatingLabel" type="Label" parent="CenterMargin/PanelContainer/MainLayout/TelemetryPanel/TelemetryLayout"]
+layout_mode = 2
+text = "A-Field Interference: Phase Aligned (0.000 Hz)"
+
+[node name="ButtonsLayout" type="HBoxContainer" parent="CenterMargin/PanelContainer/MainLayout"]
+layout_mode = 2
+alignment = 1
+
+[node name="TriggerSweepBtn" type="Button" parent="CenterMargin/PanelContainer/MainLayout/ButtonsLayout"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TRIGGER SECTOR FOUR DESCENT SWEEP"
+
+[node name="LoopSubToggle" type="CheckButton" parent="CenterMargin/PanelContainer/MainLayout/ButtonsLayout"]
+layout_mode = 2
+text = "FORCE CONSTANT SUB-BASS RESONANCE"

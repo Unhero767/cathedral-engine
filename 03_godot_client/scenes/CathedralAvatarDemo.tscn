@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://b8y1xq4w7kd2e"]
+
+[ext_resource type="Script" path="res://03_godot_client/scripts/CathedralAvatarHarness.gd" id="1_harness"]
+[ext_resource type="Script" path="res://03_godot_client/scripts/core/SomaticToPortraitBridge.gd" id="4_bridge"]
+[ext_resource type="Script" path="res://03_godot_client/scripts/core/CathedralDialogueDriver.gd" id="5_dialogue"]
+[ext_resource type="Script" path="res://03_godot_client/scripts/core/CathedralAvatarDebugger.gd" id="6_debugger"]
+[ext_resource type="Script" path="res://03_godot_client/scripts/CathedralCharacterCreator.gd" id="7_creator"]
+
+[node name="CathedralAvatarDemo" type="Control" unique_id=690380324]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_harness")
+
+[node name="Background" type="ColorRect" parent="." unique_id=650636877]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.06, 0.14, 1)
+
+[node name="CathedralSomaticEngine" type="Node3D" parent="." unique_id=2113981416]
+
+[node name="SomaticToPortraitBridge" type="Control" parent="." unique_id=2109058334]
+anchors_preset = 0
+script = ExtResource("4_bridge")
+
+[node name="CathedralDialogueDriver" type="Control" parent="." unique_id=438770312]
+anchors_preset = 0
+script = ExtResource("5_dialogue")
+
+[node name="MainUIContainer" type="Control" parent="." unique_id=1175653304]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Character Creator" type="Control" parent="MainUIContainer" unique_id=258475138 node_paths=PackedStringArray("somatic_engine", "somatic_bridge", "dialogue_driver")]
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("7_creator")
+somatic_engine = NodePath("../../CathedralSomaticEngine")
+somatic_bridge = NodePath("../../SomaticToPortraitBridge")
+dialogue_driver = NodePath("../../CathedralDialogueDriver")
+
+[node name="Calibration & Testing" type="Control" parent="MainUIContainer" unique_id=1205500943]
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("6_debugger")

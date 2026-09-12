@@ -1,0 +1,245 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce5f410b-df81-4a37-849f-0e60069e892a"]
+
+[ext_resource type="Script" path="res://heart-oculus-hud.gd" id="1_hud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_obsidian"]
+bg_color = Color(0.0509804, 0.0509804, 0.0705882, 0.784314)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6, 0.360784, 0.819608, 0.501961)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header"]
+bg_color = Color(0.0823529, 0.0823529, 0.117647, 0.901961)
+border_width_bottom = 2
+border_color = Color(0.6, 0.360784, 0.819608, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+
+[sub_resource type="Shader" id="Shader_kinetic"]
+code = "shader_type canvas_item;
+uniform float distortion_strength : hint_range(0.0, 1.0) = 0.0;
+uniform float vignette_depth : hint_range(0.0, 2.0) = 0.1;
+uniform float pulse_brightness : hint_range(0.1, 5.0) = 1.0;
+uniform float aberration_offset : hint_range(0.0, 0.2) = 0.0;
+const vec3 VIOLET_DOMINANT = vec3(0.6, 0.36, 0.82);
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	vec2 center_offset = uv - vec2(0.5);
+	float radial_distance = length(center_offset);
+	vec2 red_uv = uv + (center_offset * aberration_offset);
+	vec2 blue_uv = uv - (center_offset * aberration_offset);
+	float r = texture(SCREEN_TEXTURE, red_uv).r;
+	float g = texture(SCREEN_TEXTURE, uv).g;
+	float b = texture(SCREEN_TEXTURE, blue_uv).b;
+	vec3 base_color = vec3(r, g, b);
+	if (distortion_strength > 0.0) {
+		float sine_wave = sin(radial_distance * 40.0 - TIME * 12.0) * distortion_strength * 0.05;
+		vec2 distorted_uv = uv + (center_offset * sine_wave);
+		base_color = texture(SCREEN_TEXTURE, distorted_uv).rgb;
+	}
+	float vignette = smoothstep(0.4, 0.8 + (1.0 - vignette_depth * 0.5), radial_distance);
+	vec3 colored_vignette = mix(base_color, VIOLET_DOMINANT, vignette * 0.65);
+	vec3 final_output = colored_vignette * (pulse_brightness + (vignette * (pulse_brightness - 1.0) * 0.5));
+	COLOR = vec4(final_output, 1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_overlay"]
+shader = SubResource("Shader_kinetic")
+shader_parameter/distortion_strength = 0.0
+shader_parameter/vignette_depth = 0.1
+shader_parameter/pulse_brightness = 1.0
+shader_parameter/aberration_offset = 0.0
+
+[node name="HeartOculusHUD" type="Control" node_paths=PackedStringArray("assertability_bar", "deniability_bar", "dialetheism_bar", "underdetermination_bar", "state_label", "anomaly_log", "shader_rect")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hud")
+assertability_bar = NodePath("MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/AssertabilityCluster/Assertability")
+deniability_bar = NodePath("MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/DeniabilityCluster/Deniability")
+dialetheism_bar = NodePath("MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/DialetheismCluster/Dialetheism")
+underdetermination_bar = NodePath("MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/UnderdeterminationCluster/Underdetermination")
+state_label = NodePath("MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/StateLabel")
+anomaly_log = NodePath("MainMargin/HBoxContainer_Layout/RightColumn/TerminalPanel/Margin/VBox/AnomalyLog")
+shader_rect = NodePath("ShaderRect")
+
+[node name="ShaderRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_overlay")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MainMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="HBoxContainer_Layout" type="HBoxContainer" parent="MainMargin"]
+layout_mode = 2
+theme_override_constants/separation = 48
+
+[node name="LeftColumn" type="VBoxContainer" parent="MainMargin/HBoxContainer_Layout"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HeaderPanel" type="PanelContainer" parent="MainMargin/HBoxContainer_Layout/LeftColumn"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_header")
+
+[node name="Margin" type="MarginContainer" parent="MainMargin/HBoxContainer_Layout/LeftColumn/HeaderPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="MainMargin/HBoxContainer_Layout/LeftColumn/HeaderPanel/Margin"]
+layout_mode = 2
+text = "NYX AURELIA // SRP-NX7/02 // A-FIELD DRIVER"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="MainMargin/HBoxContainer_Layout/LeftColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TelemetryPanel" type="PanelContainer" parent="MainMargin/HBoxContainer_Layout/LeftColumn"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_obsidian")
+
+[node name="Margin" type="MarginContainer" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="StateLabel" type="Label" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox"]
+layout_mode = 2
+text = "COGNITIVE STATE: A-FIELD SYNCING..."
+
+[node name="HSeparator" type="HSeparator" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox"]
+layout_mode = 2
+
+[node name="AssertabilityCluster" type="VBoxContainer" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox"]
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/AssertabilityCluster/HBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/AssertabilityCluster/HBox"]
+layout_mode = 2
+text = "Consciousness Integration (t)"
+
+[node name="Assertability" type="ProgressBar" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/AssertabilityCluster"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+value = 100.0
+show_percentage = false
+
+[node name="DeniabilityCluster" type="VBoxContainer" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox"]
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/DeniabilityCluster/HBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/DeniabilityCluster/HBox"]
+layout_mode = 2
+text = "Spacetime Decay (f)"
+
+[node name="Deniability" type="ProgressBar" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/DeniabilityCluster"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+show_percentage = false
+
+[node name="DialetheismCluster" type="VBoxContainer" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox"]
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/DialetheismCluster/HBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/DialetheismCluster/HBox"]
+layout_mode = 2
+text = "Paraconsistent Buffer (D)"
+
+[node name="Dialetheism" type="ProgressBar" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/DialetheismCluster"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+show_percentage = false
+
+[node name="UnderdeterminationCluster" type="VBoxContainer" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox"]
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/UnderdeterminationCluster/HBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/UnderdeterminationCluster/HBox"]
+layout_mode = 2
+text = "Existential Potential (U)"
+
+[node name="Underdetermination" type="ProgressBar" parent="MainMargin/HBoxContainer_Layout/LeftColumn/TelemetryPanel/Margin/VBox/UnderdeterminationCluster"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+show_percentage = false
+
+[node name="RightColumn" type="VBoxContainer" parent="MainMargin/HBoxContainer_Layout"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Control" parent="MainMargin/HBoxContainer_Layout/RightColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TerminalPanel" type="PanelContainer" parent="MainMargin/HBoxContainer_Layout/RightColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+theme_override_styles/panel = SubResource("StyleBoxFlat_obsidian")
+
+[node name="Margin" type="MarginContainer" parent="MainMargin/HBoxContainer_Layout/RightColumn/TerminalPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="MainMargin/HBoxContainer_Layout/RightColumn/TerminalPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="MainMargin/HBoxContainer_Layout/RightColumn/TerminalPanel/Margin/VBox"]
+layout_mode = 2
+text = "ASH ARCHIVE TELEMETRY TERMINAL"
+
+[node name="HSeparator" type="HSeparator" parent="MainMargin/HBoxContainer_Layout/RightColumn/TerminalPanel/Margin/VBox"]
+layout_mode = 2
+
+[node name="AnomalyLog" type="RichTextLabel" parent="MainMargin/HBoxContainer_Layout/RightColumn/TerminalPanel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_following = true
+autowrap_mode = 2
