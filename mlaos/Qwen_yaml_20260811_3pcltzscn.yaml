@@ -1,0 +1,62 @@
+isomorphism_mapping:
+  version: "R2-Ω.1-A-XII"
+  reality_tier: R2
+  canonical_status: PROVISIONAL  # Awaiting Sovereign CANON signature
+
+  emotion_to_physics:
+    grief: gravitational_collapse
+    joy: thermodynamic_expansion
+    anger: exothermic_reaction
+    love: entanglement_symmetry
+    fear: quantum_uncertainty
+    wonder: electromagnetic_radiation
+    despair: entropy_maximization
+    hope: negative_energy_fluctuation
+
+  physics_to_magic:
+    gravitational_collapse: binding_enchantment
+    thermodynamic_expansion: abjuration_field
+    exothermic_reaction: evocation_burst
+    entanglement_symmetry: sympathetic_resonance
+    quantum_uncertainty: divination_veil
+    electromagnetic_radiation: illusion_spectrum
+    entropy_maximization: necromantic_decay
+    negative_energy_fluctuation: conjuration_genesis
+
+  magic_to_biology:
+    binding_enchantment: cellular_adhesion
+    abjuration_field: immune_membrane
+    evocation_burst: metabolic_cascade
+    sympathetic_resonance: neural_synchronization
+    divination_veil: epigenetic_expression
+    illusion_spectrum: chromatophore_display
+    necromantic_decay: apoptosis
+    conjuration_genesis: stem_cell_differentiation
+
+  biology_to_architecture:
+    cellular_adhesion: load_bearing_wall
+    immune_membrane: defensive_perimeter
+    metabolic_cascade: energy_distribution_grid
+    neural_synchronization: structural_harmonic
+    epigenetic_expression: adaptive_facade
+    chromatophore_display: ornamental_surface
+    apoptosis: planned_demolition
+    stem_cell_differentiation: modular_expansion
+
+  architecture_to_emotion:
+    load_bearing_wall: grief          # what holds when all else falls
+    defensive_perimeter: fear          # the boundary that keeps the void out
+    energy_distribution_grid: anger    # the controlled burn that powers the whole
+    structural_harmonic: love          # resonance between separate structures
+    adaptive_facade: wonder            # the surface that changes in the light
+    ornamental_surface: joy            # beauty for its own sake
+    planned_demolition: despair        # necessary ending
+    modular_expansion: hope            # room for what comes next
+
+  # COMMUTATIVITY VERIFICATION:
+  # grief → gravitational_collapse → binding_enchantment → cellular_adhesion
+  #   → load_bearing_wall → grief  ✓ IDENTITY
+  # joy → thermodynamic_expansion → abjuration_field → immune_membrane
+  #   → defensive_perimeter → fear  ✗ NOT IDENTITY
+  #   NOTE: joy maps to fear in the return path. This is a known asymmetry
+  #   requiring Sovereign resolution. See Contradiction CONTRA-ISO-001.

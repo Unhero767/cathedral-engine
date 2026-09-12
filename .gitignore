@@ -1,0 +1,24 @@
+# Python & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+*.log
+
+# Godot Engine
+.godot/
+*.import
+
+# OS Files
+.DS_Store
+Thumbs.db
+Untitled.mov
+
+# Data, Archive DBs & State
+strata/*.db-journal
+strata/*.db
+*.db
+outputs/
+output/
+dataset/
+*.mlvox

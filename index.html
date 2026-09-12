@@ -3,168 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cathedral-Engine | Sovereign Interface</title>
+    <title>Cathedral-Engine // 3D Sovereign Viewport</title>
     <style>
-        :root {
-            --bg: #0d0d12;
-            --panel: #16161f;
-            --gold: #d4af37;
-            --gold-bright: #ffd700;
-            --teal: #00e5ff;
-            --text: #e2e8f0;
-            --border: #2d3748;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #050608; color: #e2e8f0; font-family: monospace; overflow: hidden; }
+        #canvas-container { width: 100vw; height: 100vh; display: block; }
+        #hud {
+            position: absolute; top: 16px; left: 16px; z-index: 10;
+            background: rgba(10, 12, 18, 0.85); border: 1px solid rgba(235, 185, 45, 0.4);
+            padding: 14px 18px; border-radius: 6px; pointer-events: none;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.8);
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: monospace; }
-        body { background: var(--bg); color: var(--text); padding: 20px; min-height: 100vh; }
-        header { border-bottom: 2px solid var(--gold); padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        h1 { color: var(--gold-bright); font-size: 1.2rem; letter-spacing: 2px; }
-        .badge { background: #1a202c; border: 1px solid var(--gold); color: var(--gold); padding: 4px 10px; font-size: 0.85rem; }
-        .layout { display: grid; grid-template-columns: 360px 1fr; gap: 20px; }
-        .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 16px; }
-        h2 { font-size: 0.95rem; color: var(--gold); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
-        .grid { display: grid; grid-template-columns: repeat(8, 38px); gap: 4px; margin: 0 auto 16px auto; width: max-content; }
-        .cell { width: 38px; height: 38px; background: #0a0a0f; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; user-select: none; font-size: 0.9rem; }
-        .cell:hover { border-color: var(--teal); background: #1f293d; }
-        .cell.player { background: #553c00 !important; border-color: var(--gold-bright) !important; color: #fff !important; }
-        .cell.entity { border-color: var(--teal); color: var(--teal); }
-        .dpad { display: grid; grid-template-columns: repeat(3, 44px); gap: 6px; margin: 0 auto 16px auto; width: max-content; }
-        button { background: #2d3748; color: var(--text); border: 1px solid var(--border); height: 38px; cursor: pointer; font-weight: bold; border-radius: 4px; }
-        button:hover { background: var(--gold); color: #000; }
-        .stat-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1f2430; font-size: 0.85rem; }
-        .stat-val { color: var(--gold-bright); font-weight: bold; }
-        .log-box { height: 320px; overflow-y: auto; background: #0a0a0f; border: 1px solid var(--border); padding: 10px; font-size: 0.8rem; }
-        .log-line { margin-bottom: 6px; padding-left: 8px; border-left: 2px solid var(--gold); line-height: 1.4; color: #cbd5e1; }
-        .legend { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.75rem; margin-top: 10px; color: #94a3b8; }
-        .legend span { background: #0a0a0f; padding: 2px 6px; border: 1px solid var(--border); }
+        .title { color: #fbbf24; font-weight: bold; font-size: 14px; margin-bottom: 4px; }
+        .stat { font-size: 11px; color: #94a3b8; margin: 2px 0; }
+        .val { color: #38bdf8; font-weight: bold; }
+        #controls-hint {
+            position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+            background: rgba(10, 12, 18, 0.8); border: 1px solid rgba(148, 163, 184, 0.2);
+            padding: 8px 16px; border-radius: 20px; font-size: 11px; color: #cbd5e1;
+        }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 </head>
 <body>
-    <header>
-        <h1>CATHEDRAL-ENGINE // SANCTUM APEX</h1>
-        <span class="badge" id="carrier-tag">130.81 Hz [Prismatic-Obsidian]</span>
-    </header>
-
-    <div class="layout">
-        <div>
-            <div class="panel" style="margin-bottom: 16px;">
-                <h2>Spatial Nave (Chamber V)</h2>
-                <div class="grid" id="grid"></div>
-                <div class="dpad">
-                    <div></div><button onclick="step(0, -1)">▲</button><div></div>
-                    <button onclick="step(-1, 0)">◀</button><button onclick="interact()">Ω</button><button onclick="step(1, 0)">▶</button>
-                    <div></div><button onclick="step(0, 1)">▼</button><div></div>
-                </div>
-                <div class="legend">
-                    <span>@ You</span>
-                    <span>W West Portal</span>
-                    <span>α Pillar Alpha</span>
-                    <span>β Pillar Beta</span>
-                    <span>Ω Monad Altar</span>
-                    <span>T Ash Terminal</span>
-                    <span>O Oculus</span>
-                </div>
-            </div>
-
-            <div class="panel">
-                <h2>Substrate Telemetry</h2>
-                <div class="stat-row"><span>Position:</span><span class="stat-val" id="val-pos">(7, 4)</span></div>
-                <div class="stat-row"><span>Chamber:</span><span class="stat-val">Chamber V (Sanctum Apex)</span></div>
-                <div class="stat-row"><span>Belnap-Dunn Truth:</span><span class="stat-val">BOTH</span></div>
-                <div class="stat-row"><span>Consciousness Flux:</span><span class="stat-val">dΦ/dt = 1.618</span></div>
-            </div>
-        </div>
-
-        <div class="panel">
-            <h2>Ash Archive & Event Ledger</h2>
-            <div class="log-box" id="log">
-                <div class="log-line">[INITIALIZE] Sovereign Interface online at Transcendence Oculus (7, 4).</div>
-                <div class="log-line">[AXIOM] EMOTION = PHYSICS = MAGIC = BIOLOGY = ARCHITECTURE</div>
-            </div>
-        </div>
+    <div id="hud">
+        <div class="title">CATHEDRAL-ENGINE // SANCTUM APEX</div>
+        <div class="stat">Chamber: <span class="val">Chamber V (Core Monad)</span></div>
+        <div class="stat">Coordinates: <span class="val">(4, 4) [Monad Altar]</span></div>
+        <div class="stat">Carrier Wave: <span class="val">130.81 Hz [Gold-Obsidian]</span></div>
+        <div class="stat">Ash Ledger: <span class="val">Block #41 [Merkle Locked]</span></div>
+        <div class="stat">Axiom: <span class="val">EMOTION = PHYSICS = MAGIC = BIOLOGY = ARCHITECTURE</span></div>
     </div>
+    <div id="controls-hint">Left Click + Drag: Rotate | Scroll: Zoom | Right Click: Pan</div>
+    <div id="canvas-container"></div>
 
     <script>
-        let px = 7, py = 4;
-        const entities = {
-            '0,4': { icon: 'W', name: 'West Portal Threshold' },
-            '2,1': { icon: 'α', name: 'Somatic Pillar Alpha' },
-            '2,7': { icon: 'β', name: 'Somatic Pillar Beta' },
-            '4,4': { icon: 'Ω', name: 'Axiomatic Monad Matrix' },
-            '6,4': { icon: 'T', name: 'Ash Stratum Deep Terminal' },
-            '7,4': { icon: 'O', name: 'Transcendence Oculus' }
-        };
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x07080c);
+        scene.fog = new THREE.FogExp2(0x07080c, 0.035);
 
-        function draw() {
-            const gridEl = document.getElementById('grid');
-            gridEl.innerHTML = '';
-            for (let y = 0; y < 8; y++) {
-                for (let x = 0; x < 8; x++) {
-                    const cell = document.createElement('div');
-                    cell.className = 'cell';
-                    const key = `${x},${y}`;
-                    if (x === px && y === py) {
-                        cell.classList.add('player');
-                        cell.textContent = '@';
-                    } else if (entities[key]) {
-                        cell.classList.add('entity');
-                        cell.textContent = entities[key].icon;
-                    }
-                    cell.onclick = () => { px = x; py = y; sync(); };
-                    gridEl.appendChild(cell);
-                }
-            }
-            document.getElementById('val-pos').textContent = `(${px}, ${py})`;
-        }
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 8, 22);
 
-        async function sync() {
-            draw();
-            const key = `${px},${py}`;
-            const target = entities[key] ? entities[key].name : 'Nave Tile';
-            try {
-                const res = await fetch(`/api/rpg/move?x=${px}&y=${py}&chamber=5`);
-                const data = await res.json();
-                addLog(`[MOVE] Stepped to (${px}, ${py}) [${target}] | Server: ${data.status || 'OK'}`);
-            } catch (err) {
-                addLog(`[MOVE] Stepped to (${px}, ${py}) [${target}]`);
-            }
-        }
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        container.appendChild(renderer.domElement);
 
-        function step(dx, dy) {
-            px = Math.max(0, Math.min(7, px + dx));
-            py = Math.max(0, Math.min(7, py + dy));
-            sync();
-        }
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.maxPolarAngle = Math.PI / 2 - 0.05;
 
-        async function interact() {
-            const key = `${px},${py}`;
-            const target = entities[key] ? entities[key].name : 'Floor Grid';
-            try {
-                const res = await fetch(`/api/rpg/interact?target_uid=${encodeURIComponent(target)}&x=${px}&y=${py}&action=EXAMINE`);
-                const data = await res.json();
-                addLog(`[INTERACT] Engaged ${target} at (${px}, ${py}) -> ${data.status || 'PROCESSED'}`);
-            } catch (err) {
-                addLog(`[INTERACT] Engaged ${target} at (${px}, ${py})`);
-            }
-        }
+        // Lighting
+        const ambient = new THREE.AmbientLight(0x1a1c24, 0.8);
+        scene.add(ambient);
 
-        function addLog(text) {
-            const box = document.getElementById('log');
-            const div = document.createElement('div');
-            div.className = 'log-line';
-            div.textContent = text;
-            box.appendChild(div);
-            box.scrollTop = box.scrollHeight;
-        }
+        const altarLight = new THREE.PointLight(0xffb703, 3.5, 35, 1.2);
+        altarLight.position.set(0, 3, 0);
+        altarLight.castShadow = true;
+        scene.add(altarLight);
 
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowUp') step(0, -1);
-            else if (e.key === 'ArrowDown') step(0, 1);
-            else if (e.key === 'ArrowLeft') step(-1, 0);
-            else if (e.key === 'ArrowRight') step(1, 0);
-            else if (e.key === ' ' || e.key === 'Enter') interact();
+        const windowLight = new THREE.DirectionalLight(0x38bdf8, 2.0);
+        windowLight.position.set(0, 15, -25);
+        windowLight.target.position.set(0, 0, 0);
+        scene.add(windowLight);
+
+        // Materials
+        const basaltMat = new THREE.MeshStandardMaterial({ color: 0x16181f, roughness: 0.85, metalness: 0.2 });
+        const goldFiligreeMat = new THREE.MeshStandardMaterial({ color: 0xfbbf24, roughness: 0.3, metalness: 0.8, emissive: 0x553300 });
+        const glowingCyanMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+        const stainedGlassMat = new THREE.MeshBasicMaterial({ color: 0x0284c7, transparent: true, opacity: 0.65 });
+
+        // Floor
+        const floorGeo = new THREE.PlaneGeometry(50, 50, 25, 25);
+        const floorMesh = new THREE.Mesh(floorGeo, basaltMat);
+        floorMesh.rotation.x = -Math.PI / 2;
+        floorMesh.receiveShadow = true;
+        scene.add(floorMesh);
+
+        const gridHelper = new THREE.GridHelper(50, 25, 0xfbbf24, 0x1e293b);
+        gridHelper.position.y = 0.01;
+        scene.add(gridHelper);
+
+        // Pillars
+        const pillarGeo = new THREE.CylinderGeometry(0.7, 0.85, 16, 12);
+        const archPositions =;
+        const archZPositions =;
+
+        archPositions.forEach(x => {
+            archZPositions.forEach(z => {
+                const pillar = new THREE.Mesh(pillarGeo, basaltMat);
+                pillar.position.set(x, 8, z);
+                pillar.castShadow = true;
+                pillar.receiveShadow = true;
+                scene.add(pillar);
+
+                const capitalGeo = new THREE.BoxGeometry(1.8, 0.6, 1.8);
+                const capital = new THREE.Mesh(capitalGeo, goldFiligreeMat);
+                capital.position.set(x, 16, z);
+                scene.add(capital);
+            });
         });
 
-        draw();
+        // Core Monad Altar
+        const altarBaseGeo = new THREE.CylinderGeometry(3.5, 4.2, 1.2, 8);
+        const altarBase = new THREE.Mesh(altarBaseGeo, basaltMat);
+        altarBase.position.set(0, 0.6, 0);
+        altarBase.receiveShadow = true;
+        scene.add(altarBase);
+
+        const altarPillarGeo = new THREE.BoxGeometry(1.6, 2.8, 1.6);
+        const altarPillar = new THREE.Mesh(altarPillarGeo, basaltMat);
+        altarPillar.position.set(0, 2.4, 0);
+        altarPillar.castShadow = true;
+        scene.add(altarPillar);
+
+        const oculusGeo = new THREE.OctahedronGeometry(0.8, 0);
+        const oculusMesh = new THREE.Mesh(oculusGeo, goldFiligreeMat);
+        oculusMesh.position.set(0, 4.5, 0);
+        scene.add(oculusMesh);
+
+        const ringGeo = new THREE.TorusGeometry(1.6, 0.06, 8, 32);
+        const ringMesh = new THREE.Mesh(ringGeo, glowingCyanMat);
+        ringMesh.position.set(0, 4.5, 0);
+        ringMesh.rotation.x = Math.PI / 3;
+        scene.add(ringMesh);
+
+        const windowFrameGeo = new THREE.BoxGeometry(8, 16, 0.4);
+        const windowFrame = new THREE.Mesh(windowFrameGeo, stainedGlassMat);
+        windowFrame.position.set(0, 10, -22);
+        scene.add(windowFrame);
+
+        let clock = new THREE.Clock();
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsed = clock.getElapsedTime();
+
+            oculusMesh.rotation.y = elapsed * 0.8;
+            oculusMesh.rotation.x = elapsed * 0.4;
+            ringMesh.rotation.z = -elapsed * 0.6;
+            ringMesh.rotation.y = elapsed * 0.3;
+
+            altarLight.intensity = 3.0 + Math.sin(elapsed * 4.0) * 0.8;
+
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
     </script>
 </body>
 </html>

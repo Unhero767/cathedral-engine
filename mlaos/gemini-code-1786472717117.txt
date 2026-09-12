@@ -1,0 +1,8 @@
+mlaos_workspace/
+├── constitution.yaml
+├── invariant_registry.yaml
+├── mlaos_ledger.py
+├── mlaos_linter.py
+├── mlaos_dashboard.py
+├── test_crucible.py
+└── run_workspace.py

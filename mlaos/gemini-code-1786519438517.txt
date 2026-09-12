@@ -1,0 +1,21 @@
+# Excerpt from AshArchiveNode.gd
+class_name AshArchiveNode
+extends Node
+
+signal state_carbonized(content_hash: String, merkle_root: String, truth_value: String)
+signal dialetheic_collision_resolved(collision_hash: String, entity_id: String)
+signal harmonic_scar_metabolized(scar_hash: String, failure_source: String)
+
+func ingest_dialetheic_collision(entity_id: String, assertion_a: Dictionary, assertion_not_a: Dictionary) -> String:
+	var res_a: Dictionary = append_state({"entity": entity_id, "state": assertion_a}, "PARACONSISTENT_TRUE(A)", true)
+	var res_b: Dictionary = append_state({"entity": entity_id, "state": assertion_not_a}, "PARACONSISTENT_TRUE(NOT_A)", true)
+	
+	var synthesis: Dictionary = {
+		"entity": entity_id,
+		"synthesis_type": "DIALETHEIC_BUFFER_COLLISION",
+		"component_a": res_a["content_hash"],
+		"component_not_a": res_b["content_hash"]
+	}
+	var res_col: Dictionary = append_state(synthesis, "BOTH(A_AND_NOT_A)", true)
+	emit_signal("dialetheic_collision_resolved", res_col["content_hash"], entity_id)
+	return res_col["content_hash"]
