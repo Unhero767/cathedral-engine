@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 450" width="500" height="450">
+  
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#66fcf1" />
+      <stop offset="100%" stop-color="#1f2833" />
+    </linearGradient>
+  </defs>
+  <rect width="500" height="450" fill="#0b0c10" rx="10"/>
+  <text x="250" y="35" fill="#66fcf1" font-family="Courier New" font-size="18" font-weight="bold" text-anchor="middle">TRI-KEY SOVEREIGNTY SEAL</text>
+  
+  <g transform="translate(250, 230)">
+    <!-- Triangular Seal -->
+    <polygon points="0,-140 -120,80 120,80" fill="none" stroke="#66fcf1" stroke-width="3"/>
+    
+    <!-- Lead Key -->
+    <circle cx="0" cy="-140" r="30" fill="#1f2833" stroke="#ffd700" stroke-width="3"/>
+    <text x="0" y="-135" fill="#ffd700" font-family="Courier New" font-size="10" font-weight="bold" text-anchor="middle">LEAD (Saturn)</text>
+    <text x="0" y="-80" fill="#aaa" font-family="Courier New" font-size="10" text-anchor="middle">Permineralizes Time</text>
+
+    <!-- Cyan Key -->
+    <circle cx="-120" cy="80" r="30" fill="#1f2833" stroke="#66fcf1" stroke-width="3"/>
+    <text x="-120" y="85" fill="#66fcf1" font-family="Courier New" font-size="10" font-weight="bold" text-anchor="middle">CYAN (Juno)</text>
+    <text x="-120" y="130" fill="#aaa" font-family="Courier New" font-size="10" text-anchor="middle">Network Invariance</text>
+
+    <!-- Iron Key -->
+    <circle cx="120" cy="80" r="30" fill="#1f2833" stroke="#ff4d4d" stroke-width="3"/>
+    <text x="120" y="85" fill="#ff4d4d" font-family="Courier New" font-size="10" font-weight="bold" text-anchor="middle">IRON (Mars)</text>
+    <text x="120" y="130" fill="#aaa" font-family="Courier New" font-size="10" text-anchor="middle">Kinetic Scalpel</text>
+
+    <!-- Core Authorization -->
+    <circle cx="0" cy="0" r="25" fill="#11151c" stroke="#fff" stroke-width="2"/>
+    <text x="0" y="5" fill="#fff" font-family="Courier New" font-size="11" font-weight="bold" text-anchor="middle">ROOT</text>
+  </g>
+</svg>

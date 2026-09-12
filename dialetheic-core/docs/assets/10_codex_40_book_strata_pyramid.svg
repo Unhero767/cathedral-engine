@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 450" width="500" height="450">
+  
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#66fcf1" />
+      <stop offset="100%" stop-color="#1f2833" />
+    </linearGradient>
+  </defs>
+  <rect width="500" height="450" fill="#0b0c10" rx="10"/>
+  <text x="250" y="35" fill="#66fcf1" font-family="Courier New" font-size="18" font-weight="bold" text-anchor="middle">THE 40-BOOK CODICAL STRATA PYRAMID</text>
+
+  <!-- Tier 4: Inner Shadow Canon -->
+  <polygon points="250,70 190,130 310,130" fill="#8b4513" stroke="#fff" stroke-width="1.5"/>
+  <text x="250" y="115" fill="#fff" font-family="Courier New" font-size="10" font-weight="bold" text-anchor="middle">TIER 4 (XXXI-XL)</text>
+
+  <!-- Tier 3: Outer Choirs -->
+  <polygon points="190,135 310,135 370,215 130,215" fill="#8a2be2" stroke="#fff" stroke-width="1.5"/>
+  <text x="250" y="180" fill="#fff" font-family="Courier New" font-size="11" font-weight="bold" text-anchor="middle">TIER 3: OUTER CHOIRS (XXI-XXX)</text>
+
+  <!-- Tier 2: Inner Mandala -->
+  <polygon points="130,220 370,220 430,300 70,300" fill="#4169e1" stroke="#fff" stroke-width="1.5"/>
+  <text x="250" y="265" fill="#fff" font-family="Courier New" font-size="11" font-weight="bold" text-anchor="middle">TIER 2: INNER MANDALA (XI-XX)</text>
+
+  <!-- Tier 1: Prime Foundations -->
+  <polygon points="70,305 430,305 480,385 20,385" fill="#ffd700" stroke="#fff" stroke-width="1.5"/>
+  <text x="250" y="350" fill="#000" font-family="Courier New" font-size="12" font-weight="bold" text-anchor="middle">TIER 1: PRIME FOUNDATIONS (I-X)</text>
+</svg>

@@ -1,0 +1,19 @@
+services:
+  cathedral:
+    build: .
+    container_name: cathedral-engine
+    ports:
+      - "8000:8000"
+    environment:
+      - DATA_DIR=/app/data
+      - CORS_ORIGINS=*
+      - LOG_LEVEL=info
+    volumes:
+      - ./data:/app/data
+      - ./codex:/app/codex
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5

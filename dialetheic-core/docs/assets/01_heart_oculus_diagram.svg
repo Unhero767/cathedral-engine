@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#66fcf1" />
+      <stop offset="100%" stop-color="#1f2833" />
+    </linearGradient>
+  </defs>
+  <rect width="500" height="500" fill="#0b0c10" rx="10"/>
+  <text x="250" y="35" fill="#66fcf1" font-family="Courier New" font-size="18" font-weight="bold" text-anchor="middle">HEART-OCULUS :: 36-CHAMBER BIO-PROCESSOR</text>
+  <circle cx="250" cy="250" r="180" fill="none" stroke="#66fcf1" stroke-width="2" stroke-dasharray="6 4"/>
+  <circle cx="250" cy="250" r="130" fill="none" stroke="#ffd700" stroke-width="2"/>
+  <circle cx="250" cy="250" r="80" fill="none" stroke="#8a2be2" stroke-width="2"/>
+  <circle cx="250" cy="250" r="25" fill="#66fcf1" stroke="#fff" stroke-width="3"/>
+  <text x="250" y="254" fill="#000" font-family="Courier New" font-size="10" font-weight="bold" text-anchor="middle">CORE</text>
+  <!-- 12 Sensory, 12 Emotional, 12 Wisdom Nodes -->
+  <g stroke="#66fcf1" stroke-width="1.5">
+    <line x1="250" y1="70" x2="250" y2="430"/>
+    <line x1="70" y1="250" x2="430" y2="250"/>
+    <line x1="122" y1="122" x2="378" y2="378"/>
+    <line x1="122" y1="378" x2="378" y2="122"/>
+  </g>
+  <text x="250" y="470" fill="#c5c6c7" font-family="Courier New" font-size="12" text-anchor="middle">3 Rings: 12 Sensory | 12 Emotional | 12 Wisdom</text>
+</svg>

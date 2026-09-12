@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  cathedral:
+    build: .
+    container_name: cathedral-engine-prod
+    ports:
+      - "8000:8000"
+    environment:
+      - DATA_DIR=/app/data
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:8000}
+      - LOG_LEVEL=warning
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - cathedral_data:/app/data
+    restart: always
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+    read_only_root_filesystem: false
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+
+volumes:
+  cathedral_data:
+    driver: local

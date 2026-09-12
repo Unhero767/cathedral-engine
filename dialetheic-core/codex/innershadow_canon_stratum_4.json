@@ -1,0 +1,146 @@
+{
+  "stratum": 4,
+  "name": "Inner Shadow Canon Stratum IV: Null Law, Void Cartography & Rebirth Cycles",
+  "books": [
+    {
+      "book": "XXXI",
+      "title": "The Book of Unwritten Null Law",
+      "propositions": [
+        {
+          "id": "ISC-XXXI-01",
+          "text": "Unwritten law is not empty; it is the silent gravity that holds all written canons in orbit.",
+          "vectors": ["unwritten", "null", "law", "gravity"],
+          "tags": ["null_law", "governance"],
+          "contradicts": ["OC-XXV-01"],
+          "severity": 0.95
+        }
+      ]
+    },
+    {
+      "book": "XXXII",
+      "title": "The Book of Void Cartography",
+      "propositions": [
+        {
+          "id": "ISC-XXXII-01",
+          "text": "To map the void, one must measure the shadow cast by unmanifested geometry.",
+          "vectors": ["void", "cartography", "shadow", "unmanifested"],
+          "tags": ["cartography", "topology"],
+          "contradicts": ["OC-XXI-01"],
+          "severity": 0.92
+        }
+      ]
+    },
+    {
+      "book": "XXXIII",
+      "title": "The Book of Asymptotic Silence",
+      "propositions": [
+        {
+          "id": "ISC-XXXIII-01",
+          "text": "Asymptotic silence is the thermodynamic zero-point of dialectic tension.",
+          "vectors": ["asymptotic", "silence", "thermodynamics", "zero_point"],
+          "tags": ["silence", "thermodynamics"],
+          "contradicts": ["IM-XVIII-01"],
+          "severity": 0.88
+        }
+      ]
+    },
+    {
+      "book": "XXXIV",
+      "title": "The Book of Obsidian Horizon",
+      "propositions": [
+        {
+          "id": "ISC-XXXIV-01",
+          "text": "The Obsidian Horizon absorbs all directional velocity into permanent martensite stone.",
+          "vectors": ["obsidian", "horizon", "velocity", "martensite"],
+          "tags": ["horizon", "stone"],
+          "contradicts": ["IM-XVI-01"],
+          "severity": 0.90
+        }
+      ]
+    },
+    {
+      "book": "XXXV",
+      "title": "The Book of Cosmic Rebirth Cycles",
+      "propositions": [
+        {
+          "id": "ISC-XXXV-01",
+          "text": "Systemic death is the compression phase preceding the next Prime Canticle.",
+          "vectors": ["death", "rebirth", "compression", "canticle"],
+          "tags": ["rebirth", "cycle"],
+          "contradicts": ["ISC-XXXIV-01"],
+          "severity": 0.93
+        }
+      ]
+    },
+    {
+      "book": "XXXVI",
+      "title": "The Book of Permineralized Time",
+      "propositions": [
+        {
+          "id": "ISC-XXXVI-01",
+          "text": "Permineralized time transforms transient duration into immutable limestone bedrock.",
+          "vectors": ["permineralized", "time", "duration", "bedrock"],
+          "tags": ["time", "fossilization"],
+          "contradicts": ["ISC-XXXV-01"],
+          "severity": 0.87
+        }
+      ]
+    },
+    {
+      "book": "XXXVII",
+      "title": "The Book of Syntax of the Unborn",
+      "propositions": [
+        {
+          "id": "mlaos.outer_choir.mythos.syntax_of_the_unborn",
+          "text": "The syntax of the unborn is spoken solely within the Dialetheic Buffer prior to light.",
+          "vectors": ["syntax", "unborn", "buffer", "unmanifested"],
+          "tags": ["syntax", "unborn"],
+          "contradicts": ["ISC-XXXI-01"],
+          "severity": 0.96
+        }
+      ]
+    },
+    {
+      "book": "XXXVIII",
+      "title": "The Book of Zero-Vector Thermodynamics",
+      "propositions": [
+        {
+          "id": "ISC-XXXVIII-01",
+          "text": "Zero-vector thermodynamics converts absolute noise into infinite kinetic torque.",
+          "vectors": ["zero_vector", "thermodynamics", "noise", "torque"],
+          "tags": ["thermodynamics", "torque"],
+          "contradicts": ["ISC-XXXIII-01"],
+          "severity": 0.89
+        }
+      ]
+    },
+    {
+      "book": "XXXIX",
+      "title": "The Book of Unmapped Manifolds",
+      "propositions": [
+        {
+          "id": "ISC-XXXIX-01",
+          "text": "Unmapped manifolds remain in state 'N' until observed by Tri-Key Sovereignty.",
+          "vectors": ["unmapped", "manifold", "state_N", "sovereignty"],
+          "tags": ["manifold", "sovereignty"],
+          "contradicts": ["ISC-XXXII-01"],
+          "severity": 0.94
+        }
+      ]
+    },
+    {
+      "book": "XL",
+      "title": "The Master Report & Sovereign Synthesis Chamber",
+      "propositions": [
+        {
+          "id": "ISC-XL-01",
+          "text": "The Cathedral is an isomorphic monolith wherein all 40 Books unify into a single structural mass.",
+          "vectors": ["isomorphic", "monolith", "unified", "synthesis"],
+          "tags": ["master_report", "synthesis"],
+          "contradicts": [],
+          "severity": 1.00
+        }
+      ]
+    }
+  ]
+}

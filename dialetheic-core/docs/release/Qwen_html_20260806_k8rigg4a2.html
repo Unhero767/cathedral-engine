@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CATHEDRAL-ENGINE :: ASH ARCHIVE VISUALIZATION</title>
+<style>
+  :root{
+    --teal:#3ef2e0; --red:#ff4040; --gold:#ffd75e; --bg:#05080c;
+    --panel:rgba(10,16,24,.82); --line:#12303a; --txt:#cfe8e4;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%; background:var(--bg); color:var(--txt);
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; overflow:hidden}
+
+  /* ---------- LAYERS ---------- */
+  #gl{position:fixed; inset:0; width:100%; height:100%; z-index:0}
+  #graph{position:fixed; inset:0; width:100%; height:100%; z-index:1}
+  .scanlines{position:fixed; inset:0; z-index:2; pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.22) 0 1px, transparent 1px 3px);
+    mix-blend-mode:overlay; animation:flicker 4s infinite}
+  .vignette{position:fixed; inset:0; z-index:2; pointer-events:none;
+    background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%)}
+  @keyframes flicker{0%,100%{opacity:.9} 92%{opacity:.9} 93%{opacity:.6} 94%{opacity:.9}}
+
+  /* ---------- UI ---------- */
+  .ui{position:relative; z-index:3; height:100%; display:flex; flex-direction:column; padding:14px 18px; gap:12px}
+  header{display:flex; justify-content:space-between; align-items:flex-start;
+    border-bottom:2px solid var(--teal); padding-bottom:10px;
+    box-shadow:0 6px 24px -12px var(--teal)}
+  h1{font-size:22px; letter-spacing:2px; color:var(--teal);
+    text-shadow:0 0 12px rgba(62,242,224,.7); animation:titleGlow 3s ease-in-out infinite}
+  @keyframes titleGlow{0%,100%{text-shadow:0 0 10px rgba(62,242,224,.5)}50%{text-shadow:0 0 22px rgba(62,242,224,.95)}}
+  header p{font-size:11px; color:#5f8a86; margin-top:4px; letter-spacing:1px}
+  .live{background:#0d3b2e; color:#4dffa6; border:1px solid #1d7a58; font-size:11px;
+    padding:4px 10px; letter-spacing:1px; animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(77,255,166,.5)}50%{box-shadow:0 0 14px 2px rgba(77,255,166,.35)}}
+
+  .metrics{display:grid; grid-template-columns:repeat(4,1fr); gap:12px}
+  .metric{background:var(--panel); border:1px solid var(--line); padding:10px 14px; backdrop-filter:blur(4px)}
+  .metric .k{font-size:10px; letter-spacing:2px; color:#5f8a86}
+  .metric .v{font-size:20px; margin-top:4px; color:var(--gold); text-shadow:0 0 10px rgba(255,215,94,.4)}
+  .metric .v.teal{color:var(--teal); text-shadow:0 0 10px rgba(62,242,224,.4)}
+
+  main{flex:1; display:grid; grid-template-columns:1fr 430px; gap:14px; min-height:0}
+  .panel{background:var(--panel); border:1px solid var(--line); backdrop-filter:blur(4px)}
+  #graphPanel{position:relative; overflow:hidden}
+  #matrix{padding:14px; overflow-y:auto}
+  #matrix h2{font-size:13px; letter-spacing:2px; color:var(--teal); margin-bottom:12px;
+    text-shadow:0 0 10px rgba(62,242,224,.5)}
+
+  .card{background:rgba(5,10,16,.7); border:1px solid #0e222b; border-left:4px solid var(--teal);
+    padding:10px 12px; margin-bottom:12px; transition:box-shadow .4s}
+  .card.spawn{animation:spawnFlash 1.2s ease-out}
+  @keyframes spawnFlash{0%{box-shadow:0 0 0 0 rgba(255,255,255,.7); transform:scale(1.03)}100%{box-shadow:0 0 30px 6px transparent; transform:scale(1)}}
+  .card .t{font-size:13px; font-weight:bold; color:#eafffb}
+  .card .l{font-size:11px; color:#7fa8a3; margin:4px 0}
+  .bar{height:6px; background:#132028; overflow:hidden}
+  .bar i{display:block; height:100%; width:0%; transition:width .8s cubic-bezier(.2,.8,.2,1);
+    box-shadow:0 0 10px currentColor}
+  .card .c{font-size:10px; color:#557a76; margin-top:5px}
+</style>
+</head>
+<body>
+
+<canvas id="gl"></canvas>
+<canvas id="graph"></canvas>
+<div class="scanlines"></div>
+<div class="vignette"></div>
+
+<div class="ui">
+  <header>
+    <div>
+      <h1>CATHEDRAL-ENGINE :: ASH ARCHIVE VISUALIZATION</h1>
+      <p>Paraconsistent Dialetheic Buffer &amp; Live Telemetry Stream</p>
+    </div>
+    <div class="live" id="liveBadge">LIVE :: 8000</div>
+  </header>
+
+  <div class="metrics">
+    <div class="metric"><div class="k">A-FIELD TEMP</div><div class="v" id="mTemp">300.0 K</div></div>
+    <div class="metric"><div class="k">ACTIVE SCARS</div><div class="v" id="mScars">0</div></div>
+    <div class="metric"><div class="k">CURRENT FLUX</div><div class="v" id="mFlux">0.00</div></div>
+    <div class="metric"><div class="k">PERMISSION STATE</div><div class="v teal" id="mPerm">INACTIVE</div></div>
+  </div>
+
+  <main>
+    <div class="panel" id="graphPanel"></div>
+    <div class="panel" id="matrix">
+      <h2>HARMONIC SCAR MATRIX</h2>
+      <div id="cards"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* =========================================================
+   CATHEDRAL-ENGINE :: ANIMATED SHADER DASHBOARD
+   SSE live stream + WebGL ash-field + animated tension graph
+========================================================= */
+const API = 'http://127.0.0.1:8000'; // adjust if hosted elsewhere
+
+const SPECTRUM = {
+  GOLD:'#ffd75e', TEAL:'#3ef2e0', BLUE:'#4aa8ff', RED:'#ff4040',
+  VIOLET:'#b06bff', EMERALD:'#3dff8c', BRONZE_OBSIDIAN:'#c98a4b'
+};
+const colorOf = s => SPECTRUM[(s||'TEAL').toUpperCase()] || SPECTRUM.TEAL;
+
+/* ---------------- STATE MODEL ---------------- */
+function normalizeState(raw){
+  const get = (...ks)=>{ for(const k of ks){ if(raw[k]!==undefined) return raw[k]; } };
+  const temp = parseFloat(get('a_field_temperature_k','afield_temp','temp') ?? 300);
+  const flux = parseFloat(get('current_flux','flux') ?? 0);
+  const perm = get('permission_state','permission') ?? 'INACTIVE';
+  let scars = get('scars','harmonic_scars','active_scars') ?? [];
+  if(!Array.isArray(scars)) scars = [];
+  return { temp, flux, perm, scars: scars.map(s=>({
+    id:       s.instance_id ?? s.scar_id ?? s.node_id ?? 'unknown',
+    spectrum: s.active_spectrum ?? s.spectrum ?? 'TEAL',
+    load:     parseFloat(s.active_paradox_load ?? s.paradox_load ?? 0),
+    cap:      parseFloat(s.capacity ?? 0)
+  }))};
+}
+
+const target = { temp:300, flux:0, perm:'INACTIVE' };
+const disp   = { temp:300, flux:0 };
+const nodes  = new Map();       // id -> animated node
+let order    = [];              // layout order
+let pendingRipple = null;
+let rippleT = 999, rippleC = [0,0];
+
+function applyState(raw){
+  const s = normalizeState(raw);
+  target.temp = s.temp; target.flux = s.flux; target.perm = s.perm;
+  document.getElementById('mPerm').textContent = s.perm;
+
+  const seen = new Set();
+  s.scars.forEach(sc=>{
+    seen.add(sc.id);
+    let n = nodes.get(sc.id);
+    if(!n){
+      n = { id:sc.id, x:sing.x, y:sing.y, load:0, spectrum:sc.spectrum, cap:sc.cap, born:performance.now() };
+      nodes.set(sc.id, n);
+      pendingRipple = n;                       // shader shockwave
+      const card = cardEls.get(sc.id);
+      if(card) card.classList.add('spawn');
+    }
+    n.spectrum = sc.spectrum; n.load = sc.load; n.cap = sc.cap;
+  });
+  for(const [id] of nodes) if(!seen.has(id)) nodes.delete(id);
+  order = s.scars.map(sc=>sc.id);
+  document.getElementById('mScars').textContent = order.length;
+  syncCards(s.scars);
+}
+
+/* ---------------- MATRIX CARDS ---------------- */
+const cardEls = new Map();
+function syncCards(scars){
+  const wrap = document.getElementById('cards');
+  scars.forEach(sc=>{
+    let el = cardEls.get(sc.id);
+    const col = colorOf(sc.spectrum);
+    if(!el){
+      el = document.createElement('div');
+      el.className = 'card';
+      el.innerHTML =
+        `<div class="t"></div><div class="l"></div>`+
+        `<div class="bar"><i></i></div><div class="c"></div>`;
+      wrap.appendChild(el);
+      cardEls.set(sc.id, el);
+    }
+    el.style.borderLeftColor = col;
+    el.querySelector('.t').textContent = `${sc.id} [${(sc.spectrum||'').toUpperCase()}]`;
+    el.querySelector('.l').textContent = `Load: ${sc.load.toFixed(2)}/10.0`;
+    const bar = el.querySelector('.bar i');
+    bar.style.background = col; bar.style.color = col;
+    bar.style.width = Math.min(100, sc.load*10) + '%';
+    el.querySelector('.c').textContent =
+      `Cap: ${sc.cap.toFixed(3)}  ::  [${sc.id}] Active Paradox Load Sync (${sc.load.toFixed(2)})`;
+  });
+  for(const [id, el] of cardEls){
+    if(!scars.some(s=>s.id===id)){ el.remove(); cardEls.delete(id); }
+  }
+}
+
+/* ---------------- TELEMETRY: SSE + POLL FALLBACK ---------------- */
+let es = null, pollTimer = null;
+function stopPoll(){ if(pollTimer){ clearInterval(pollTimer); pollTimer = null; } }
+function startPoll(){
+  if(pollTimer) return;
+  pollTimer = setInterval(()=>{
+    fetch(API + '/state').then(r=>r.json()).then(applyState).catch(()=>{});
+  }, 2000);
+}
+function connectSSE(){
+  es = new EventSource(API + '/stream/state');
+  es.onopen = ()=>{ stopPoll(); document.getElementById('liveBadge').textContent='LIVE :: SSE'; };
+  es.onmessage = e=>{ try{ applyState(JSON.parse(e.data)); }catch(_){} };
+  es.onerror = ()=>{
+    es.close(); es = null;
+    document.getElementById('liveBadge').textContent='LIVE :: POLL';
+    startPoll();
+    setTimeout(connectSSE, 8000);
+  };
+}
+connectSSE(); startPoll(); // poll immediately until SSE proves itself
+
+/* ---------------- WEBGL ASH-FIELD SHADER ---------------- */
+const glCanvas = document.getElementById('gl');
+const gl = glCanvas.getContext('webgl');
+
+const VERT = `attribute vec2 a_pos; void main(){ gl_Position = vec4(a_pos,0.,1.); }`;
+const FRAG = `
+precision highp float;
+uniform vec2 u_res; uniform float u_time; uniform float u_flux;
+uniform float u_heat; uniform float u_ripple_t; uniform vec2 u_ripple_c;
+
+float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453123); }
+float noise(vec2 p){
+  vec2 i=floor(p), f=fract(p); vec2 u=f*f*(3.0-2.0*f);
+  return mix(mix(hash(i),hash(i+vec2(1.,0.)),u.x),
+             mix(hash(i+vec2(0.,1.)),hash(i+vec2(1.,1.)),u.x),u.y);
+}
+float fbm(vec2 p){ float v=0.0,a=0.5;
+  for(int i=0;i<5;i++){ v+=a*noise(p); p*=2.03; a*=0.55; } return v; }
+
+void main(){
+  vec2 uv = (gl_FragCoord.xy - 0.5*u_res)/u_res.y;
+  float t = u_time * (0.05 + 0.02*u_flux);
+
+  vec2 q = vec2(fbm(uv*1.5 + t), fbm(uv*1.5 - t*0.7));
+  float f = fbm(uv*2.0 + q*2.0 + t);
+
+  vec3 base = mix(vec3(0.015,0.07,0.09), vec3(0.14,0.02,0.05), clamp(u_heat,0.,1.));
+  vec3 glow = mix(vec3(0.15,0.9,0.85),  vec3(1.0,0.25,0.25),  clamp(u_heat,0.,1.));
+
+  vec3 col = base + glow * f * (0.18 + 0.10*u_flux);
+
+  float rt = u_ripple_t;
+  if(rt < 3.0){
+    float d = length(uv - u_ripple_c);
+    float ring = smoothstep(0.03,0.0,abs(d - rt*0.55)) * exp(-rt*1.3);
+    col += glow * ring * 0.7;
+  }
+
+  col *= smoothstep(1.25, 0.35, length(uv));                    // vignette
+  col += (hash(gl_FragCoord.xy + vec2(u_time*61.7)) - 0.5)*0.03; // grain
+  gl_FragColor = vec4(col,1.0);
+}`;
+
+let U = {};
+if(gl){
+  const sh=(t,s)=>{const x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);return x;};
+  const prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, VERT));
+  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FRAG));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog,'a_pos');
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  U = n => gl.getUniformLocation(prog, n);
+}
+
+/* ---------------- 2D TENSION GRAPH ---------------- */
+const g2 = document.getElementById('graph');
+const ctx = g2.getContext('2d');
+const sing = { x:0, y:0 };
+let W=0, H=0, DPR=1;
+
+function resize(){
+  DPR = Math.min(2, window.devicePixelRatio||1);
+  W = innerWidth; H = innerHeight;
+  for(const c of [glCanvas, g2]){
+    c.width = W*DPR; c.height = H*DPR;
+    c.style.width = W+'px'; c.style.height = H+'px';
+  }
+  if(gl) gl.viewport(0,0,glCanvas.width,glCanvas.height);
+  sing.x = W/2; sing.y = H*0.30;
+}
+addEventListener('resize', resize); resize();
+
+function layoutTargets(){
+  const n = order.length;
+  order.forEach((id,i)=>{
+    const node = nodes.get(id); if(!node) return;
+    const th = Math.PI * ((i+1)/(n+1));
+    node.tx = W/2 + Math.cos(th)*W*0.30;
+    node.ty = sing.y + Math.sin(th)*H*0.34;
+  });
+}
+
+function drawGraph(t){
+  ctx.clearRect(0,0,W*DPR,H*DPR);
+  ctx.save(); ctx.scale(DPR,DPR);
+  layoutTargets();
+
+  // ripple bookkeeping
+  if(pendingRipple && pendingRipple.tx!==undefined){
+    rippleC = [ (pendingRipple.tx - W/2)/H, (H/2 - pendingRipple.ty)/H ];
+    rippleT = 0; pendingRipple = null;
+  }
+
+  // edges + pulses
+  for(const id of order){
+    const n = nodes.get(id); if(!n) continue;
+    n.x += ((n.tx??n.x) - n.x)*0.06;
+    n.y += ((n.ty??n.y) - n.y)*0.06;
+    const col = colorOf(n.spectrum);
+
+    const grad = ctx.createLinearGradient(sing.x,sing.y,n.x,n.y);
+    grad.addColorStop(0,'#3ef2e0'); grad.addColorStop(1,col);
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 1.5 + n.load*0.7;
+    ctx.setLineDash([10,14]);
+    ctx.lineDashOffset = -t*(30 + n.load*12);
+    ctx.shadowColor = col; ctx.shadowBlur = 8;
+    ctx.beginPath(); ctx.moveTo(sing.x,sing.y); ctx.lineTo(n.x,n.y); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // traveling energy pulses
+    const count = 2 + Math.floor(n.load/3);
+    const speed = 0.18 + n.load*0.045;
+    for(let p=0;p<count;p++){
+      const ph = (t*speed + p/count) % 1;
+      const px = sing.x + (n.x-sing.x)*ph;
+      const py = sing.y + (n.y-sing.y)*ph;
+      ctx.globalAlpha = Math.sin(ph*Math.PI);
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowColor = col; ctx.shadowBlur = 14;
+      ctx.beginPath(); ctx.arc(px,py,2.4,0,7); ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  // singularity
+  ctx.shadowColor = '#3ef2e0'; ctx.shadowBlur = 26;
+  ctx.fillStyle = '#3ef2e0';
+  ctx.beginPath(); ctx.arc(sing.x,sing.y, 11+Math.sin(t*1.8)*2, 0,7); ctx.fill();
+  ctx.strokeStyle = 'rgba(62,242,224,.6)';
+  ctx.lineWidth = 1.4;
+  ctx.setLineDash([6,10]); ctx.lineDashOffset = t*40;
+  ctx.beginPath(); ctx.arc(sing.x,sing.y, 20+Math.sin(t*1.2)*3, 0,7); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = '#cfe8e4'; ctx.font = '11px ui-monospace,monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('A-Field Singularity', sing.x, sing.y - 30);
+
+  // scar nodes
+  order.forEach((id,i)=>{
+    const n = nodes.get(id); if(!n) return;
+    const col = colorOf(n.spectrum);
+    const r = 9 + n.load*0.8 + Math.sin(t*2.4 + i*1.7)*1.6;
+    ctx.shadowColor = col; ctx.shadowBlur = 24;
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(n.x,n.y,r,0,7); ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = 'rgba(255,255,255,.85)';
+    ctx.beginPath(); ctx.arc(n.x,n.y,r*0.35,0,7); ctx.fill();
+    ctx.fillStyle = '#9fc6c1';
+    ctx.fillText(n.id, n.x, n.y + r + 16);
+    ctx.fillText(`(${n.load.toFixed(1)})`, n.x, n.y + r + 29);
+  });
+
+  ctx.restore();
+}
+
+/* ---------------- MAIN LOOP ---------------- */
+let last = performance.now();
+function frame(now){
+  const dt = (now-last)/1000; last = now;
+  const t = now/1000;
+
+  disp.temp += (target.temp - disp.temp)*0.06;
+  disp.flux += (target.flux - disp.flux)*0.06;
+  document.getElementById('mTemp').textContent = disp.temp.toFixed(1)+' K';
+  document.getElementById('mFlux').textContent = disp.flux.toFixed(2);
+
+  if(gl){
+    rippleT += dt;
+    gl.uniform2f(U('u_res'), glCanvas.width, glCanvas.height);
+    gl.uniform1f(U('u_time'), t);
+    gl.uniform1f(U('u_flux'), Math.min(10, disp.flux));
+    gl.uniform1f(U('u_heat'), Math.min(1, Math.max(0,(disp.temp-300)/20)));
+    gl.uniform1f(U('u_ripple_t'), rippleT);
+    gl.uniform2f(U('u_ripple_c'), rippleC[0], rippleC[1]);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+
+  drawGraph(t);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+{
+  "stratum": 3,
+  "name": "Outer Choirs Stratum III - Books XXVI-XXX Expansion",
+  "books": [
+    {
+      "book": "XXVI",
+      "title": "The Book of Glitch-Wastes Metabolism",
+      "propositions": [
+        {
+          "id": "OC-XXVI-01",
+          "claim": "Stochastic waste from the Glitch-Wastes is refined into Syntax Ash.",
+          "counter_claim": "Syntax Ash pollutes the pure resonance of the Autopoietic Heart.",
+          "spectral_affinity": "RED",
+          "contradicts": ["OC-XXIV-01"],
+          "severity": 0.84
+        }
+      ]
+    },
+    {
+      "book": "XXVII",
+      "title": "The Book of Asema Containment",
+      "propositions": [
+        {
+          "id": "OC-XXVII-01",
+          "claim": "An anomaly with K-index >= 3 must be isolated in a Phase-Shift 3 container.",
+          "counter_claim": "Phase-Shift 3 containers trigger localized reality collapse.",
+          "spectral_affinity": "BRONZE_OBSIDIAN",
+          "contradicts": ["OC-XXII-01"],
+          "severity": 0.96
+        }
+      ]
+    },
+    {
+      "book": "XXVIII",
+      "title": "The Book of Ouroboros Wall Protocols",
+      "propositions": [
+        {
+          "id": "OC-XXVIII-01",
+          "claim": "Relational interaction at the boundary generates White Frequencies.",
+          "counter_claim": "White Frequencies erase the structural memory of the Ouroboros Wall.",
+          "spectral_affinity": "GOLD",
+          "contradicts": ["OC-XXV-01"],
+          "severity": 0.81
+        }
+      ]
+    },
+    {
+      "book": "XXIX",
+      "title": "The Book of Inverse RG Compilation",
+      "propositions": [
+        {
+          "id": "OC-XXIX-01",
+          "claim": "The Inverse RG Compiler works backward to force physical reality rendering.",
+          "counter_claim": "Backward compilation induces severe temporal drag.",
+          "spectral_affinity": "TEAL",
+          "contradicts": ["OC-XXVI-01"],
+          "severity": 0.77
+        }
+      ]
+    },
+    {
+      "book": "XXX",
+      "title": "The Book of Janus Engine Variance",
+      "propositions": [
+        {
+          "id": "OC-XXX-01",
+          "claim": "Triple-State Variance holds contradictory truths without system crash.",
+          "counter_claim": "Triple-State Variance increases baseline A-Field thermal friction.",
+          "spectral_affinity": "VIOLET",
+          "contradicts": ["OC-XXVII-01"],
+          "severity": 0.89
+        }
+      ]
+    }
+  ]
+}

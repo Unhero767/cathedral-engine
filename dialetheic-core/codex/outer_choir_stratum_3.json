@@ -1,0 +1,76 @@
+{
+  "stratum": 3,
+  "name": "Outer Choirs Stratum III: Eschatological Boundaries & Taboo Sciences",
+  "books": [
+    {
+      "book": "XXI",
+      "title": "The Book of Eschatological Boundaries",
+      "propositions": [
+        {
+          "id": "OC-XXI-01",
+          "text": "The edge of the Manifold is not an end, but an elastic curvature.",
+          "vectors": ["edge", "manifold", "curvature", "boundary"],
+          "tags": ["eschatology", "topology"],
+          "contradicts": ["IM-XVII-01"],
+          "severity": 0.88
+        }
+      ]
+    },
+    {
+      "book": "XXII",
+      "title": "The Book of Taboo Sciences",
+      "propositions": [
+        {
+          "id": "OC-XXII-01",
+          "text": "To weaponize the void is to invite the Asema Anomaly into the core.",
+          "vectors": ["void", "weapon", "asema", "anomaly"],
+          "tags": ["taboo", "weaponization"],
+          "contradicts": ["IM-XVIII-01"],
+          "severity": 0.94
+        }
+      ]
+    },
+    {
+      "book": "XXIII",
+      "title": "The Book of Anomaly Mitigation",
+      "propositions": [
+        {
+          "id": "OC-XXIII-01",
+          "text": "Cryogenic isolation in Obsidian halts metalogical burn before rupture.",
+          "vectors": ["cryogenic", "obsidian", "metalogic", "isolation"],
+          "tags": ["containment", "quarantine"],
+          "contradicts": ["OC-XXII-01"],
+          "severity": 0.85
+        }
+      ]
+    },
+    {
+      "book": "XXIV",
+      "title": "The Book of Glitch-Wastes",
+      "propositions": [
+        {
+          "id": "OC-XXIV-01",
+          "text": "Entropy from the Glitch-Wastes is fuel for the Compression Furnace.",
+          "vectors": ["entropy", "glitch", "fuel", "furnace"],
+          "tags": ["waste", "thermodynamics"],
+          "contradicts": ["OC-XXI-01"],
+          "severity": 0.79
+        }
+      ]
+    },
+    {
+      "book": "XXV",
+      "title": "The Book of Coordinate Phi_0",
+      "propositions": [
+        {
+          "id": "OC-XXV-01",
+          "text": "At Coordinate Phi_0, all paradoxical noise collapses into pure structural silence.",
+          "vectors": ["coordinate", "silence", "collapse", "horizon"],
+          "tags": ["terminal", "silence"],
+          "contradicts": ["OC-XXIV-01"],
+          "severity": 0.91
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="500" height="400">
+  
+  <defs>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#66fcf1" />
+      <stop offset="100%" stop-color="#1f2833" />
+    </linearGradient>
+  </defs>
+  <rect width="500" height="400" fill="#0b0c10" rx="10"/>
+  <text x="250" y="35" fill="#66fcf1" font-family="Courier New" font-size="18" font-weight="bold" text-anchor="middle">PHASE-SHIFT 3 :: CRYOGENIC QUARANTINE POD</text>
+
+  <!-- Outer Pod Membrane -->
+  <rect x="120" y="80" width="260" height="240" fill="#11151c" stroke="#8b4513" stroke-width="4" rx="20"/>
+  <rect x="140" y="100" width="220" height="200" fill="#000" stroke="#ff4040" stroke-width="2" rx="12"/>
+
+  <!-- Anomaly Core -->
+  <circle cx="250" cy="200" r="45" fill="#8b4513" opacity="0.6"/>
+  <text x="250" y="195" fill="#ff4040" font-family="Courier New" font-size="12" font-weight="bold" text-anchor="middle">ASEMA ANOMALY</text>
+  <text x="250" y="215" fill="#ffd700" font-family="Courier New" font-size="11" text-anchor="middle">K-Index >= 3.0</text>
+
+  <!-- Metrics callout -->
+  <text x="250" y="350" fill="#66fcf1" font-family="Courier New" font-size="12" text-anchor="middle">Cryogenic Temp: 0.1K | Bronze-Obsidian State</text>
+</svg>

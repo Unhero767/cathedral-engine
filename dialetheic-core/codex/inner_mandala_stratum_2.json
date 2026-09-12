@@ -1,0 +1,78 @@
+{
+  "stratum": 2,
+  "name": "Inner Mandala Stratum II: The Recursive Wounds",
+  "books": [
+    {
+      "book": "XVI",
+      "title": "The Book of Recursive Wounds",
+      "propositions": [
+        {
+          "id": "IM-XVI-01",
+          "text": "A wound that remembers itself becomes a doorway.",
+          "vectors": ["wound", "memory", "threshold", "recursion"],
+          "tags": ["scar", "time", "paradox"],
+          "contradicts": ["IM-XII-01"]
+        },
+        {
+          "id": "IM-XVI-02",
+          "text": "To heal is to forget the geometry of the break.",
+          "vectors": ["healing", "erasure", "geometry"],
+          "tags": ["memory", "loss"],
+          "contradicts": ["IM-XI-02"]
+        }
+      ]
+    },
+    {
+      "book": "XVII",
+      "title": "The Book of Hollow Light",
+      "propositions": [
+        {
+          "id": "IM-XVII-01",
+          "text": "Light without shadow casts no anchor.",
+          "vectors": ["light", "shadow", "anchor", "weight"],
+          "tags": ["duality", "physics"],
+          "contradicts": []
+        }
+      ]
+    },
+    {
+      "book": "XVIII",
+      "title": "The Book of Silent Geometries",
+      "propositions": [
+        {
+          "id": "IM-XVIII-01",
+          "text": "Silence is the loudest shape in the archive.",
+          "vectors": ["silence", "shape", "volume", "archive"],
+          "tags": ["acoustic", "space"],
+          "contradicts": []
+        }
+      ]
+    },
+    {
+      "book": "XIX",
+      "title": "The Book of Mirrors",
+      "propositions": [
+        {
+          "id": "IM-XIX-01",
+          "text": "The reflection bears the weight the mirror refuses.",
+          "vectors": ["reflection", "weight", "mirror", "burden"],
+          "tags": ["optics", "load"],
+          "contradicts": ["IM-XVII-01"]
+        }
+      ]
+    },
+    {
+      "book": "XX",
+      "title": "The Book of Final Anchors",
+      "propositions": [
+        {
+          "id": "IM-XX-01",
+          "text": "Obsidian does not forgive weight; it remembers it.",
+          "vectors": ["obsidian", "memory", "weight", "permanence"],
+          "tags": ["anchor", "material", "time"],
+          "contradicts": ["IM-XVI-02"]
+        }
+      ]
+    }
+  ]
+}
