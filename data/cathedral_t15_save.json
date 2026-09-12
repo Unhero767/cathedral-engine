@@ -1,0 +1,78 @@
+{
+  "canon": {
+    "node_id": "forge_furnace",
+    "act": 1,
+    "paradox": 1,
+    "momentum": 1,
+    "ego": 2,
+    "rigidity": 2,
+    "flow_stage": "NONE",
+    "coherence": 0.96,
+    "k_index": 0.978,
+    "flags": {},
+    "visited_nodes": [
+      "nave_threshold",
+      "crypt_descent",
+      "forge_furnace"
+    ],
+    "scars": [],
+    "keys_held": {
+      "LEAD": 1,
+      "CYAN": 1,
+      "IRON": 1
+    }
+  },
+  "ledger": [
+    {
+      "index": 0,
+      "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "f2874df0ed98a190e3b80ba0778097b176515c543c0868346ed94264af606ce9",
+      "timestamp": 1786957394.755602,
+      "event_type": "GENESIS",
+      "node_id": "nave_threshold",
+      "choice_id": "INITIALIZE_CANON",
+      "roll_result": null,
+      "state_before_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "state_after_hash": "c5d1fea9ea8a08337ae83a4502c4b87b3e7d0abb9fd68775e511af97c99ce14e",
+      "payload": {
+        "action": "GENESIS_LOCK",
+        "initial_act": 1,
+        "sentinel_seal": "VALID"
+      }
+    },
+    {
+      "index": 1,
+      "prev_hash": "f2874df0ed98a190e3b80ba0778097b176515c543c0868346ed94264af606ce9",
+      "hash": "02cb8cd49747b28ad99575ab9cb21103198a81375eca8e02f43c3ff8751937b1",
+      "timestamp": 1786957412.5189729,
+      "event_type": "CHOICE",
+      "node_id": "nave_threshold",
+      "choice_id": "descend_crypt_altar",
+      "roll_result": null,
+      "state_before_hash": "c5d1fea9ea8a08337ae83a4502c4b87b3e7d0abb9fd68775e511af97c99ce14e",
+      "state_after_hash": "0f2d6ad203c369eec17ce608d5c6a5bfd6f986e7650cb6a6b0044f5dd246f167",
+      "payload": {
+        "target_node": "crypt_descent",
+        "label": "Descend directly into the Crypt of Ash",
+        "sentinel_audit": "PASSED"
+      }
+    },
+    {
+      "index": 2,
+      "prev_hash": "02cb8cd49747b28ad99575ab9cb21103198a81375eca8e02f43c3ff8751937b1",
+      "hash": "05849d047e328c713528840e371626b3b55368c3b28a8a20a2184f673a3c718d",
+      "timestamp": 1786957425.157621,
+      "event_type": "CHOICE",
+      "node_id": "crypt_descent",
+      "choice_id": "force_sarcophagus_iron",
+      "roll_result": null,
+      "state_before_hash": "b83b71e62b9df6ceb69e7b3ab43de242a3cab3445e237f3fb0fe136657da33f3",
+      "state_after_hash": "f34c159fb8b8a91bf509386af87dc6b0d428b9c3dae7c861934f3e454cfa13cc",
+      "payload": {
+        "target_node": "forge_furnace",
+        "label": "Strike the iron sarcophagus with Iron Key \u2642",
+        "sentinel_audit": "PASSED"
+      }
+    }
+  ]
+}

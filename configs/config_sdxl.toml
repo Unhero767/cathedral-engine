@@ -1,0 +1,25 @@
+[model_arguments]
+pretrained_model_name_or_path = "/users/kennethdallmier/cathedral_engine/models/sdxl_base.safetensors"
+
+[dataset_arguments]
+train_data_dir = "/users/kennethdallmier/cathedral_engine/dataset"
+resolution = "1024,1024"
+dataset_repeats = 5
+
+[training_arguments]
+output_dir = "/users/kennethdallmier/cathedral_engine/output"
+logging_dir = "/users/kennethdallmier/cathedral_engine/logs"
+train_batch_size = 2
+learning_rate = 1e-4
+unet_lr = 1e-4
+text_encoder_lr = 5e-5
+max_train_epochs = 10
+mixed_precision = "bf16"
+save_precision = "bf16"
+save_every_n_epochs = 1
+optimizer_type = "AdamW8bit"
+
+[network_arguments]
+network_module = "networks.lora"
+network_dim = 32
+network_alpha = 16

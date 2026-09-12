@@ -1,0 +1,29 @@
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
+
+uniform float epistemic_state_id = 0.0;
+uniform float transition_weight = 0.0;
+
+// Spectral Frequency Color Constants
+const vec3 COLOR_NEITHER = vec3(0.1, 0.1, 0.15); // Void baseline
+const vec3 COLOR_TRUE    = vec3(0.9, 0.8, 0.2);  // Gold / Joy (Confirmed Truth)
+const vec3 COLOR_FALSE   = vec3(0.1, 0.3, 0.7);  // Blue / Sorrow (Confirmed False)
+const vec3 COLOR_SCAR    = vec3(0.9, 0.1, 0.1);  // Crimson / Harmonic Scar (BothConfirmed)
+
+void fragment() {
+    vec3 base_color = COLOR_NEITHER;
+    
+    // Map epistemic state index to spectral color channels
+    if (epistemic_state_id >= 6.0) {
+        // BothTentative (6.0) or BothConfirmed (7.0) -> Dialetheic collision
+        float pulse = sin(TIME * 4.0) * 0.5 + 0.5;
+        base_color = mix(COLOR_TRUE, COLOR_SCAR, transition_weight * pulse);
+    } else if (epistemic_state_id >= 2.0 && epistemic_state_id < 4.0) {
+        base_color = COLOR_TRUE;
+    } else if (epistemic_state_id >= 4.0 && epistemic_state_id < 6.0) {
+        base_color = COLOR_FALSE;
+    }
+    
+    ALBEDO = base_color;
+    EMISSION = base_color * transition_weight * 0.7;
+}
