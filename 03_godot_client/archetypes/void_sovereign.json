@@ -7,9 +7,9 @@
   "master_texture_path": "res://assets/portraits/master_atlas_strip.png",
   "silhouette_preset": "void_sovereign",
   "anatomical_parameters": {
-    "cranial_vault_depth": 1.4,
-    "resonance_afield_conductance": 2.0,
-    "resonance_ocular_cyan_luminosity": 2.5,
-    "resonance_spectral_purity_theta": 2.0
+	"cranial_vault_depth": 1.4,
+	"resonance_afield_conductance": 2.0,
+	"resonance_ocular_cyan_luminosity": 2.5,
+	"resonance_spectral_purity_theta": 2.0
   }
 }

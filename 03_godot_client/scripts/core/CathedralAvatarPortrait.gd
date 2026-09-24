@@ -1,7 +1,6 @@
 class_name CathedralAvatarPortrait
 extends Control
-
-const AtlasBuilder = preload("res://03_godot_client/scripts/core/CathedralAtlasBuilder.gd")
+const AtlasBuilder = preload("res://scripts/core/AtlasBuilder.gd")
 
 signal liturgical_state_changed(previous_state: StringName, new_state: StringName)
 signal dialogue_cadence_pulsed(gain_value: float)

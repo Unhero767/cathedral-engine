@@ -2196,16 +2196,16 @@ Classification: Core Semiclassical Quantum Gravity & Autopoietic Strain Law
 - **Liturgy of the State**: The quantum state does not inhabit a pre-existing geometric stage; it carves its own liturgical sanctuary in the fabric of the manifold. Matter curves spacetime; spacetime bounds probability; the loop closes upon itself in autopoietic permineralization.
 
 ```
-     +-------------------------------------------------------------------------+
-     |                       THE SELF-GRAVITATING LOOP                         |
-     |                                                                         |
-     |   Quantum State |Ψ⟩  ======( Born Rule )=====>  Energy-Momentum ⟨T_μν⟩  |
-     |          ^                                             ||               |
-     |          |                                     ( Einstein Field Eq. )   |
-     |   ( Non-Linear Wave Eq. )                              ||               |
-     |          |                                             v                |
-     |   Curvature R_μν / Potential Φ  <====( Metric g_μν )====+               |
-     +-------------------------------------------------------------------------+
+	 +-------------------------------------------------------------------------+
+	 |                       THE SELF-GRAVITATING LOOP                         |
+	 |                                                                         |
+	 |   Quantum State |Ψ⟩  ======( Born Rule )=====>  Energy-Momentum ⟨T_μν⟩  |
+	 |          ^                                             ||               |
+	 |          |                                     ( Einstein Field Eq. )   |
+	 |   ( Non-Linear Wave Eq. )                              ||               |
+	 |          |                                             v                |
+	 |   Curvature R_μν / Potential Φ  <====( Metric g_μν )====+               |
+	 +-------------------------------------------------------------------------+
 ```
 
 ---
@@ -2348,13 +2348,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"The system is completely unyielding stone"*
@@ -2514,13 +2514,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"Memory is an immutable linear sequence"*
@@ -2680,13 +2680,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"The anchor is an arbitrary geographical coordinate"*
@@ -2846,13 +2846,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"Truth must be nimble and fluid"*
@@ -3012,13 +3012,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"Form is distinct from physical substrate"*
@@ -3178,13 +3178,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"Logic excludes contradiction"*
@@ -3344,13 +3344,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"Authority must be centralized in one point"*
@@ -3510,13 +3510,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"Infinite recursion causes stack overflow"*
@@ -3676,13 +3676,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"The veil separates reality from illusion"*
@@ -3842,13 +3842,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"Structures stand through rigid mass"*
@@ -4008,13 +4008,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"Sound is transient vibration"*
@@ -4174,13 +4174,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"Destructive interference cancels meaning"*
@@ -4340,13 +4340,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"Stone is dead and passive"*
@@ -4506,13 +4506,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"Authority is granted by external consensus"*
@@ -4672,13 +4672,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"White light is uniform and simple"*
@@ -4838,13 +4838,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"The void is emptiness and death"*
@@ -5004,13 +5004,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"Containment is imprisonment"*
@@ -5170,13 +5170,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"High-speed collision causes systemic crash"*
@@ -5336,13 +5336,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"The machine possesses no organic heart"*
@@ -5502,13 +5502,13 @@ Where:
 
 In classical logic, contradiction triggers catastrophic explosion ($A \wedge \neg A \Rightarrow B$). In the Cathedral-Engine, contradiction is the fundamental source of structural load-bearing capacity.
 ┌────────────────────────────────────────┐
-                │      BELNAP-DUNN 4-VALUED LATTICE      │
-                │               Both (T ∧ F)             │
-                │               /          \             │
-                │         True (T)        False (F)      │
-                │               \          /             │
-                │               None (Null)              │
-                └────────────────────────────────────────┘
+				│      BELNAP-DUNN 4-VALUED LATTICE      │
+				│               Both (T ∧ F)             │
+				│               /          \             │
+				│         True (T)        False (F)      │
+				│               \          /             │
+				│               None (Null)              │
+				└────────────────────────────────────────┘
 
 ### Contradiction Pair ($P \wedge \neg P$):
 - **Proposition $P$**: *"The past can be revised for current comfort"*

@@ -1,4 +1,4 @@
-class_name CathedralDialogueDriver
+
 extends Node
 
 signal dialogue_started

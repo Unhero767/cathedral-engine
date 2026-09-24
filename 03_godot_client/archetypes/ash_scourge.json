@@ -7,7 +7,7 @@
   "master_texture_path": "res://assets/portraits/master_atlas_strip.png",
   "silhouette_preset": "scourge_gaunt",
   "anatomical_parameters": {
-    "resonance_ash_accumulation_affinity": 1.95,
-    "clearance_cranial_calvaria_offset": 0.3
+	"resonance_ash_accumulation_affinity": 1.95,
+	"clearance_cranial_calvaria_offset": 0.3
   }
 }

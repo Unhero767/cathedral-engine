@@ -57,59 +57,59 @@ colors:
   spiral-teal: '#008080'
 typography:
   headline-lg:
-    fontFamily: JetBrains Mono
-    fontSize: 48px
-    fontWeight: '700'
-    lineHeight: '1.1'
-    letterSpacing: -0.04em
+	fontFamily: JetBrains Mono
+	fontSize: 48px
+	fontWeight: '700'
+	lineHeight: '1.1'
+	letterSpacing: -0.04em
   headline-md:
-    fontFamily: JetBrains Mono
-    fontSize: 32px
-    fontWeight: '700'
-    lineHeight: '1.2'
-    letterSpacing: -0.02em
+	fontFamily: JetBrains Mono
+	fontSize: 32px
+	fontWeight: '700'
+	lineHeight: '1.2'
+	letterSpacing: -0.02em
   headline-sm:
-    fontFamily: JetBrains Mono
-    fontSize: 24px
-    fontWeight: '600'
-    lineHeight: '1.2'
-    letterSpacing: 0.01em
+	fontFamily: JetBrains Mono
+	fontSize: 24px
+	fontWeight: '600'
+	lineHeight: '1.2'
+	letterSpacing: 0.01em
   body-lg:
-    fontFamily: Inter
-    fontSize: 18px
-    fontWeight: '400'
-    lineHeight: '1.6'
-    letterSpacing: 0em
+	fontFamily: Inter
+	fontSize: 18px
+	fontWeight: '400'
+	lineHeight: '1.6'
+	letterSpacing: 0em
   body-md:
-    fontFamily: Inter
-    fontSize: 16px
-    fontWeight: '400'
-    lineHeight: '1.5'
-    letterSpacing: 0em
+	fontFamily: Inter
+	fontSize: 16px
+	fontWeight: '400'
+	lineHeight: '1.5'
+	letterSpacing: 0em
   body-sm:
-    fontFamily: Inter
-    fontSize: 14px
-    fontWeight: '400'
-    lineHeight: '1.4'
-    letterSpacing: 0.01em
+	fontFamily: Inter
+	fontSize: 14px
+	fontWeight: '400'
+	lineHeight: '1.4'
+	letterSpacing: 0.01em
   label-lg:
-    fontFamily: Space Mono
-    fontSize: 14px
-    fontWeight: '700'
-    lineHeight: '1.2'
-    letterSpacing: 0.05em
+	fontFamily: Space Mono
+	fontSize: 14px
+	fontWeight: '700'
+	lineHeight: '1.2'
+	letterSpacing: 0.05em
   label-md:
-    fontFamily: Space Mono
-    fontSize: 12px
-    fontWeight: '500'
-    lineHeight: '1.2'
-    letterSpacing: 0.1em
+	fontFamily: Space Mono
+	fontSize: 12px
+	fontWeight: '500'
+	lineHeight: '1.2'
+	letterSpacing: 0.1em
   label-sm:
-    fontFamily: Space Mono
-    fontSize: 10px
-    fontWeight: '500'
-    lineHeight: '1.2'
-    letterSpacing: 0.15em
+	fontFamily: Space Mono
+	fontSize: 10px
+	fontWeight: '500'
+	lineHeight: '1.2'
+	letterSpacing: 0.15em
 spacing:
   base: 4px
   lattice-unit: 8px

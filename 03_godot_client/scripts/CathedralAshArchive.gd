@@ -1,4 +1,4 @@
-class_name CathedralAshArchive
+
 extends RefCounted
 
 enum TraumaType { PRAYER_BRAND = 0, COMBAT_LACERATION = 1, ASH_DEPOSIT = 2 }

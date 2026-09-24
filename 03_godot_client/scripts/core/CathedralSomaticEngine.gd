@@ -1,4 +1,4 @@
-class_name CathedralSomaticEngine
+
 extends RefCounted
 
 enum ParamIdx {
@@ -17,4 +17,4 @@ enum ParamIdx {
 }
 
 static func evaluate_somatic_resonance(hp: float, buffer: float) -> float:
-    return clamp((hp + buffer) / 200.0, 0.0, 1.0)
+	return clamp((hp + buffer) / 200.0, 0.0, 1.0)

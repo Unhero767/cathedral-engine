@@ -1,4 +1,4 @@
-class_name CathedralCharacterCreator
+
 extends Control
 
 const AtlasBuilder = preload("res://03_godot_client/scripts/core/CathedralAtlasBuilder.gd")

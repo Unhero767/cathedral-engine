@@ -1,48 +1,41 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://2purp1ye0u6q"]
 
-[ext_resource type="Script" path="res://src/Engine/SomaticStateMachine.cs" id="1_state"]
-[ext_resource type="Script" path="res://src/Engine/CathedralSpriteController.cs" id="2_sprite"]
-[ext_resource type="Script" path="res://src/Engine/SomaticTestHarness.cs" id="3_harness"]
-[ext_resource type="Shader" path="res://src/Shaders/CathedralHD2D.gdshader" id="4_shader"]
+[ext_resource type="Script" uid="uid://bwlsfwmk5e2i" path="res://CathedralTelemetryPoller.gd" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://c14l0kufid0gj" path="res://core/AshArchiveManager.gd" id="2_jyhfs"]
+[ext_resource type="Script" uid="uid://cxd6yqlsvv7b" path="res://scenes/OracleHUDController.gd" id="3_tbgi4"]
+[ext_resource type="Script" uid="uid://bvpuu3kat5nj4" path="res://src/Engine/DialetheicMatrixHUD.gd" id="4_tefeu"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hd2d"]
-shader = ExtResource("4_shader")
+[sub_resource type="BoxMesh" id="BoxMesh_qh81v"]
+size = Vector3(2.9804688, 1.991333, 1.3991699)
 
-[node name="SovereignRoot" type="Node2D"]
+[node name="ChamberXVII" type="Node3D" unique_id=1243014622]
 
-[node name="CanvasLayerBG" type="CanvasLayer" parent="."]
-layer = -1
+[node name="Camera3D" type="Camera3D" parent="." unique_id=841886365]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38076603, -1.5636821)
+fov = 1.0
 
-[node name="BackgroundColor" type="ColorRect" parent="CanvasLayerBG"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.0470588, 0.054902, 0.0705882, 1)
+[node name="Node" type="Node" parent="." unique_id=1344133624]
+script = ExtResource("1_o5qli")
 
-[node name="SovereignAvatar" type="Sprite2D" parent="."]
-position = Vector2(576, 324)
-scale = Vector2(3, 3)
-script = ExtResource("2_sprite")
+[node name="Node2" type="Node" parent="." unique_id=754793014]
+script = ExtResource("2_jyhfs")
 
-[node name="SomaticStateMachine" type="Node" parent="SovereignAvatar"]
-script = ExtResource("1_state")
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1675794946]
 
-[node name="SomaticTestHarness" type="Node" parent="."]
-script = ExtResource("3_harness")
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer" unique_id=339418400]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_tbgi4")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(576, 324)
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer" unique_id=903942618]
+layout_mode = 2
+script = ExtResource("4_tefeu")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-layer = 10
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=332217419]
+transform = Transform3D(-0.927577, 0.3309612, -0.17339484, 0.32532585, 0.9436444, 0.06081418, 0.18375015, 0, -0.9829729, -1.0508912, -0.07651402, -0.20726499)
+custom_aabb = AABB(5, 0, 0, 0, 5, 0)
+mesh = SubResource("BoxMesh_qh81v")
 
-[node name="HD2DOverlay" type="ColorRect" parent="CanvasLayer"]
-material = SubResource("ShaderMaterial_hd2d")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=969571362]
+transform = Transform3D(0.3796885, 0.5374819, -0.75296086, -0.65358263, 0.7318727, 0.19285256, 0.6547263, 0.41889817, 0.6291724, 0, 0, 0)
+shadow_enabled = true

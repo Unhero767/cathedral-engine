@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="cathedral_engine_full_project"
-run/main_scene="res://scenes/chambers/chamber_v.tscn"
+run/main_scene="uid://2purp1ye0u6q"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -39,3 +39,18 @@ window/stretch/aspect="expand"
 
 textures/canvas_textures/default_texture_filter=0
 environment/defaults/default_clear_color=Color(0.043, 0.043, 0.063, 1)
+
+[shader_globals]
+
+global_z_active={
+"type": "float",
+"value": 1.0
+}
+global_contradiction_flag={
+"type": "float",
+"value": 0.0
+}
+global_logic_state={
+"type": "float",
+"value": 0.0
+}

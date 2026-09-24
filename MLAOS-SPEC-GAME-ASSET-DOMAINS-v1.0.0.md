@@ -80,12 +80,12 @@ Per MLAOS-Prime Master Engineering Specifications, artifacts maintain 5 discrete
 Runtime materials map directly to the 3-map PBR standard (Diffuse, Height, Normal, and Emission) under the Hard Noir color doctrine:
 
 ```
-                              ┌─────────────────────────┐
-                              │  32-BIT HARD NOIR GLSL  │
-                              └────────────┬────────────┘
-                                           │
-         ┌─────────────────────────────────┼─────────────────────────────────┐
-         ▼                                 ▼                                 ▼
+							  ┌─────────────────────────┐
+							  │  32-BIT HARD NOIR GLSL  │
+							  └────────────┬────────────┘
+										   │
+		 ┌─────────────────────────────────┼─────────────────────────────────┐
+		 ▼                                 ▼                                 ▼
 ┌──────────────────┐              ┌──────────────────┐              ┌──────────────────┐
 │ STRUCTURAL PBR   │              │ BIO-SILICATE     │              │ SPECTRAL EMISSION│
 ├──────────────────┤              ├──────────────────┤              ├──────────────────┤
@@ -122,7 +122,7 @@ cathedral_engine_full_project/
 │   ├── shaders/                   # GLSL/GDShader PBR & dither implementations
 │   └── ui/                        # Core & MLAOS-specific HUD elements
 └── strata/
-    └── ash_archive.db             # Append-only SQLite forensic ledger
+	└── ash_archive.db             # Append-only SQLite forensic ledger
 ```
 
 ---

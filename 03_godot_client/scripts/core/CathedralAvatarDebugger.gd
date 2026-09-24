@@ -1,4 +1,4 @@
-class_name CathedralAvatarDebugger
+
 extends Node
 
 @export var target_harness_path: NodePath

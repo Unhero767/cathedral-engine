@@ -7,8 +7,8 @@
   "master_texture_path": "res://assets/portraits/master_atlas_strip.png",
   "silhouette_preset": "verdant_organic",
   "anatomical_parameters": {
-    "cranial_vault_depth": 1.0,
-    "dermal_turgor_hydration": 0.95,
-    "resonance_tissue_recuperation_rate": 1.8
+	"cranial_vault_depth": 1.0,
+	"dermal_turgor_hydration": 0.95,
+	"resonance_tissue_recuperation_rate": 1.8
   }
 }
