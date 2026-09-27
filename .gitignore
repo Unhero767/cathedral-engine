@@ -88,3 +88,21 @@ dist/
 workspace/
 workspace 2/
 workspace.tar.gz
+.DS_Store
+.godot/
+__pycache__/
+*.pyc
+app.db-wal
+app.db-shm
+ash_archive_stratum.db-wal
+ash_archive_stratum.db-shm
+build/
+dist/
+workspace/
+workspace 2/
+workspace.tar.gz
+
+# C# & Godot Build Artifacts
+CathedralEngine.Solvers/bin/
+CathedralEngine.Solvers/obj/
+.vscode/
