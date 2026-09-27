@@ -1,0 +1,68 @@
+[
+    {
+        "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "block_hash": "0015b3ed93b688865e19b0e6d3b0f4a033e773bbb26b8d379381f5eb1b36004a",
+        "metrics": {
+            "step": 0,
+            "dialetheic_tension": 0.9414823651313782,
+            "vacuum_polarization_j": 2.976521710781546e-26,
+            "micro_torsion_rad_m2": 1.5216755800554156e-35,
+            "timestamp": "2026-09-24T19:01:33.652893Z"
+        }
+    },
+    {
+        "prev_hash": "0015b3ed93b688865e19b0e6d3b0f4a033e773bbb26b8d379381f5eb1b36004a",
+        "block_hash": "a6a7bd285496b9a7aa4f18c74ce82a0a983caa361d90b52f68daddf6a3f6aeea",
+        "metrics": {
+            "step": 1,
+            "dialetheic_tension": 0.9414823651313782,
+            "vacuum_polarization_j": 2.976521710781546e-26,
+            "micro_torsion_rad_m2": 1.5216755800554156e-35,
+            "timestamp": "2026-09-24T19:01:33.655031Z"
+        }
+    },
+    {
+        "prev_hash": "a6a7bd285496b9a7aa4f18c74ce82a0a983caa361d90b52f68daddf6a3f6aeea",
+        "block_hash": "541073f5bf7407b13c011ce594f8326b0ad187c0ba5a41fbb99fd259335d9acc",
+        "metrics": {
+            "step": 2,
+            "dialetheic_tension": 0.9414823651313782,
+            "vacuum_polarization_j": 2.976521710781546e-26,
+            "micro_torsion_rad_m2": 1.5216755800554156e-35,
+            "timestamp": "2026-09-24T19:01:33.655977Z"
+        }
+    },
+    {
+        "prev_hash": "541073f5bf7407b13c011ce594f8326b0ad187c0ba5a41fbb99fd259335d9acc",
+        "block_hash": "d63aff94816e64161c0a1e9c0ff0b3f6844615d076f6319e0a1b1cebe84ee138",
+        "metrics": {
+            "step": 3,
+            "dialetheic_tension": 0.9414823651313782,
+            "vacuum_polarization_j": 2.976521710781546e-26,
+            "micro_torsion_rad_m2": 1.5216755800554156e-35,
+            "timestamp": "2026-09-24T19:01:33.656999Z"
+        }
+    },
+    {
+        "prev_hash": "d63aff94816e64161c0a1e9c0ff0b3f6844615d076f6319e0a1b1cebe84ee138",
+        "block_hash": "5d4f3f1b5c66625882c484884ec6008dd718a22d2b7b98c6319ed041285d99f4",
+        "metrics": {
+            "step": 4,
+            "dialetheic_tension": 0.9414823651313782,
+            "vacuum_polarization_j": 2.976521710781546e-26,
+            "micro_torsion_rad_m2": 1.5216755800554156e-35,
+            "timestamp": "2026-09-24T19:01:33.658087Z"
+        }
+    },
+    {
+        "prev_hash": "5d4f3f1b5c66625882c484884ec6008dd718a22d2b7b98c6319ed041285d99f4",
+        "block_hash": "23619b1cf1099008c3fa1a46db70f1d47e0b90f6795aef85aaf44a8d4e6dcded",
+        "metrics": {
+            "step": 5,
+            "dialetheic_tension": 0.9414823651313782,
+            "vacuum_polarization_j": 2.976521710781546e-26,
+            "micro_torsion_rad_m2": 1.5216755800554156e-35,
+            "timestamp": "2026-09-24T19:01:33.659081Z"
+        }
+    }
+]

@@ -1,0 +1,8 @@
+/Users/kennethdallmier/cathedral-engine/CathedralEngine.Solvers/bin/Debug/netstandard2.1/CathedralEngine.Solvers.deps.json
+/Users/kennethdallmier/cathedral-engine/CathedralEngine.Solvers/bin/Debug/netstandard2.1/CathedralEngine.Solvers.dll
+/Users/kennethdallmier/cathedral-engine/CathedralEngine.Solvers/bin/Debug/netstandard2.1/CathedralEngine.Solvers.pdb
+/Users/kennethdallmier/cathedral-engine/CathedralEngine.Solvers/obj/Debug/netstandard2.1/CathedralEngine.Solvers.GeneratedMSBuildEditorConfig.editorconfig
+/Users/kennethdallmier/cathedral-engine/CathedralEngine.Solvers/obj/Debug/netstandard2.1/CathedralEngine.Solvers.csproj.CoreCompileInputs.cache
+/Users/kennethdallmier/cathedral-engine/CathedralEngine.Solvers/obj/Debug/netstandard2.1/CathedralEngine.Solvers.sourcelink.json
+/Users/kennethdallmier/cathedral-engine/CathedralEngine.Solvers/obj/Debug/netstandard2.1/CathedralEngine.Solvers.dll
+/Users/kennethdallmier/cathedral-engine/CathedralEngine.Solvers/obj/Debug/netstandard2.1/CathedralEngine.Solvers.pdb

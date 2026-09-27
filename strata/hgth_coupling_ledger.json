@@ -1,0 +1,102 @@
+[
+    {
+        "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "block_hash": "34a68773c643a215808a83ae97a1b02404bd9f12f5c1be8a2c8ef473b4719716",
+        "metrics": {
+            "step": 0,
+            "shannon_entropy": 13.24251012991705,
+            "gravitational_binding_energy_j": 5.451153482526488e-20,
+            "timestamp": "2026-09-24T18:39:59.587704Z"
+        }
+    },
+    {
+        "prev_hash": "34a68773c643a215808a83ae97a1b02404bd9f12f5c1be8a2c8ef473b4719716",
+        "block_hash": "6d9987630d357b9cfc8ccc9ed4e0e5f83d54186b2438375ef6e63ca0731b2174",
+        "metrics": {
+            "step": 1,
+            "shannon_entropy": 13.24251012991705,
+            "gravitational_binding_energy_j": 5.451153482526488e-20,
+            "timestamp": "2026-09-24T18:39:59.593007Z"
+        }
+    },
+    {
+        "prev_hash": "6d9987630d357b9cfc8ccc9ed4e0e5f83d54186b2438375ef6e63ca0731b2174",
+        "block_hash": "deaf4303253ab99c885b93688bcb31cd6a858566d1895129ed0a98ae1ffe7cbb",
+        "metrics": {
+            "step": 2,
+            "shannon_entropy": 13.24251012991705,
+            "gravitational_binding_energy_j": 5.451153482526488e-20,
+            "timestamp": "2026-09-24T18:39:59.596311Z"
+        }
+    },
+    {
+        "prev_hash": "deaf4303253ab99c885b93688bcb31cd6a858566d1895129ed0a98ae1ffe7cbb",
+        "block_hash": "3914122c6a11a5503d6fe2ef087974acfac7ebd83b31cfe7635b65b38bccfca5",
+        "metrics": {
+            "step": 3,
+            "shannon_entropy": 13.24251012991705,
+            "gravitational_binding_energy_j": 5.451153482526488e-20,
+            "timestamp": "2026-09-24T18:39:59.599052Z"
+        }
+    },
+    {
+        "prev_hash": "3914122c6a11a5503d6fe2ef087974acfac7ebd83b31cfe7635b65b38bccfca5",
+        "block_hash": "762ac0178ac8d7a5caf322274d092916a1193d897c9e53517be3eff462672fef",
+        "metrics": {
+            "step": 4,
+            "shannon_entropy": 13.24251012991705,
+            "gravitational_binding_energy_j": 5.451153482526488e-20,
+            "timestamp": "2026-09-24T18:39:59.601702Z"
+        }
+    },
+    {
+        "prev_hash": "762ac0178ac8d7a5caf322274d092916a1193d897c9e53517be3eff462672fef",
+        "block_hash": "e2b508aee9d309dccc1071e8a2fa246da278ff0440f6614f76ae77f16aa5e10e",
+        "metrics": {
+            "step": 5,
+            "shannon_entropy": 13.24251012991705,
+            "gravitational_binding_energy_j": 5.451153482526488e-20,
+            "timestamp": "2026-09-24T18:39:59.604442Z"
+        }
+    },
+    {
+        "prev_hash": "e2b508aee9d309dccc1071e8a2fa246da278ff0440f6614f76ae77f16aa5e10e",
+        "block_hash": "1f4ff4d5b127d0e40988b9e6f9ca343d4abb8a24ffa5ab38269bb3910bd05461",
+        "metrics": {
+            "step": 6,
+            "shannon_entropy": 13.24251012991705,
+            "gravitational_binding_energy_j": 5.451153482526488e-20,
+            "timestamp": "2026-09-24T18:39:59.607382Z"
+        }
+    },
+    {
+        "prev_hash": "1f4ff4d5b127d0e40988b9e6f9ca343d4abb8a24ffa5ab38269bb3910bd05461",
+        "block_hash": "9d36fd9bbdac0bdd924bd9a73b93c6f1a2c41f17e88ed5b5a90d01091fae6ac1",
+        "metrics": {
+            "step": 7,
+            "shannon_entropy": 13.24251012991705,
+            "gravitational_binding_energy_j": 5.451153482526488e-20,
+            "timestamp": "2026-09-24T18:39:59.610104Z"
+        }
+    },
+    {
+        "prev_hash": "9d36fd9bbdac0bdd924bd9a73b93c6f1a2c41f17e88ed5b5a90d01091fae6ac1",
+        "block_hash": "8f03ed626fcdf13c3b542d6b22ce309237399a5d974cf37bd348eb5325547e80",
+        "metrics": {
+            "step": 8,
+            "shannon_entropy": 13.24251012991705,
+            "gravitational_binding_energy_j": 5.451153482526488e-20,
+            "timestamp": "2026-09-24T18:39:59.612757Z"
+        }
+    },
+    {
+        "prev_hash": "8f03ed626fcdf13c3b542d6b22ce309237399a5d974cf37bd348eb5325547e80",
+        "block_hash": "f5ff1a0550777dee47195e7474e5fd9242301602070b3e845e6500872c55d1a3",
+        "metrics": {
+            "step": 9,
+            "shannon_entropy": 13.24251012991705,
+            "gravitational_binding_energy_j": 5.451153482526488e-20,
+            "timestamp": "2026-09-24T18:39:59.615197Z"
+        }
+    }
+]

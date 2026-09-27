@@ -1,0 +1,14 @@
+{
+    "device": "mps",
+    "tensor_shape": [
+        2,
+        16,
+        64,
+        64,
+        64
+    ],
+    "iterations": 50,
+    "total_duration_s": 1.3165497779846191,
+    "average_latency_ms": 26.330995559692383,
+    "status": "NOMINAL"
+}

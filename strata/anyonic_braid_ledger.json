@@ -1,0 +1,38 @@
+[
+    {
+        "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "block_hash": "313f5b12bb385c3f4381b2acbda427efa886939a3028b743e6ccc4e00bb73ef7",
+        "braid_metrics": {
+            "step": 1,
+            "state_a": "TRUE",
+            "state_b": "FALSE",
+            "braid_operator": "sigma_1",
+            "topology_classification": "Abelian",
+            "timestamp": "2026-09-24T19:29:32.277449+00:00"
+        }
+    },
+    {
+        "prev_hash": "313f5b12bb385c3f4381b2acbda427efa886939a3028b743e6ccc4e00bb73ef7",
+        "block_hash": "21c9025324c74cab34f739f95f54094b93808cb6c348fec8fece7197bc365d03",
+        "braid_metrics": {
+            "step": 2,
+            "state_a": "BOTH",
+            "state_b": "NEITHER",
+            "braid_operator": "sigma_2_prime",
+            "topology_classification": "Non-Abelian (Harmonic Scar)",
+            "timestamp": "2026-09-24T19:29:32.277598+00:00"
+        }
+    },
+    {
+        "prev_hash": "21c9025324c74cab34f739f95f54094b93808cb6c348fec8fece7197bc365d03",
+        "block_hash": "946be4be50081f45bf7683da8feb008e8a1c427ee58d339839054d48cd025c6c",
+        "braid_metrics": {
+            "step": 3,
+            "state_a": "BOTH",
+            "state_b": "BOTH",
+            "braid_operator": "sigma_3_fusion",
+            "topology_classification": "Locked Invariant",
+            "timestamp": "2026-09-24T19:29:32.277615+00:00"
+        }
+    }
+]

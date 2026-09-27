@@ -1,0 +1,32 @@
+[gd_scene load_steps=8 format=3 uid="uid://c8x1q2w3e4r5t"]
+
+[ext_resource type="Script" path="res://AshArchiveBridge.gd" id="1_bridge"]
+[ext_resource type="Script" path="res://LabyrinthGridController.gd" id="2_grid"]
+[ext_resource type="Script" path="res://ParaconsistentLogicEngine.gd" id="3_logic"]
+[ext_resource type="Script" path="res://ExecutionCatalyst.gd" id="4_catalyst"]
+[ext_resource type="Script" path="res://DialetheicVisualizer.gd" id="5_vis"]
+[ext_resource type="Script" path="res://TemporalGrammarInterface.gd" id="6_grammar"]
+[ext_resource type="Script" path="res://ThermodynamicStable.gd" id="7_stable"]
+
+[node name="CathedralRoot" type="Node3D"]
+
+[node name="AshArchiveBridge" type="Node" parent="."]
+script = ExtResource("1_bridge")
+
+[node name="LabyrinthGridController" type="Node3D" parent="."]
+script = ExtResource("2_grid")
+
+[node name="ParaconsistentLogicEngine" type="Node" parent="."]
+script = ExtResource("3_logic")
+
+[node name="ExecutionCatalyst" type="Node" parent="."]
+script = ExtResource("4_catalyst")
+
+[node name="DialetheicVisualizer" type="CanvasLayer" parent="."]
+script = ExtResource("5_vis")
+
+[node name="TemporalGrammarInterface" type="CanvasLayer" parent="."]
+script = ExtResource("6_grammar")
+
+[node name="ThermodynamicStable" type="CanvasLayer" parent="."]
+script = ExtResource("7_stable")

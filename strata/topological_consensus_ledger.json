@@ -1,0 +1,72 @@
+[
+    {
+        "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "block_hash": "cc9d0082a15567429b2f28416221fae3b412a1477cb704654534d1ef159c03f8",
+        "metrics": {
+            "cycle": 0,
+            "node_hashes": [
+                "3708399c1ea2efd60de621a783e77e2dfb7f07d42be39429ef20476e3fe3a2c8",
+                "e8f4da357fa6322839b3f5223874d61dbc3f1bb51f7b43ef63b6cc6422384cfe",
+                "4b12a49ccc33dbdf9d5bbfe0652d7e0401f86c02cdb27e00c6ce9bd957cc6f90"
+            ],
+            "consensus_status": "INSTANT_TOPOLOGICAL_LOCK",
+            "timestamp": "2026-09-24T18:45:35.999977Z"
+        }
+    },
+    {
+        "prev_hash": "cc9d0082a15567429b2f28416221fae3b412a1477cb704654534d1ef159c03f8",
+        "block_hash": "46a3bbec450f47d131cf9897eea755e082deb11342b2eae1bd586da6b7c607bc",
+        "metrics": {
+            "cycle": 1,
+            "node_hashes": [
+                "a7888bffcac326d11a8245a6fdc39eb4eee43f98bdaac91c98917769a1ad8e37",
+                "7818b187c3d6b1c580bf5d6dd55decd7d5d0f1a2f883bd35275f7fc21f70a06e",
+                "c0dc09407f37efdfaa696d95387adf718f9247b02838998e69a615641a0feadf"
+            ],
+            "consensus_status": "INSTANT_TOPOLOGICAL_LOCK",
+            "timestamp": "2026-09-24T18:45:36.003452Z"
+        }
+    },
+    {
+        "prev_hash": "46a3bbec450f47d131cf9897eea755e082deb11342b2eae1bd586da6b7c607bc",
+        "block_hash": "968e92af6206d76f65c4f077e50c913e8e032456c4b4075ce41202ab0fd4d568",
+        "metrics": {
+            "cycle": 2,
+            "node_hashes": [
+                "c9e333da5ab954572730241c590ffe7ab247d4cadea4aa3ddcf06c9326982244",
+                "c8c91783dff9094423c7d450445ecea2745a68f15a811bf1747fadae2e976406",
+                "741542bfc8b13ab7910220d4467eccbd0011d0eb824b65225a0b0a11582df769"
+            ],
+            "consensus_status": "INSTANT_TOPOLOGICAL_LOCK",
+            "timestamp": "2026-09-24T18:45:36.006580Z"
+        }
+    },
+    {
+        "prev_hash": "968e92af6206d76f65c4f077e50c913e8e032456c4b4075ce41202ab0fd4d568",
+        "block_hash": "8eaf56f5f078c4439345fa73235e4e2f1ad67f49a3243d7ff10972f571ebc6b0",
+        "metrics": {
+            "cycle": 3,
+            "node_hashes": [
+                "03f90c8c89b95f5889c2aabbbb85428abae76521019e71fa0dc2ad5d9749bf88",
+                "6900e53db0f166367aa1816b384a9a87356d63cb82069816892cb028a152522d",
+                "70d87d2ec2f0949b5ef00acc2e140d5f3b57c4241c24319401d7bd6d510d3dfb"
+            ],
+            "consensus_status": "INSTANT_TOPOLOGICAL_LOCK",
+            "timestamp": "2026-09-24T18:45:36.009282Z"
+        }
+    },
+    {
+        "prev_hash": "8eaf56f5f078c4439345fa73235e4e2f1ad67f49a3243d7ff10972f571ebc6b0",
+        "block_hash": "c359f4ccc8bb5eb0413e79a02ef97543da275079958447183e404cca71cd46b1",
+        "metrics": {
+            "cycle": 4,
+            "node_hashes": [
+                "e7d6f33d05e4e01651146306773973dc5129b9b6b01566a3b1b7a7aacca3e989",
+                "ec0b711a285ea471e6b0f55b1e2e4db821622d1b7a4f5af7e51cf552fa2c91b2",
+                "af4d096aa2d1189cf9185be76fe0035950e7555b4cc4460107ab0e2bc8950740"
+            ],
+            "consensus_status": "INSTANT_TOPOLOGICAL_LOCK",
+            "timestamp": "2026-09-24T18:45:36.010561Z"
+        }
+    }
+]

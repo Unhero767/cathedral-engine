@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://mla0sgen001main"]
+
+[ext_resource type="Script" path="res://scripts/world/DungeonGrid.cs" id="1_dungeon"]
+[ext_resource type="Script" path="res://scripts/core/CombatManager.cs" id="2_combat"]
+[ext_resource type="Script" path="res://scripts/core/DelveRecoveryController.cs" id="3_delve"]
+[ext_resource type="Script" path="res://scripts/core/StableManager.cs" id="4_stable"]
+
+[node name="Main" type="Node"]
+
+[node name="DungeonGrid" type="Node" parent="."]
+script = ExtResource("1_dungeon")
+
+[node name="CombatManager" type="Node" parent="."]
+script = ExtResource("2_combat")
+
+[node name="DelveRecoveryController" type="Node" parent="."]
+script = ExtResource("3_delve")
+
+[node name="StableManager" type="Node" parent="."]
+script = ExtResource("4_stable")

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "7yGhmhtdEQ8=",
+  "success": true,
+  "projectFilePath": "/Users/kennethdallmier/cathedral-engine/CathedralEngine.Solvers/CathedralEngine.Solvers.csproj",
+  "expectedPackageFiles": [
+    "/Users/kennethdallmier/.nuget/packages/netstandard.library.ref/2.1.0/netstandard.library.ref.2.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}

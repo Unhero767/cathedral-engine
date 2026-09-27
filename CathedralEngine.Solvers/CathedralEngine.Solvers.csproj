@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <PackageId>CathedralEngine.Solvers</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Kenneth W. Dallmier</Authors>
+    <Company>Dallmier Tech Venture</Company>
+    <Description>High-performance standalone mathematical solvers for pre-geometric graph Laplacian connectivity (Fiedler eigenvalue), Belnap-Dunn four-valued logic relaxation, Pyragas feedback stabilization, and Magic-Angle shear stress cancellation.</Description>
+    <PackageTags>graph-laplacian;paraconsistent-logic;fiedler-vector;pyragas-control;scientific-computing</PackageTags>
+  </PropertyGroup>
+</Project>
