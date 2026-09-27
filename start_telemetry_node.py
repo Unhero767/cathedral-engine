@@ -74,3 +74,43 @@ async def websocket_manifold(websocket: WebSocket):
 if __name__ == "__main__":
     print("==> Starting Uvicorn Telemetry Node with /ws/manifold on http://127.0.0.1:8765 ...")
     uvicorn.run(app, host="127.0.0.1", port=8765)
+
+import httpx
+from pydantic import BaseModel
+
+class AvatarGenerationRequest(BaseModel):
+    seed_prompt: str = "Cathedral sovereign mechanoid saint, gothic biomechanical chassis"
+    dphi_dt: float = 0.42
+    belnap_state: str = "Both"
+
+@app.post("/api/v1/avatar/generate")
+async def generate_avatar_webhook(payload: AvatarGenerationRequest):
+    comfy_url = "http://127.0.0.1:8188/prompt"
+    
+    # Construct prompt incorporating MLAOS-HGASE art direction & spectral telemetry
+    enhanced_prompt = (
+        f"{payload.seed_prompt}, hard-noir biomechanical gothic 32-bit HD-2D, volumetric chiaroscuro lighting, "
+        f"spectral frequency gold joy, dPhi_dt={payload.dphi_dt:.2f}, belnap_state={payload.belnap_state}"
+    )
+    
+    workflow_payload = {
+        "prompt": {
+            "3": {
+                "inputs": {
+                    "text": enhanced_prompt,
+                    "clip": ["4", 1]
+                },
+                "class_type": "CLIPTextEncode"
+            }
+        }
+    }
+    
+    try:
+        async with httpx.AsyncClient(timeout=5.0) as client:
+            response = await client.post(comfy_url, json=workflow_payload)
+            if response.status_code == 200:
+                return {"status": "success", "comfy_response": response.json()}
+            else:
+                return {"status": "proxied_local_fallback", "prompt": enhanced_prompt, "note": "ComfyUI offline; payload formatted."}
+    except Exception as e:
+        return {"status": "simulated_dispatch", "prompt": enhanced_prompt, "error": str(e)}
