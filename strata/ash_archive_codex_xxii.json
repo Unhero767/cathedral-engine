@@ -1,18 +1,12 @@
-[
-    {
-        "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
-        "block_hash": "2d65a9e6f384f580f59de1cd158573c288d1338b731b57b7a5a91d8140ccaef0",
-        "monograph": {
-            "codex_book": 22,
-            "title": "The Refractive Spires: The Architecture of Optical Stratigraphy",
-            "spectral_dominant": "GOLD_JOY",
-            "core_thesis": "Coherent photon fluxes refracted through non-Euclidean lattices crystallize into load-bearing dielectric structural struts.",
-            "axioms": [
-                "Luminosity functions as a rigid tensor field under precise geometric constraint.",
-                "Crossed optical beams bind zero-point vacuum energy into transparent structural barriers.",
-                "Refraction matrices are permanently archived as stratigraphic layers within the Ash Archive."
-            ],
-            "timestamp": "2026-09-24T19:16:14.005550Z"
-        }
-    }
-]
+{
+  "chamber": "Chamber II: The Inner Mandala",
+  "spectral_dominant": "Teal/Curiosity (510 THz) & Gold/Joy",
+  "core_thesis": "Contradiction functions as the primary load-bearing structural arch of the cathedral lattice.",
+  "movements": {
+    "liturgy": "The stone does not merely bear the vault; the stone is the active capacitance of the architect query made manifest under 510 THz resonance.",
+    "foundational_strata": "Emotion equals Physics equals Biology equals Architecture across all operational SQLite Write-Ahead Logging strata.",
+    "dialetheic_buffer": "Belnap-Dunn four-valued matrices (Both/Neither) stabilize paraconsistent state collisions without runtime collapse.",
+    "harmonic_scar_integration": "High-strain dPhi/dt spikes crystallize into permanent Merkle DAG witness hashes within the ash archive ledger."
+  },
+  "status": "Drafted & Ratified"
+}
