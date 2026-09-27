@@ -10,11 +10,12 @@ extends Node3D
 func _ready() -> void:
     if Engine.is_editor_hint():
         return
-        
+    
     print("[CathedralSceneBootstrap]: Initializing environment and rendering safety net...")
     
     # 1. Ensure an active Camera3D exists
-    if auto_spawn_camera and not get_viewport().get_camera_3d():
+    var vp = get_viewport()
+    if auto_spawn_camera and vp and not vp.get_camera_3d():
         var cam = Camera3D.new()
         cam.name = "SafetyCamera3D"
         cam.current = true
@@ -22,7 +23,7 @@ func _ready() -> void:
         cam.look_at(Vector3.ZERO, Vector3.UP)
         add_child(cam)
         print("[CathedralSceneBootstrap]: Spawned safety Camera3D at (0, 1.5, 4).")
-
+    
     # 2. Ensure lighting exists
     if auto_spawn_lighting:
         var has_light = false
@@ -38,7 +39,7 @@ func _ready() -> void:
             light.rotation_degrees = Vector3(-45, 45, 0)
             add_child(light)
             print("[CathedralSceneBootstrap]: Spawned safety DirectionalLight3D.")
-
+    
     # 3. Ensure WorldEnvironment exists
     if auto_spawn_environment:
         var has_env = false
@@ -57,8 +58,8 @@ func _ready() -> void:
             we.environment = env
             add_child(we)
             print("[CathedralSceneBootstrap]: Spawned safety WorldEnvironment.")
-
-    # 4. Ensure a visible test MeshInstance3D exists if none present
+    
+    # 4. Ensure a visible test MeshInstance3D exists
     if auto_spawn_test_mesh:
         var has_mesh = false
         for child in get_children():
@@ -67,18 +68,18 @@ func _ready() -> void:
                 break
         if not has_mesh:
             var mi = MeshInstance3D.new()
-            mi.name = "SafetyTestSphere"
+            mi.name = "GlobalSafetySphere"
             var sphere = SphereMesh.new()
             sphere.radius = 1.0
             sphere.height = 2.0
             mi.mesh = sphere
             
             var mat = StandardMaterial3D.new()
-            mat.albedo_color = Color(0.8, 0.2, 0.1) # Gold/Red cathedral tone
+            mat.albedo_color = Color(0.9, 0.3, 0.1)
             mat.emission_enabled = true
-            mat.emission = Color(0.9, 0.4, 0.1)
-            mat.emission_energy_multiplier = 1.5
+            mat.emission = Color(1.0, 0.5, 0.2)
+            mat.emission_energy_multiplier = 2.0
             mi.material_override = mat
             
             add_child(mi)
-            print("[CathedralSceneBootstrap]: Spawned safety MeshInstance3D sphere.")
+            print("[CathedralSceneBootstrap]: Spawned global test sphere mesh.")
