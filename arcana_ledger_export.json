@@ -1,0 +1,29 @@
+{
+    "deck": 377,
+    "question": "Where does the structural shear exceed our thermal tolerance?",
+    "spread": [
+        {
+            "position": "Thesis (Card I)",
+            "card_id": 360,
+            "logic_state": "T"
+        },
+        {
+            "position": "Antithesis (Card II)",
+            "card_id": 136,
+            "logic_state": "F"
+        },
+        {
+            "position": "Synthesis (Card III)",
+            "card_id": 169,
+            "logic_state": "B"
+        }
+    ],
+    "dialetheic_collision": "B",
+    "metamorphic_squeeze": {
+        "friction_fs": 2.95,
+        "p_squeeze": 34.77,
+        "algorithmic_cost": 0.27,
+        "status": "PETRIFIED_AS_HARMONIC_SCAR"
+    },
+    "sha256_anchor": "0x3fe8a98fac34e4ed8bb5594fd08641e8e62f9510f4877d708f292cbece0b055a"
+}
