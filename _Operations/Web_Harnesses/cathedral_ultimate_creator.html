@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CATHEDRAL-BORN // SOVEREIGN CHARACTER STUDIO & SHEET (EAS-03)</title>
+<style>
+  :root {
+    --bg-primary: #050608;
+    --bg-panel: #0b0d12;
+    --bg-card: #10131b;
+    --gold: #dfb249;
+    --gold-bright: #ffd466;
+    --cyan: #00e5ff;
+    --crimson: #c83232;
+    --text-main: #dce1eb;
+    --text-muted: #7e8799;
+    --border: #1e2330;
+    --border-gold: rgba(223, 178, 73, 0.4);
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+    --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+  body { background-color: var(--bg-primary); color: var(--text-main); font-family: var(--font-ui); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+  
+  header { background: #0e1017; border-bottom: 2px solid var(--border-gold); padding: 8px 20px; display: flex; align-items: center; justify-content: space-between; height: 50px; flex-shrink: 0; }
+  .brand { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--gold-bright); letter-spacing: 1.5px; display: flex; align-items: center; gap: 10px; }
+  .brand-badge { background: rgba(223, 178, 73, 0.15); border: 1px solid var(--border-gold); padding: 2px 6px; border-radius: 3px; font-size: 10px; color: var(--text-main); }
+
+  .workspace { display: grid; grid-template-columns: 360px 1fr 400px; flex: 1; height: calc(100vh - 50px); overflow: hidden; }
+  
+  /* Panels */
+  .panel { background: var(--bg-panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+  .panel-right { border-left: 1px solid var(--border); border-right: none; }
+  
+  .tab-bar { display: flex; background: var(--bg-card); border-bottom: 1px solid var(--border); overflow-x: auto; flex-shrink: 0; }
+  .tab-btn { background: none; border: none; color: var(--text-muted); padding: 10px 12px; font-size: 11px; font-weight: 600; cursor: pointer; text-transform: uppercase; white-space: nowrap; border-bottom: 2px solid transparent; }
+  .tab-btn.active { color: var(--gold-bright); border-bottom-color: var(--gold); background: rgba(223, 178, 73, 0.05); }
+  
+  .tab-content { flex: 1; overflow-y: auto; padding: 14px; display: none; flex-direction: column; gap: 12px; }
+  .tab-content.active { display: flex; }
+
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 12px; }
+  .card-title { font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
+
+  .input-group { margin-bottom: 8px; }
+  .input-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 3px; }
+  .text-input, select { width: 100%; background: var(--bg-primary); border: 1px solid var(--border); color: var(--text-main); padding: 7px 10px; border-radius: 4px; font-size: 12px; outline: none; }
+  .text-input:focus, select:focus { border-color: var(--gold); }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .stat-box { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 4px; padding: 8px; text-align: center; }
+  .stat-name { font-size: 9px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+  .stat-val { font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--gold-bright); margin-top: 2px; }
+
+  .param-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+  .param-name { font-size: 11px; color: var(--text-main); flex: 1; }
+  .param-slider { flex: 1; -webkit-appearance: none; height: 4px; background: #252833; border-radius: 2px; outline: none; }
+  .param-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); cursor: pointer; }
+  .param-val { font-family: var(--font-mono); font-size: 11px; color: var(--gold-bright); width: 28px; text-align: right; }
+
+  /* Center Viewport */
+  .viewport { background: radial-gradient(circle at center, #151924 0%, #050608 100%); display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 20px; position: relative; }
+  .canvas-container { background: #080a0e; border: 2px solid var(--border-gold); border-radius: 12px; padding: 16px; box-shadow: 0 0 60px rgba(0,0,0,0.9); position: relative; cursor: crosshair; }
+  #masterCanvas { image-rendering: pixelated; width: 300px; height: 300px; border-radius: 4px; display: block; }
+  
+  .viewport-controls { display: flex; gap: 8px; background: var(--bg-card); border: 1px solid var(--border); padding: 8px 16px; border-radius: 20px; }
+  .btn-chip { background: transparent; border: 1px solid var(--border); color: var(--text-main); padding: 6px 12px; border-radius: 12px; cursor: pointer; font-size: 11px; }
+  .btn-chip.active, .btn-chip:hover { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 600; }
+
+  .btn-primary { background: linear-gradient(180deg, var(--gold) 0%, #b88d2d 100%); border: none; color: #000; padding: 9px 14px; border-radius: 4px; font-weight: 700; font-size: 11px; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 1px; }
+  .btn-primary:hover { filter: brightness(1.15); }
+  
+  .combat-log { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 4px; padding: 8px; font-family: var(--font-mono); font-size: 10px; color: var(--cyan); height: 110px; overflow-y: auto; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span>CATHEDRAL-BORN SOVEREIGN STUDIO</span>
+    <span class="brand-badge">EAS-03 // 100,000-BIT MASTERPIECE</span>
+  </div>
+  <div style="font-family:var(--font-mono); font-size:11px; color:var(--cyan);">D&D Character Sheet + Isomorphic Somatics Active</div>
+</header>
+
+<div class="workspace">
+  <!-- LEFT PANEL: D&D SHEET & LINEAGE -->
+  <div class="panel">
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('sheetTab', this)">Sheet</button>
+      <button class="tab-btn" onclick="switchTab('statsTab', this)">Attributes</button>
+    </div>
+
+    <div class="tab-content active" id="sheetTab">
+      <div class="card">
+        <div class="card-title">📜 Identity & Lineage</div>
+        <div class="input-group">
+          <label class="input-label">Character Name</label>
+          <input type="text" class="text-input" id="charName" value="Vanguard Kaelen" oninput="updateSheetData()">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Archetype / Caste</label>
+          <select id="archetypeSelect" onchange="applyArchetypePreset()">
+            <option value="templar">Crucible Templar (Melee Vanguard)</option>
+            <option value="seraph">Sovereign Seraph (Cognitive Vanguard)</option>
+            <option value="astrologer">Null Astrologer (Entropic Weaver)</option>
+            <option value="berserk">Crucible Berserk (Shock Vanguard)</option>
+            <option value="scourge">Ash Scourge (Monastic Penitent)</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Spectral Constant (Alignment)</label>
+          <select id="spectralSelect" onchange="updateSheetData()">
+            <option value="JOY_GOLD_THETA">Joy (Gold Theta - Θ)</option>
+            <option value="CURIOSITY_TEAL_PSI">Curiosity (Teal Psi - Ψ)</option>
+            <option value="VOID_OBSIDIAN_NULL">Void (Obsidian Null)</option>
+            <option value="ANGER_CRIMSON_PHI">Anger (Crimson Phi - Φ)</option>
+            <option value="SORROW_BLUE_DELTA">Sorrow (Blue Delta - Δ)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🛡 Combat Metrics</div>
+        <div class="stats-grid">
+          <div class="stat-box"><div class="stat-name">Armor Class</div><div class="stat-val" id="metricAC">19</div></div>
+          <div class="stat-box"><div class="stat-name">Initiative</div><div class="stat-val" id="metricInit">+3</div></div>
+          <div class="stat-box"><div class="stat-name">Hit Points</div><div class="stat-val" id="metricHP">48/48</div></div>
+          <div class="stat-box"><div class="stat-name">Speed</div><div class="stat-val">30 ft</div></div>
+          <div class="stat-box"><div class="stat-name">A-Field Pot.</div><div class="stat-val" id="metricAField">1.87</div></div>
+          <div class="stat-box"><div class="stat-name">Buffer</div><div class="stat-val">15</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="statsTab">
+      <div class="card">
+        <div class="card-title">⚔ D&D Ability Scores</div>
+        <div class="stats-grid">
+          <div class="stat-box"><div class="stat-name">Might (STR)</div><div class="stat-val" id="statMight">18</div></div>
+          <div class="stat-box"><div class="stat-name">Agility (DEX)</div><div class="stat-val" id="statAgility">14</div></div>
+          <div class="stat-box"><div class="stat-name">Resilience (CON)</div><div class="stat-val" id="statRes">16</div></div>
+          <div class="stat-box"><div class="stat-name">Intellect (INT)</div><div class="stat-val" id="statCog">12</div></div>
+          <div class="stat-box"><div class="stat-name">Wisdom (WIS)</div><div class="stat-val" id="statWis">15</div></div>
+          <div class="stat-box"><div class="stat-name">Presence (CHA)</div><div class="stat-val" id="statCha">13</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER PANEL: MASTERPIECE PIXEL ART VIEWPORT -->
+  <div class="viewport">
+    <div class="canvas-container" title="Click to stamp Ash Archive Scars (Layer 11)" onclick="handleCanvasClick(event)">
+      <canvas id="masterCanvas" width="256" height="256"></canvas>
+    </div>
+    
+    <div class="viewport-controls">
+      <button class="btn-chip active" onclick="setAnim('liturgical_idle', this)">Idle</button>
+      <button class="btn-chip" onclick="setAnim('lumen_pulse', this)">Pulse</button>
+      <button class="btn-chip" onclick="setAnim('harmonic_resonance', this)">Halo</button>
+      <button class="btn-chip" onclick="setAnim('ocular_surge', this)">Ocular Surge</button>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL: CUSTOMIZATION STUDIO -->
+  <div class="panel panel-right">
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('bodyTab', this)">Body & Face</button>
+      <button class="tab-btn" onclick="switchTab('gearTab', this)">Armor & Hair</button>
+    </div>
+
+    <div class="tab-content active" id="bodyTab">
+      <div class="card">
+        <div class="card-title">💀 Skeletal & Facial Proportions</div>
+        <div class="param-row">
+          <span class="param-name">Jaw Width</span>
+          <input type="range" class="param-slider" id="jawWidth" min="30" max="60" value="48" oninput="renderMasterPiece()">
+          <span class="param-val" id="v-jawWidth">48</span>
+        </div>
+        <div class="param-row">
+          <span class="param-name">Cranial Height</span>
+          <input type="range" class="param-slider" id="cranialHeight" min="45" max="75" value="64" oninput="renderMasterPiece()">
+          <span class="param-val" id="v-cranialHeight">64</span>
+        </div>
+        <div class="param-row">
+          <span class="param-name">Brow Depth</span>
+          <input type="range" class="param-slider" id="browDepth" min="5" max="30" value="18" oninput="renderMasterPiece()">
+          <span class="param-val" id="v-browDepth">18</span>
+        </div>
+        <div class="param-row">
+          <span class="param-name">Iris Aperture</span>
+          <input type="range" class="param-slider" id="irisScale" min="12" max="24" value="18" oninput="renderMasterPiece()">
+          <span class="param-val" id="v-irisScale">18</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🎨 Dermal & Pigmentation</div>
+        <div class="param-row">
+          <span class="param-name">Melanin Tone</span>
+          <input type="range" class="param-slider" id="melanin" min="0" max="100" value="30" oninput="renderMasterPiece()">
+          <span class="param-val" id="v-melanin">30</span>
+        </div>
+        <div class="param-row">
+          <span class="param-name">Blush SSS Intensity</span>
+          <input type="range" class="param-slider" id="sssIntensity" min="0" max="50" value="25" oninput="renderMasterPiece()">
+          <span class="param-val" id="v-sssIntensity">25</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="gearTab">
+      <div class="card">
+        <div class="card-title">🛡 Gothic Armor & Filigree</div>
+        <div class="param-row">
+          <span class="param-name">Plate Steel Color</span>
+          <input type="color" id="armorColor" value="#788c9a" onchange="renderMasterPiece()" style="background:none; border:none; width:36px; height:24px; cursor:pointer;">
+        </div>
+        <div class="param-row">
+          <span class="param-name">Gilded Inlay Tone</span>
+          <input type="color" id="trimColor" value="#ffd746" onchange="renderMasterPiece()" style="background:none; border:none; width:36px; height:24px; cursor:pointer;">
+        </div>
+        <div class="param-row">
+          <span class="param-name">Filigree Density</span>
+          <input type="range" class="param-slider" id="filigreeDensity" min="6" max="20" value="12" oninput="renderMasterPiece()">
+          <span class="param-val" id="v-filigreeDensity">12</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💇 Hair & Scalp Assets</div>
+        <div class="param-row">
+          <span class="param-name">Hair Pigment</span>
+          <input type="color" id="hairColor" value="#3c2d23" onchange="renderMasterPiece()" style="background:none; border:none; width:36px; height:24px; cursor:pointer;">
+        </div>
+        <div class="param-row">
+          <span class="param-name">Wind Sway Amplitude</span>
+          <input type="range" class="param-slider" id="windSway" min="0" max="10" value="4" oninput="renderMasterPiece()">
+          <span class="param-val" id="v-windSway">4</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">⚡ Ash Archive (Layer 11 Scars)</div>
+        <div class="btn-row" style="margin-bottom:8px;">
+          <button class="btn-chip" onclick="setScarType('brand')">Brand</button>
+          <button class="btn-chip active" onclick="setScarType('cut')">Cut</button>
+          <button class="btn-chip" onclick="setScarType('ash')">Ash</button>
+        </div>
+        <div class="combat-log" id="combatLog">[SYSTEM] Sovereign Masterpiece Engine online.\n[DATA] Click portrait canvas to stamp Layer 11 trauma.</div>
+        <button class="btn-primary" style="margin-top:8px;" onclick="exportMasterpiecePortrait()">💾 Export Masterpiece PNG</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('masterCanvas');
+const ctx = canvas.getContext('2d');
+let currentAnim = 'liturgical_idle';
+let currentScarType = 'cut';
+const ashArchiveScars = [];
+
+const ARCHETYPES = {
+  templar: {jaw: 48, cran: 64, iris: 18, melanin: 30, armor: "#788c9a", trim: "#ffd746", hair: "#3c2d23", might: 18, res: 16, ac: 19, hp: "48/48", afield: "1.87"},
+  seraph: {jaw: 38, cran: 68, iris: 20, melanin: 20, armor: "#a0a8b4", trim: "#00e5ff", hair: "#f0e6c8", might: 12, res: 14, ac: 16, hp: "38/38", afield: "2.40"},
+  astrologer: {jaw: 34, cran: 72, iris: 18, melanin: 40, armor: "#322d41", trim: "#a05aff", hair: "#191423", might: 10, res: 12, ac: 15, hp: "32/32", afield: "2.20"},
+  berserk: {jaw: 54, cran: 60, iris: 16, melanin: 35, armor: "#6e2d28", trim: "#dc7832", hair: "#282323", might: 20, res: 18, ac: 18, hp: "56/56", afield: "1.25"},
+  scourge: {jaw: 44, cran: 58, iris: 14, melanin: 50, armor: "#232026", trim: "#dc5050", hair: "#282323", might: 15, res: 17, ac: 17, hp: "44/44", afield: "1.60"}
+};
+
+function switchTab(tabId, btn) {
+  const panel = btn.closest('.panel');
+  panel.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  panel.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function applyArchetypePreset() {
+  const type = document.getElementById('archetypeSelect').value;
+  const a = ARCHETYPES[type];
+  document.getElementById('jawWidth').value = a.jaw;
+  document.getElementById('cranialHeight').value = a.cran;
+  document.getElementById('irisScale').value = a.iris;
+  document.getElementById('melanin').value = a.melanin;
+  document.getElementById('armorColor').value = a.armor;
+  document.getElementById('trimColor').value = a.trim;
+  document.getElementById('hairColor').value = a.hair;
+
+  document.getElementById('statMight').textContent = a.might;
+  document.getElementById('statRes').textContent = a.res;
+  document.getElementById('metricAC').textContent = a.ac;
+  document.getElementById('metricHP').textContent = a.hp;
+  document.getElementById('metricAField').textContent = a.afield;
+
+  logMessage(`[ARCHETYPE] Loaded ${type.toUpperCase()} profile parameters.`);
+  renderMasterPiece();
+}
+
+function updateSheetData() {
+  renderMasterPiece();
+}
+
+function setAnim(anim, btn) {
+  currentAnim = anim;
+  document.querySelectorAll('.viewport button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function setScarType(type) {
+  currentScarType = type;
+  document.querySelectorAll('.panel-right .btn-chip').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function handleCanvasClick(e) {
+  const rect = canvas.getBoundingClientRect();
+  const x = Math.floor((e.clientX - rect.left) / (rect.width / 256));
+  const y = Math.floor((e.clientY - rect.top) / (rect.height / 256));
+  ashArchiveScars.push({x: x, y: y, type: currentScarType});
+  logMessage(`[ASH ARCHIVE] Inscribed ${currentScarType} at coordinate (${x}, ${y}).`);
+  renderMasterPiece();
+}
+
+function logMessage(msg) {
+  const log = document.getElementById('combatLog');
+  log.textContent += "\n" + msg;
+  log.scrollTop = log.scrollHeight;
+}
+
+function renderMasterPiece() {
+  ctx.clearRect(0, 0, 256, 256);
+  const t = Date.now() * 0.003;
+
+  const jaw = parseInt(document.getElementById('jawWidth').value);
+  const cran = parseInt(document.getElementById('cranialHeight').value);
+  const brow = parseInt(document.getElementById('browDepth').value);
+  const irisS = parseInt(document.getElementById('irisScale').value);
+  const mel = parseInt(document.getElementById('melanin').value) / 100.0;
+  const sss = parseInt(document.getElementById('sssIntensity').value);
+  const armorHex = document.getElementById('armorColor').value;
+  const trimHex = document.getElementById('trimColor').value;
+  const hairHex = document.getElementById('hairColor').value;
+  const filigD = parseInt(document.getElementById('filigreeDensity').value);
+  const windA = parseInt(document.getElementById('windSway').value);
+
+  ['jawWidth','cranialHeight','browDepth','irisScale','melanin','sssIntensity','filigreeDensity','windSway'].forEach(id => {
+    document.getElementById('v-' + id).textContent = document.getElementById(id).value;
+  });
+
+  const rS = Math.floor(230 - mel * 90);
+  const gS = Math.floor(185 - mel * 110);
+  const bS = Math.floor(170 - mel * 120);
+  const skinBase = `rgb(${rS}, ${gS}, ${bS})`;
+  const skinShadow = `rgb(${Math.max(0,rS-55)}, ${Math.max(0,gS-55)}, ${Math.max(0,bS-55)})`;
+  const skinSSS = `rgb(${Math.min(255,rS+sss)}, ${Math.max(0,gS-20)}, ${Math.max(0,bS-20)})`;
+
+  // 1. Gothic Armor & Filigree
+  ctx.fillStyle = armorHex;
+  ctx.fillRect(48, 155, 160, 101);
+  ctx.fillStyle = trimHex;
+  ctx.fillRect(64, 148, 128, 16);
+
+  ctx.fillStyle = "#111";
+  for(let rx = 72; rx < 185; rx += 16) {
+    ctx.fillRect(rx, 154, 3, 3);
+  }
+
+  ctx.strokeStyle = trimHex;
+  ctx.lineWidth = 1;
+  for(let fx = 70; fx < 186; fx += filigD) {
+    ctx.beginPath();
+    ctx.moveTo(fx, 168);
+    ctx.lineTo(fx + 6, 230);
+    ctx.stroke();
+  }
+
+  // 2. Neck & Clavicle SSS
+  ctx.fillStyle = skinShadow;
+  ctx.fillRect(104, 120, 48, 50);
+  ctx.fillStyle = skinBase;
+  ctx.fillRect(112, 120, 32, 50);
+  ctx.fillStyle = skinSSS;
+  ctx.fillRect(108, 154, 40, 8);
+
+  // 3. Craniofacial Structure
+  ctx.fillStyle = skinBase;
+  for(let y=54; y<148; y++) {
+    let w = (y < cran) ? jaw : Math.floor(jaw - (y - cran) * 0.65);
+    ctx.fillRect(128 - w, y, w * 2, 1);
+  }
+
+  // 4. Masterpiece Anime Eyes with Dual Specular Reflexes
+  ctx.fillStyle = skinShadow;
+  ctx.fillRect(90, 84 - brow/3, 36, 18);
+  ctx.fillRect(130, 84 - brow/3, 36, 18);
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(94, 87 - brow/3, 28, 12);
+  ctx.fillRect(134, 87 - brow/3, 28, 12);
+  ctx.fillStyle = "#00e5ff";
+  ctx.fillRect(98, 88 - brow/3, irisS, 10);
+  ctx.fillRect(138, 88 - brow/3, irisS, 10);
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(100, 89 - brow/3, 5, 5);
+  ctx.fillStyle = trimHex;
+  ctx.fillRect(108, 93 - brow/3, 4, 4);
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(140, 89 - brow/3, 5, 5);
+  ctx.fillStyle = trimHex;
+  ctx.fillRect(148, 93 - brow/3, 4, 4);
+
+  // Nose & Mouth
+  ctx.fillStyle = skinShadow;
+  ctx.fillRect(126, 88, 4, 36);
+  ctx.fillStyle = "#b45050";
+  ctx.fillRect(114, 130, 28, currentAnim === 'penitent_recitation' ? 6 + Math.floor(4*Math.sin(t*10)) : 5);
+
+  // 5. Volumetric Wind-Sway Hair
+  const sway = Math.floor(windA * Math.sin(t * 3.5));
+  ctx.fillStyle = hairHex;
+  ctx.fillRect(76 + sway, 28, 104, 38);
+  ctx.fillRect(68 + sway, 52, 22, 78);
+  ctx.fillRect(166 + sway, 52, 22, 78);
+  ctx.fillRect(88, 48, 80, 16);
+
+  // 6. Layer 11 Ash Archive Scars
+  ashArchiveScars.forEach(s => {
+    ctx.fillStyle = s.type === 'brand' ? trimHex : (s.type === 'cut' ? '#c83232' : '#3c3232');
+    ctx.fillRect(s.x, s.y, 4, 4);
+  });
+
+  // 7. Dialetheic Halo
+  if(currentAnim === 'harmonic_resonance' || currentAnim === 'lumen_pulse') {
+    ctx.strokeStyle = trimHex;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(128, 78, 85 + 6 * Math.sin(t * 5), 0, Math.PI * 2);
+    ctx.stroke();
+  }
+}
+
+function exportMasterpiecePortrait() {
+  const name = document.getElementById('charName').value;
+  logMessage(`[EXPORT] Compiled 256x256 Masterpiece PNG for ${name}.`);
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL("image/png");
+  a.download = `${name.toLowerCase().replace(/ /g,'_')}_masterpiece.png`;
+  a.click();
+}
+
+setInterval(renderMasterPiece, 1000 / 60);
+renderMasterPiece();
+</script>
+</body>
+</html>

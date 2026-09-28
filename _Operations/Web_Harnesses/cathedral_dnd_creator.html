@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CATHEDRAL-BORN // MYTHOTECHNICAL CHARACTER SHEET & CREATOR (EAS-03)</title>
+<style>
+  :root {
+    --bg-primary: #07080a;
+    --bg-panel: #0d0f14;
+    --bg-card: #13161f;
+    --gold: #dfb249;
+    --gold-bright: #ffd466;
+    --cyan: #00e5ff;
+    --crimson: #d23232;
+    --text-main: #dce1eb;
+    --text-muted: #7e8799;
+    --border: #212633;
+    --border-gold: rgba(223, 178, 73, 0.4);
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+    --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+  body { background-color: var(--bg-primary); color: var(--text-main); font-family: var(--font-ui); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+  header { background: #11131a; border-bottom: 2px solid var(--border-gold); padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; height: 54px; }
+  .brand { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--gold-bright); letter-spacing: 1.5px; }
+  .workspace { display: grid; grid-template-columns: 340px 1fr 380px; flex: 1; height: calc(100vh - 54px); overflow: hidden; }
+  .panel { background: var(--bg-panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow-y: auto; padding: 14px; gap: 12px; }
+  .panel-right { border-left: 1px solid var(--border); border-right: none; }
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 12px; position: relative; }
+  .card-title { font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+  
+  /* Form Inputs & D&D Style Stat Blocks */
+  .input-group { margin-bottom: 8px; }
+  .input-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 3px; }
+  .text-input, select { width: 100%; background: var(--bg-primary); border: 1px solid var(--border); color: var(--text-main); padding: 7px 10px; border-radius: 4px; font-size: 12px; font-family: var(--font-ui); outline: none; }
+  .text-input:focus, select:focus { border-color: var(--gold); }
+  
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .stat-box { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 4px; padding: 8px; text-align: center; }
+  .stat-name { font-size: 9px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+  .stat-val { font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--gold-bright); margin-top: 2px; }
+
+  .param-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+  .param-name { font-size: 11px; color: var(--text-main); flex: 1; }
+  .param-slider { flex: 1; -webkit-appearance: none; height: 4px; background: #252833; border-radius: 2px; outline: none; }
+  .param-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); cursor: pointer; }
+  .param-val { font-family: var(--font-mono); font-size: 11px; color: var(--gold-bright); width: 28px; text-align: right; }
+
+  /* Center Viewport */
+  .viewport { background: radial-gradient(circle at center, #181c28 0%, #060709 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; position: relative; }
+  .canvas-container { background: #0a0c10; border: 2px solid var(--border-gold); border-radius: 12px; padding: 16px; box-shadow: 0 0 50px rgba(0,0,0,0.9); position: relative; }
+  #sheetCanvas { image-rendering: pixelated; width: 300px; height: 300px; border-radius: 4px; display: block; }
+  
+  .btn-primary { background: linear-gradient(180deg, var(--gold) 0%, #b88d2d 100%); border: none; color: #000; padding: 9px 14px; border-radius: 4px; font-weight: 700; font-size: 11px; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 1px; }
+  .btn-primary:hover { filter: brightness(1.15); }
+  .btn-row { display: flex; gap: 6px; margin-top: 6px; }
+  .btn-chip { background: transparent; border: 1px solid var(--border); color: var(--text-main); padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; flex: 1; text-align: center; }
+  .btn-chip.active, .btn-chip:hover { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 600; }
+  
+  .combat-log { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 4px; padding: 8px; font-family: var(--font-mono); font-size: 10px; color: var(--cyan); height: 90px; overflow-y: auto; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">CATHEDRAL-BORN // MYTHOTECHNICAL CHARACTER SHEET (EAS-03)</div>
+  <div style="font-family:var(--font-mono); font-size:11px; color:var(--cyan);">D&D Mechanics + Isomorphic Somatics Active</div>
+</header>
+
+<div class="workspace">
+  <!-- LEFT PANEL: IDENTITY & ABILITY SCORES -->
+  <div class="panel">
+    <div class="card">
+      <div class="card-title">📜 Character Lineage & Caste</div>
+      <div class="input-group">
+        <label class="input-label">Character Name</label>
+        <input type="text" class="text-input" id="charName" value="Brother Kaelen" oninput="updateSheet()">
+      </div>
+      <div class="input-group">
+        <label class="input-label">Choir / Lineage</label>
+        <select id="lineageSelect" onchange="applyLineage()">
+          <option value="templar">Crucible Templar (Melee Vanguard)</option>
+          <option value="seraph">Sovereign Seraph (Cognitive Vanguard)</option>
+          <option value="astrologer">Null Astrologer (Entropic Weaver)</option>
+          <option value="scourge">Ash Scourge (Monastic Penitent)</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Spectral Constant (Alignment)</label>
+        <select id="spectralSelect" onchange="updateSheet()">
+          <option value="JOY_GOLD_THETA">Joy (Gold Theta - Θ)</option>
+          <option value="CURIOSITY_TEAL_PSI">Curiosity (Teal Psi - Ψ)</option>
+          <option value="VOID_OBSIDIAN_NULL">Void (Obsidian Null)</option>
+          <option value="SORROW_BLUE_DELTA">Sorrow (Blue Delta - Δ)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚔ Ability Scores & Attributes</div>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="stat-name">Might</div><div class="stat-val" id="statMight">16</div></div>
+        <div class="stat-box"><div class="stat-name">Resilience</div><div class="stat-val" id="statRes">14</div></div>
+        <div class="stat-box"><div class="stat-name">Cognition</div><div class="stat-val" id="statCog">12</div></div>
+        <div class="stat-box"><div class="stat-name">A-Field</div><div class="stat-val" id="statAField">18</div></div>
+        <div class="stat-box"><div class="stat-name">Buffer</div><div class="stat-val" id="statBuffer">15</div></div>
+        <div class="stat-box"><div class="stat-name">Resonance</div><div class="stat-val" id="statReson">17</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER PANEL: LIVE D&D TOKEN VIEWPORT -->
+  <div class="viewport">
+    <div class="canvas-container">
+      <canvas id="sheetCanvas" width="256" height="256"></canvas>
+    </div>
+    <div style="margin-top: 14px; display:flex; gap:8px;">
+      <button class="btn-chip active" onclick="setAnim('liturgical_idle', this)">Idle</button>
+      <button class="btn-chip" onclick="setAnim('lumen_pulse', this)">Pulse</button>
+      <button class="btn-chip" onclick="setAnim('harmonic_resonance', this)">Halo</button>
+      <button class="btn-chip" onclick="setAnim('ocular_surge', this)">Ocular Surge</button>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL: SOMATIC SCULPTING & ASH ARCHIVE -->
+  <div class="panel panel-right">
+    <div class="card">
+      <div class="card-title">💀 Somatic Proportions</div>
+      <div class="param-row">
+        <span class="param-name">Jaw Width</span>
+        <input type="range" class="param-slider" id="jawWidth" min="30" max="60" value="46" oninput="renderSheet()">
+        <span class="param-val" id="v-jawWidth">46</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Cranial Height</span>
+        <input type="range" class="param-slider" id="cranialHeight" min="45" max="75" value="62" oninput="renderSheet()">
+        <span class="param-val" id="v-cranialHeight">62</span>
+      </div>
+      <div class="param-row">
+        <span class="param-name">Iris Diameter</span>
+        <input type="range" class="param-slider" id="irisScale" min="12" max="24" value="18" oninput="renderSheet()">
+        <span class="param-val" id="v-irisScale">18</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🛡 Equipment & Aesthetics</div>
+      <div class="param-row">
+        <span class="param-name">Plate Steel</span>
+        <input type="color" id="armorColor" value="#788c9a" onchange="renderSheet()" style="background:none; border:none; width:36px; height:24px; cursor:pointer;">
+      </div>
+      <div class="param-row">
+        <span class="param-name">Gilded Inlay</span>
+        <input type="color" id="trimColor" value="#ffd746" onchange="renderSheet()" style="background:none; border:none; width:36px; height:24px; cursor:pointer;">
+      </div>
+      <div class="param-row">
+        <span class="param-name">Hair Pigment</span>
+        <input type="color" id="hairColor" value="#3c2d23" onchange="renderSheet()" style="background:none; border:none; width:36px; height:24px; cursor:pointer;">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚡ Ash Archive (Layer 11 Scars)</div>
+      <div class="btn-row" style="margin-bottom:8px;">
+        <button class="btn-chip" onclick="stampScar('brand')">+ Prayer Brand</button>
+        <button class="btn-chip" onclick="stampScar('cut')">+ Combat Cut</button>
+      </div>
+      <div class="combat-log" id="combatLog">[SYSTEM] Character sheet initialized.\n[DATA] 512-byte somatic DNA buffer locked.</div>
+      <button class="btn-primary" style="margin-top:8px;" onclick="exportCharacterSheet()">💾 Export D&D Character Sheet</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('sheetCanvas');
+const ctx = canvas.getContext('2d');
+let currentAnim = 'liturgical_idle';
+const scars = [];
+
+const LINEAGES = {
+  templar: {jaw: 48, cran: 64, iris: 16, armor: "#788c9a", trim: "#ffd746", hair: "#3c2d23", might: 18, res: 16, cog: 10, afield: 14},
+  seraph: {jaw: 38, cran: 68, iris: 20, armor: "#a0a8b4", trim: "#00e5ff", hair: "#f0e6c8", might: 12, res: 14, cog: 18, afield: 20},
+  astrologer: {jaw: 34, cran: 72, iris: 18, armor: "#322d41", trim: "#a05aff", hair: "#191423", might: 10, res: 12, cog: 20, afield: 19},
+  scourge: {jaw: 44, cran: 58, iris: 14, armor: "#232026", trim: "#dc5050", hair: "#282323", might: 16, res: 18, cog: 12, afield: 15}
+};
+
+function applyLineage() {
+  const type = document.getElementById('lineageSelect').value;
+  const l = LINEAGES[type];
+  document.getElementById('jawWidth').value = l.jaw;
+  document.getElementById('cranialHeight').value = l.cran;
+  document.getElementById('irisScale').value = l.iris;
+  document.getElementById('armorColor').value = l.armor;
+  document.getElementById('trimColor').value = l.trim;
+  document.getElementById('hairColor').value = l.hair;
+
+  document.getElementById('statMight').textContent = l.might;
+  document.getElementById('statRes').textContent = l.res;
+  document.getElementById('statCog').textContent = l.cog;
+  document.getElementById('statAField').textContent = l.afield;
+  
+  logMessage(`[LINEAGE] Switched archetype to ${type.toUpperCase()}. Somatics updated.`);
+  renderSheet();
+}
+
+function updateSheet() {
+  renderSheet();
+}
+
+function setAnim(anim, btn) {
+  currentAnim = anim;
+  document.querySelectorAll('.viewport button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function stampScar(type) {
+  scars.push({
+    x: 100 + Math.random() * 56,
+    y: 80 + Math.random() * 40,
+    type: type
+  });
+  logMessage(`[ASH ARCHIVE] Inscribed ${type} trauma onto Layer 11.`);
+  renderSheet();
+}
+
+function logMessage(msg) {
+  const log = document.getElementById('combatLog');
+  log.textContent += "\n" + msg;
+  log.scrollTop = log.scrollHeight;
+}
+
+function renderSheet() {
+  ctx.clearRect(0, 0, 256, 256);
+  const t = Date.now() * 0.003;
+
+  const jaw = parseInt(document.getElementById('jawWidth').value);
+  const cran = parseInt(document.getElementById('cranialHeight').value);
+  const irisS = parseInt(document.getElementById('irisScale').value);
+  const armorHex = document.getElementById('armorColor').value;
+  const trimHex = document.getElementById('trimColor').value;
+  const hairHex = document.getElementById('hairColor').value;
+
+  ['jawWidth','cranialHeight','irisScale'].forEach(id => {
+    document.getElementById('v-' + id).textContent = document.getElementById(id).value;
+  });
+
+  // 1. Armor Plating
+  ctx.fillStyle = armorHex;
+  ctx.fillRect(48, 155, 160, 101);
+  ctx.fillStyle = trimHex;
+  ctx.fillRect(64, 148, 128, 16);
+
+  // 2. Neck
+  ctx.fillStyle = "#966455";
+  ctx.fillRect(104, 120, 48, 50);
+  ctx.fillStyle = "rgb(230, 185, 170)";
+  ctx.fillRect(112, 120, 32, 50);
+
+  // 3. Head Structure
+  ctx.fillStyle = "rgb(230, 185, 170)";
+  for(let y=54; y<148; y++) {
+    let w = (y < 90) ? jaw : Math.floor(jaw - (y - 90) * 0.65);
+    ctx.fillRect(128 - w, y, w * 2, 1);
+  }
+
+  // 4. Eyes
+  ctx.fillStyle = "#966455";
+  ctx.fillRect(90, 84, 36, 18);
+  ctx.fillRect(130, 84, 36, 18);
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(94, 87, 28, 12);
+  ctx.fillRect(134, 87, 28, 12);
+  ctx.fillStyle = trimHex;
+  ctx.fillRect(98, 88, irisS, 10);
+  ctx.fillRect(138, 88, irisS, 10);
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(100, 89, 4, 4);
+  ctx.fillRect(140, 89, 4, 4);
+
+  // Nose & Mouth
+  ctx.fillStyle = "#966455";
+  ctx.fillRect(126, 88, 4, 36);
+  ctx.fillStyle = "#b45050";
+  ctx.fillRect(114, 130, 28, currentAnim === 'penitent_recitation' ? 6 + Math.floor(4*Math.sin(t*10)) : 4);
+
+  // 5. Hair
+  ctx.fillStyle = hairHex;
+  ctx.fillRect(76, 28, 104, 38);
+  ctx.fillRect(68, 52, 22, 78);
+  ctx.fillRect(166, 52, 22, 78);
+  ctx.fillRect(88, 48, 80, 16);
+
+  // 6. Layer 11 Scars
+  scars.forEach(s => {
+    ctx.fillStyle = s.type === 'brand' ? trimHex : '#dc5050';
+    ctx.fillRect(s.x, s.y, 4, 4);
+  });
+
+  // 7. Halo
+  if(currentAnim === 'harmonic_resonance' || currentAnim === 'lumen_pulse') {
+    ctx.strokeStyle = trimHex;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(128, 78, 85 + 6 * Math.sin(t * 5), 0, Math.PI * 2);
+    ctx.stroke();
+  }
+}
+
+function exportCharacterSheet() {
+  const name = document.getElementById('charName').value;
+  logMessage(`[EXPORT] Successfully compiled D&D Character Sheet for ${name}.`);
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL("image/png");
+  a.download = `${name.toLowerCase().replace(/ /g,'_')}_token.png`;
+  a.click();
+}
+
+setInterval(renderSheet, 1000 / 60);
+renderSheet();
+</script>
+</body>
+</html>

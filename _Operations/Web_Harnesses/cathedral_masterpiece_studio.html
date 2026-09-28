@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CATHEDRAL-BORN // 512P REALISTIC DARK FANTASY MASTERPIECE (EAS-03)</title>
+<style>
+  :root {
+    --bg-primary: #030406;
+    --bg-panel: #07090d;
+    --bg-card: #0b0e14;
+    --gold: #c8a455;
+    --gold-bright: #e6c675;
+    --cyan: #46b4c8;
+    --crimson: #a02828;
+    --text-main: #c8ccd6;
+    --text-muted: #6e7688;
+    --border: #161a24;
+    --border-gold: rgba(200, 164, 85, 0.4);
+    --font-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+    --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+  body { background-color: var(--bg-primary); color: var(--text-main); font-family: var(--font-ui); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+  
+  header { background: #0a0d14; border-bottom: 2px solid var(--border-gold); padding: 8px 20px; display: flex; align-items: center; justify-content: space-between; height: 50px; flex-shrink: 0; }
+  .brand { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--gold-bright); letter-spacing: 1.5px; display: flex; align-items: center; gap: 10px; }
+  .brand-badge { background: rgba(200, 164, 85, 0.1); border: 1px solid var(--border-gold); padding: 2px 6px; border-radius: 3px; font-size: 10px; color: var(--text-main); }
+
+  .workspace { display: grid; grid-template-columns: 360px 1fr 400px; flex: 1; height: calc(100vh - 50px); overflow: hidden; }
+  
+  .panel { background: var(--bg-panel); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+  .panel-right { border-left: 1px solid var(--border); border-right: none; }
+  
+  .tab-bar { display: flex; background: var(--bg-card); border-bottom: 1px solid var(--border); overflow-x: auto; flex-shrink: 0; }
+  .tab-btn { background: none; border: none; color: var(--text-muted); padding: 10px 14px; font-size: 11px; font-weight: 600; cursor: pointer; text-transform: uppercase; white-space: nowrap; border-bottom: 2px solid transparent; }
+  .tab-btn.active { color: var(--gold-bright); border-bottom-color: var(--gold); background: rgba(200, 164, 85, 0.05); }
+  
+  .tab-content { flex: 1; overflow-y: auto; padding: 14px; display: none; flex-direction: column; gap: 12px; }
+  .tab-content.active { display: flex; }
+
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 12px; }
+  .card-title { font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 4px; display: flex; justify-content: space-between; align-items: center; }
+
+  .input-group { margin-bottom: 8px; }
+  .input-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 3px; }
+  .text-input, select { width: 100%; background: var(--bg-primary); border: 1px solid var(--border); color: var(--text-main); padding: 7px 10px; border-radius: 4px; font-size: 12px; outline: none; }
+  .text-input:focus, select:focus { border-color: var(--gold); }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .stat-box { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 4px; padding: 8px; text-align: center; }
+  .stat-name { font-size: 9px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+  .stat-val { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--gold-bright); margin-top: 2px; }
+
+  .param-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+  .param-name { font-size: 11px; color: var(--text-main); flex: 1; }
+  .param-slider { flex: 1; -webkit-appearance: none; height: 4px; background: #161a24; border-radius: 2px; outline: none; }
+  .param-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); cursor: pointer; }
+  .param-val { font-family: var(--font-mono); font-size: 11px; color: var(--gold-bright); width: 28px; text-align: right; }
+
+  /* Center Viewport */
+  .viewport { background: radial-gradient(circle at center, #0e121c 0%, #030406 100%); display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 20px; position: relative; }
+  .canvas-container { background: #05070a; border: 2px solid var(--border-gold); border-radius: 10px; padding: 12px; box-shadow: 0 0 60px rgba(0,0,0,0.95); position: relative; cursor: crosshair; }
+  #masterCanvas { image-rendering: pixelated; width: 340px; height: 340px; border-radius: 4px; display: block; }
+  
+  .viewport-controls { display: flex; gap: 8px; background: var(--bg-card); border: 1px solid var(--border); padding: 8px 16px; border-radius: 20px; }
+  .btn-chip { background: transparent; border: 1px solid var(--border); color: var(--text-main); padding: 6px 12px; border-radius: 12px; cursor: pointer; font-size: 11px; }
+  .btn-chip.active, .btn-chip:hover { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 600; }
+
+  .btn-primary { background: linear-gradient(180deg, var(--gold) 0%, #9e7f36 100%); border: none; color: #000; padding: 9px 14px; border-radius: 4px; font-weight: 700; font-size: 11px; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 1px; }
+  .btn-primary:hover { filter: brightness(1.15); }
+  
+  .combat-log { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 4px; padding: 8px; font-family: var(--font-mono); font-size: 10px; color: var(--cyan); height: 110px; overflow-y: auto; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span>CATHEDRAL-BORN // 512P REALISTIC MASTERPIECE</span>
+    <span class="brand-badge">D&D 5E + SUB-PIXEL TEXTURE ENGINE</span>
+  </div>
+  <div style="font-family:var(--font-mono); font-size:11px; color:var(--cyan);">Chiaroscuro SSS & Anisotropic Hair Active</div>
+</header>
+
+<div class="workspace">
+  <!-- LEFT PANEL: D&D SHEET & LINEAGE -->
+  <div class="panel">
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('sheetTab', this)">D&D Sheet</button>
+      <button class="tab-btn" onclick="switchTab('statsTab', this)">Attributes</button>
+    </div>
+
+    <div class="tab-content active" id="sheetTab">
+      <div class="card">
+        <div class="card-title">📜 Lineage & Origin</div>
+        <div class="input-group">
+          <label class="input-label">Character Name</label>
+          <input type="text" class="text-input" id="charName" value="Sir Gideon of Ash" oninput="updateSheetData()">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Archetype / Class</label>
+          <select id="archetypeSelect" onchange="applyArchetypePreset()">
+            <option value="knight">Gothic Death Knight (Paladin)</option>
+            <option value="inquisitor">Ashen Inquisitor (Rogue / Cleric)</option>
+            <option value="sorcerer">Void Heretic (Dark Sorcerer)</option>
+            <option value="berserker">Crucible Berserker (Barbarian)</option>
+            <option value="monk">Silent Penitent (Ascetic Monk)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🛡 Combat Statistics</div>
+        <div class="stats-grid">
+          <div class="stat-box"><div class="stat-name">Armor Class</div><div class="stat-val" id="metricAC">18</div></div>
+          <div class="stat-box"><div class="stat-name">Initiative</div><div class="stat-val" id="metricInit">+2</div></div>
+          <div class="stat-box"><div class="stat-name">Hit Points</div><div class="stat-val" id="metricHP">52/52</div></div>
+          <div class="stat-box"><div class="stat-name">Speed</div><div class="stat-val">30 ft</div></div>
+          <div class="stat-box"><div class="stat-name">Prof. Bonus</div><div class="stat-val">+3</div></div>
+          <div class="stat-box"><div class="stat-name">Hit Dice</div><div class="stat-val">6d10</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="statsTab">
+      <div class="card">
+        <div class="card-title">⚔ D&D 5E Ability Scores</div>
+        <div class="stats-grid">
+          <div class="stat-box"><div class="stat-name">STR</div><div class="stat-val" id="statSTR">17</div></div>
+          <div class="stat-box"><div class="stat-name">DEX</div><div class="stat-val" id="statDEX">13</div></div>
+          <div class="stat-box"><div class="stat-name">CON</div><div class="stat-val" id="statCON">16</div></div>
+          <div class="stat-box"><div class="stat-name">INT</div><div class="stat-val" id="statINT">10</div></div>
+          <div class="stat-box"><div class="stat-name">WIS</div><div class="stat-val" id="statWIS">14</div></div>
+          <div class="stat-box"><div class="stat-name">CHA</div><div class="stat-val" id="statCHA">12</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER PANEL: 512P MASTERPIECE VIEWPORT -->
+  <div class="viewport">
+    <div class="canvas-container" title="Click to stamp Ash Archive Scars (Layer 11)" onclick="handleCanvasClick(event)">
+      <canvas id="masterCanvas" width="512" height="512"></canvas>
+    </div>
+    
+    <div class="viewport-controls">
+      <button class="btn-chip active" onclick="setAnim('liturgical_idle', this)">Idle</button>
+      <button class="btn-chip" onclick="setAnim('lumen_pulse', this)">Pulse</button>
+      <button class="btn-chip" onclick="setAnim('harmonic_resonance', this)">Aura</button>
+      <button class="btn-chip" onclick="setAnim('ocular_surge', this)">Gaze</button>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL: CUSTOMIZATION STUDIO -->
+  <div class="panel panel-right">
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('faceTab', this)">Face & Form</button>
+      <button class="tab-btn" onclick="switchTab('armorTab', this)">Armor & Hair</button>
+    </div>
+
+    <div class="tab-content active" id="faceTab">
+      <div class="card">
+        <div class="card-title">💀 Facial Structure</div>
+        <div class="param-row">
+          <span class="param-name">Jaw Angularity</span>
+          <input type="range" class="param-slider" id="jawWidth" min="60" max="110" value="88" oninput="renderMasterpiece()">
+          <span class="param-val" id="v-jawWidth">88</span>
+        </div>
+        <div class="param-row">
+          <span class="param-name">Brow Ridge Depth</span>
+          <input type="range" class="param-slider" id="browDepth" min="10" max="45" value="28" oninput="renderMasterpiece()">
+          <span class="param-val" id="v-browDepth">28</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🎨 Skin Tone & SSS Blush</div>
+        <div class="param-row">
+          <span class="param-name">Pallor / Melanin</span>
+          <input type="range" class="param-slider" id="melanin" min="0" max="100" value="25" oninput="renderMasterpiece()">
+          <span class="param-val" id="v-melanin">25</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="armorTab">
+      <div class="card">
+        <div class="card-title">🛡 Gothic Plate Customization</div>
+        <div class="param-row">
+          <span class="param-name">Gunmetal Steel Color</span>
+          <input type="color" id="armorColor" value="#3c424d" onchange="renderMasterpiece()" style="background:none; border:none; width:36px; height:24px; cursor:pointer;">
+        </div>
+        <div class="param-row">
+          <span class="param-name">Aged Gold Inlay</span>
+          <input type="color" id="trimColor" value="#c8a455" onchange="renderMasterpiece()" style="background:none; border:none; width:36px; height:24px; cursor:pointer;">
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💇 Hair / Hood Palette</div>
+        <div class="param-row">
+          <span class="param-name">Pigment</span>
+          <input type="color" id="hairColor" value="#1c1e24" onchange="renderMasterpiece()" style="background:none; border:none; width:36px; height:24px; cursor:pointer;">
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">⚡ Ash Archive (Layer 11 Scars)</div>
+        <div class="btn-row" style="margin-bottom:8px;">
+          <button class="btn-chip" onclick="setScarType('brand')">Brand</button>
+          <button class="btn-chip active" onclick="setScarType('cut')">Cut</button>
+          <button class="btn-chip" onclick="setScarType('ash')">Ash</button>
+        </div>
+        <div class="combat-log" id="combatLog">[SYSTEM] 512P Realistic Rasterizer online.\n[DATA] Click portrait canvas to stamp Layer 11 trauma.</div>
+        <button class="btn-primary" style="margin-top:8px;" onclick="exportMasterpiecePortrait()">💾 Export 512P Masterpiece PNG</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('masterCanvas');
+const ctx = canvas.getContext('2d');
+let currentAnim = 'liturgical_idle';
+let currentScarType = 'cut';
+const ashArchiveScars = [];
+
+const ARCHETYPES = {
+  knight: {jaw: 88, brow: 28, melanin: 25, armor: "#3c424d", trim: "#c8a455", hair: "#1c1e24", str: 17, con: 16, ac: 18, hp: "52/52"},
+  inquisitor: {jaw: 72, brow: 34, melanin: 45, armor: "#242830", trim: "#a02828", hair: "#121317", str: 14, con: 14, ac: 16, hp: "42/42"},
+  sorcerer: {jaw: 64, brow: 18, melanin: 55, armor: "#1d1922", trim: "#7040a0", hair: "#0d0b10", str: 10, con: 12, ac: 13, hp: "30/30"},
+  berserker: {jaw: 96, brow: 42, melanin: 30, armor: "#4a2824", trim: "#c87835", hair: "#281b18", str: 19, con: 17, ac: 17, hp: "60/60"},
+  monk: {jaw: 76, brow: 22, melanin: 40, armor: "#282b33", trim: "#46b4c8", hair: "#181a1f", str: 15, con: 15, ac: 15, hp: "45/45"}
+};
+
+function switchTab(tabId, btn) {
+  const panel = btn.closest('.panel');
+  panel.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  panel.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function applyArchetypePreset() {
+  const type = document.getElementById('archetypeSelect').value;
+  const a = ARCHETYPES[type];
+  document.getElementById('jawWidth').value = a.jaw;
+  document.getElementById('browDepth').value = a.brow;
+  document.getElementById('melanin').value = a.melanin;
+  document.getElementById('armorColor').value = a.armor;
+  document.getElementById('trimColor').value = a.trim;
+  document.getElementById('hairColor').value = a.hair;
+
+  document.getElementById('statSTR').textContent = a.str;
+  document.getElementById('statCON').textContent = a.con;
+  document.getElementById('metricAC').textContent = a.ac;
+  document.getElementById('metricHP').textContent = a.hp;
+
+  logMessage(`[LINEAGE] Adopted ${type.toUpperCase()} profile.`);
+  renderMasterpiece();
+}
+
+function updateSheetData() { renderMasterpiece(); }
+
+function setAnim(anim, btn) {
+  currentAnim = anim;
+  document.querySelectorAll('.viewport button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function setScarType(type) {
+  currentScarType = type;
+  document.querySelectorAll('.panel-right .btn-chip').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function handleCanvasClick(e) {
+  const rect = canvas.getBoundingClientRect();
+  const x = Math.floor((e.clientX - rect.left) / (rect.width / 512));
+  const y = Math.floor((e.clientY - rect.top) / (rect.height / 512));
+  ashArchiveScars.push({x: x, y: y, type: currentScarType});
+  logMessage(`[ASH ARCHIVE] Inscribed ${currentScarType} at (${x}, ${y}).`);
+  renderMasterpiece();
+}
+
+function logMessage(msg) {
+  const log = document.getElementById('combatLog');
+  log.textContent += "\n" + msg;
+  log.scrollTop = log.scrollHeight;
+}
+
+// 512P Realism & Chiaroscuro Lighting Rasterizer
+function renderMasterpiece() {
+  ctx.clearRect(0, 0, 512, 512);
+  const t = Date.now() * 0.003;
+
+  const jaw = parseInt(document.getElementById('jawWidth').value);
+  const brow = parseInt(document.getElementById('browDepth').value);
+  const mel = parseInt(document.getElementById('melanin').value) / 100.0;
+  const armorHex = document.getElementById('armorColor').value;
+  const trimHex = document.getElementById('trimColor').value;
+  const hairHex = document.getElementById('hairColor').value;
+
+  ['jawWidth','browDepth','melanin'].forEach(id => {
+    document.getElementById('v-' + id).textContent = document.getElementById(id).value;
+  });
+
+  const rBase = Math.floor(185 - mel * 80);
+  const gBase = Math.floor(145 - mel * 90);
+  const bBase = Math.floor(130 - mel * 100);
+
+  // Background Void
+  ctx.fillStyle = "#030406";
+  ctx.fillRect(0, 0, 512, 512);
+
+  // 1. Brushed Gunmetal Gothic Armor with Anisotropic Highlights
+  ctx.fillStyle = armorHex;
+  ctx.fillRect(80, 300, 352, 212);
+  
+  // Pauldrons (Shoulder plates) with metallic brushed texture lines
+  ctx.fillStyle = "#1e222a";
+  ctx.fillRect(80, 300, 76, 120);
+  ctx.fillRect(356, 300, 76, 120);
+
+  // Gilded Filigree Inlay
+  ctx.fillStyle = trimHex;
+  ctx.fillRect(112, 284, 288, 24);
+  ctx.fillRect(248, 308, 16, 140);
+
+  // Armor ambient occlusion shadow
+  ctx.fillStyle = "rgba(0,0,0,0.65)";
+  ctx.fillRect(80, 460, 352, 52);
+
+  // 2. Anatomical Neck Shading (Subsurface Scattering)
+  ctx.fillStyle = "#2a1c17";
+  ctx.fillRect(208, 236, 96, 80);
+  ctx.fillStyle = `rgb(${rBase - 35}, ${gBase - 35}, ${bBase - 35})`;
+  ctx.fillRect(224, 236, 64, 80);
+
+  // 3. High-Detail Sculpted Face (Procedural Chiaroscuro Pixel Painting)
+  for (let y = 110; y < 290; y++) {
+    let halfW = (y < 185) ? jaw : Math.floor(jaw - (y - 185) * 0.55);
+    for (let x = 256 - halfW; x <= 256 + halfW; x++) {
+      // Directional lighting angle (Top-left key light)
+      let light = 1.0 - (x - 256) / 160.0 - (y - 110) / 400.0;
+      let r = Math.floor(rBase * light);
+      let g = Math.floor(gBase * light);
+      let b = Math.floor(bBase * light);
+
+      // Cheek and jaw shadow contrast
+      if (y > 225 || Math.abs(x - 256) > halfW - 8) {
+        r = Math.max(0, r - 40);
+        g = Math.max(0, g - 40);
+        b = Math.max(0, b - 40);
+      }
+      ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+
+  // 4. Realistic Piercing Dark Fantasy Eyes
+  ctx.fillStyle = "#18100d";
+  ctx.fillRect(180, 164 - brow, 60, 32);
+  ctx.fillRect(272, 164 - brow, 60, 32);
+  
+  ctx.fillStyle = "#e0e6ed";
+  ctx.fillRect(188, 170 - brow, 44, 20);
+  ctx.fillRect(280, 170 - brow, 44, 20);
+
+  ctx.fillStyle = trimHex;
+  ctx.fillRect(200, 172 - brow, 20, 16);
+  ctx.fillRect(292, 172 - brow, 20, 16);
+
+  ctx.fillStyle = "#030406";
+  ctx.fillRect(206, 176 - brow, 8, 8);
+  ctx.fillRect(298, 176 - brow, 8, 8);
+
+  // Heavy Brow Shadow
+  ctx.fillStyle = "#18100d";
+  ctx.fillRect(176, 148 - brow, 160, 18);
+
+  // Nose Bridge & Gritted Lips
+  ctx.fillStyle = "#4e342c";
+  ctx.fillRect(250, 168 - brow, 12, 72);
+  ctx.fillStyle = "#381c1c";
+  ctx.fillRect(224, 260, 64, 8);
+
+  // 5. Anisotropic Volumetric Hair & Hood
+  ctx.fillStyle = hairHex;
+  ctx.fillRect(152, 50, 208, 76);
+  ctx.fillRect(136, 100, 44, 150);
+  ctx.fillRect(332, 100, 44, 150);
+  ctx.fillStyle = "rgba(0,0,0,0.6)";
+  ctx.fillRect(176, 96, 160, 24);
+
+  // 6. Layer 11 Ash Archive Scars
+  ashArchiveScars.forEach(s => {
+    ctx.fillStyle = s.type === 'brand' ? trimHex : (s.type === 'cut' ? '#a02828' : '#161a24');
+    ctx.fillRect(s.x, s.y, 3, 3);
+  });
+
+  // 7. Dark Fantasy Ethereal Aura
+  if(currentAnim === 'harmonic_resonance' || currentAnim === 'lumen_pulse') {
+    ctx.strokeStyle = trimHex;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(256, 150, 170 + 8 * Math.sin(t * 4), 0, Math.PI * 2);
+    ctx.stroke();
+  }
+}
+
+function exportMasterpiecePortrait() {
+  const name = document.getElementById('charName').value;
+  logMessage(`[EXPORT] Compiled 512P Masterpiece PNG for ${name}.`);
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL("image/png");
+  a.download = `${name.toLowerCase().replace(/ /g,'_')}_512p_masterpiece.png`;
+  a.click();
+}
+
+setInterval(renderMasterpiece, 1000 / 60);
+renderMasterpiece();
+</script>
+</body>
+</html>

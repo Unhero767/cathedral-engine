@@ -18,7 +18,7 @@ func inscribe_trauma(type: TraumaType, uv: Vector2, sev: float) -> void:
 	if type == TraumaType.COMBAT_LACERATION:
 		col = Color(0.8, 0.15, 0.1, 0.9)
 	elif type == TraumaType.ASH_DEPOSIT:
-		col = Color(0.25, 0.23, 0.22, 0.7)
+		col = Color(0.196, 0.214, 0.396, 0.7)
 		
 	for y in range(-3, 4):
 		for x in range(-3, 4):

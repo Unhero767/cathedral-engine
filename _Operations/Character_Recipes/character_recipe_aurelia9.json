@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "specimen_id": "SAINT-AURELIA-09",
+  "archetype_name": "Aurelia-9 (Machine-Saint Sovereign)",
+  "caste": "Cognitive Vanguard & Reliquary Sovereign",
+  "spectral_constant": "JOY_GOLD_THETA",
+  "dialetheic_afield": 1.25,
+  "master_texture_path": "res://assets/portraits/aurelia9_atlas_strip.png",
+  "lighting_profile": {
+    "shadow_depth_ramp": 0.65,
+    "specular_rim_factor": 1.45,
+    "lumen_emission_gain": 1.20
+  },
+  "somatic_stack": [
+    {
+      "layer_id": 0,
+      "layer_name": "skeletal_frame",
+      "ontological_function": "Titanium-reinforced cranial vault and cervical armature",
+      "visible": true
+    },
+    {
+      "layer_id": 1,
+      "layer_name": "muscle_visceral_fat",
+      "ontological_function": "Synthetic myofibril bundle and sternocleidomastoid mass",
+      "visible": true
+    },
+    {
+      "layer_id": 2,
+      "layer_name": "subcutaneous_dermis",
+      "ontological_function": "Subsurface porcelain dermis with micro-vascular gold tracery",
+      "visible": true
+    },
+    {
+      "layer_id": 3,
+      "layer_name": "base_liner",
+      "ontological_function": "Impact-dampening silk gambeson underlayer",
+      "visible": true
+    },
+    {
+      "layer_id": 4,
+      "layer_name": "under_tunic",
+      "ontological_function": "Woven liturgical monastic vestment cloth",
+      "visible": true
+    },
+    {
+      "layer_id": 5,
+      "layer_name": "fluted_gorget_cuirass",
+      "ontological_function": "Fluted vanguard breastplate conforming to thoracic reliquary",
+      "visible": true
+    },
+    {
+      "layer_id": 6,
+      "layer_name": "reliquary_harness",
+      "ontological_function": "Structural load-bearing strapping and core kinetic housing",
+      "visible": true
+    },
+    {
+      "layer_id": 7,
+      "layer_name": "penitent_cowl",
+      "ontological_function": "Cranial framing shroud woven with inductive micro-coils",
+      "visible": true
+    },
+    {
+      "layer_id": 8,
+      "layer_name": "rosary_scabbard",
+      "ontological_function": "Devotional titanium rosary and harmonic tuning scabbard",
+      "visible": true
+    },
+    {
+      "layer_id": 9,
+      "layer_name": "facial_features_stubble",
+      "ontological_function": "Periorbital telemetry lenses and high-resolution facial geometry",
+      "visible": true
+    },
+    {
+      "layer_id": 10,
+      "layer_name": "gilded_trikey_halo",
+      "ontological_function": "Sovereign Theta Gold radiant halo driven by A-Field intensity",
+      "visible": true
+    },
+    {
+      "layer_id": 11,
+      "layer_name": "custom_overlay_layer",
+      "ontological_function": "Runtime Harmonic Scar injection and Merkle state glyphs under Lex I",
+      "visible": true
+    }
+  ]
+}
