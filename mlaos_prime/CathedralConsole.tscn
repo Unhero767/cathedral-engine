@@ -1,0 +1,82 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1a2b3c4d5e6f"]
+
+[ext_resource type="Script" path="res://CathedralConsole.gd" id="1_script"]
+[ext_resource type="Shader" path="res://ConsoleBlur.gdshader" id="2_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
+shader = ExtResource("2_shader")
+shader_parameter/blur_amount = 2.5
+shader_parameter/tint_color = Color(0.0470588, 0.0509804, 0.0627451, 0.85)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.0470588, 0.0509804, 0.0627451, 0.90)
+border_width_bottom = 2
+border_color = Color(0, 1, 0.8, 0.5)
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 10
+
+[node name="CathedralConsole" type="CanvasLayer"]
+process_mode = 3
+layer = 128
+script = ExtResource("1_script")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 400.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="BlurBackground" type="ColorRect" parent="PanelContainer"]
+show_behind_parent = true
+material = SubResource("ShaderMaterial_blur")
+layout_mode = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 4
+
+[node name="OutputLog" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+focus_mode = 2
+theme_override_colors/default_color = Color(0.772549, 0.784314, 0.776471, 1)
+theme_override_constants/line_separation = 4
+bbcode_enabled = true
+scroll_following = true
+selection_enabled = true
+
+[node name="InputBar" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MarginLeft" type="MarginContainer" parent="PanelContainer/VBoxContainer/InputBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+
+[node name="Prompt" type="Label" parent="PanelContainer/VBoxContainer/InputBar/MarginLeft"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0.8, 1)
+text = "mlaos-prime [T] >"
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="PanelContainer/VBoxContainer/InputBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/caret_color = Color(0, 1, 0.8, 1)
+flat = true
+caret_blink = true
+caret_blink_interval = 0.5
+
+[node name="MarginBottom" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 8

@@ -1,0 +1,32 @@
+{
+    "1": {
+        "inputs": {
+            "unet_name": "anima-base-v1.0.safetensors",
+            "weight_dtype": "default"
+        },
+        "class_type": "UNETLoader"
+    },
+    "2": {
+        "inputs": {
+            "clip_name": "qwen_3_06b_base.safetensors",
+            "type": "qwen"
+        },
+        "class_type": "DualCLIPLoader"
+    },
+    "3": {
+        "inputs": {
+            "vae_name": "qwen_image_vae.safetensors"
+        },
+        "class_type": "VAELoader"
+    },
+    "4": {
+        "inputs": {
+            "text": "Hard-noir biomechanical gothic cathedral archetype, 32-bit HD-2D, cinematic lighting",
+            "clip": [
+                "2",
+                0
+            ]
+        },
+        "class_type": "CLIPTextEncode"
+    }
+}

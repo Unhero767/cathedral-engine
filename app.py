@@ -1,6 +1,11 @@
 from flask import Flask, jsonify, request
 from flasgger import Swagger
 
+import json
+from engine.core.lex_i_adapter import LexIAdapter
+lex_adapter = LexIAdapter()
+
+
 app = Flask(__name__)
 Swagger(app)
 
@@ -135,3 +140,24 @@ def delete_recipe(current_user, recipe_id):
     db.commit()
 
     return "", 204
+
+
+@app.post("/api/v1/telemetry/ingress")
+async def ingress_telemetry(payload: dict):
+    """
+    Lex I Decoupled Ingress:
+      - Continuous volatile logging
+      - Threshold-triggered Merkle block inscription
+    """
+    temp = float(payload.get("afield_temp", 300.0))
+    flux = float(payload.get("flux", 0.0))
+    chamber = int(payload.get("chamber_id", 1))
+    strain = float(payload.get("strain", 0.0))
+
+    result = lex_adapter.record_volatile_telemetry(
+        afield_temp=temp,
+        flux=flux,
+        chamber_id=chamber,
+        strain_delta=strain
+    )
+    return result

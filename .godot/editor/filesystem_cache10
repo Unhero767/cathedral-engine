@@ -1,5 +1,5 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1790611642
+::res://::1790616635
 CathedralAtlasBuilder.gd::GDScript::1327808331159836439::1789185893::0::1::::CathedralAtlasBuilder<>RefCounted<><>0<>0<><>::
 CathedralDialogueDriver.gd::GDScript::9059518920239062986::1789185893::0::1::::CathedralDialogueDriver<>Node<><>0<>0<><>::
 CathedralSomaticEngine.gd::GDScript::8038815323686994600::1789185893::0::1::::CathedralSomaticEngine<>Node3D<><>0<>0<><>::
@@ -219,6 +219,8 @@ void_sovereign.json::JSON::-1::1789185893::0::1::::<><><>0<>0<><>::
 ::res://assets/::1787187687
 ::res://assets/portraits/::1788643802
 master_atlas_strip.png::CompressedTexture2D::5951162078220957212::1787190552::1788643802::1::::<><><>0<>0<>0f5555c26cd12c947d7b528bff9acaf1<>res://.godot/imported/master_atlas_strip.png-f95fdefaf2f054c5bee235c172cde4a2.ctex::
+::res://base_model/::1790614424
+config.json::JSON::-1::1790614424::0::1::::<><><>0<>0<><>::
 ::res://c#/::1787930055
 ::res://c#/shader/::1787930055
 gemini-code-1787267269823.txt::TextFile::-1::1787267269::0::1::::<><><>0<>0<><>::
@@ -280,8 +282,10 @@ config.json::JSON::-1::1786783327::0::1::::<><><>0<>0<><>::
 mlaospark_constitution_v0.1.json::JSON::-1::1787397397::0::1::::<><><>0<>0<><>::
 mlaos_universe_manifest.json::JSON::-1::1787397397::0::1::::<><><>0<>0<><>::
 pixel_art_manifest.json::JSON::-1::1787397397::0::1::::<><><>0<>0<><>::
-::res://configs/::1787968564
+::res://configs/::1790614424
 config_sdxl.toml::TextFile::-1::1787968564::0::1::::<><><>0<>0<><>::
+pretrain_config.json::JSON::-1::1790614424::0::1::::<><><>0<>0<><>::
+::res://corpus/::1790614424
 ::res://data/::1787595764
 cathedral_t15_save.json::JSON::-1::1786957430::0::1::::<><><>0<>0<><>::
 codex_manifest.json::JSON::-1::1786816795::0::1::::<><><>0<>0<><>::
@@ -371,6 +375,8 @@ book_xxxv_the_silent_frame.txt::TextFile::-1::1786816248::0::1::::<><><>0<>0<><>
 book_xxx_the_golden_shatter.txt::TextFile::-1::1786816248::0::1::::<><><>0<>0<><>::
 book_xx_the_harmonic_ecologies.txt::TextFile::-1::1786816248::0::1::::<><><>0<>0<><>::
 book_x_the_contradiction_matrix.txt::TextFile::-1::1786816248::0::1::::<><><>0<>0<><>::
+::res://engine/::1790613750
+::res://engine/core/::1790613750
 ::res://engines/::1787959500
 ::res://engines/__pycache__/::1787959670
 ::res://expanded_chambers/::1789185893
@@ -427,6 +433,7 @@ autosync.log::TextFile::-1::1790224521::0::1::::<><><>0<>0<><>::
 ::res://logs/scripts/__pycache__/::1790225065
 ::res://maestro/::1789186189
 ::res://maestro/movies_api/::1789186189
+::res://merged_model/::1790614424
 ::res://mlaos/::1790531543
 constitution_omega.yaml::TextFile::-1::1786816156::0::1::::<><><>0<>0<><>::
 download.jpeg::CompressedTexture2D::6665497124453522371::1786475537::1789263741::1::::<><><>0<>0<>0277fef3570829c51a1a42e44950f024<>res://.godot/imported/download.jpeg-d7c42d86b9ef43867c7ca4c252ada9b2.ctex::
@@ -449,22 +456,9 @@ mlaos_prime_master_geometry.svg::CompressedTexture2D::5838148504779496394::17900
 ::res://mlaos_engine/mlaos_engine/__pycache__/::1790038141
 ::res://mlaos_park/::1790531544
 ::res://mlaos_park/__pycache__/::1790531544
-::res://models/::1790601476
+::res://models/::1790614424
 ::res://models/checkpoints/::1787961324
 cathedral_hgase_omega_lora.json::JSON::-1::1787964416::0::1::::<><><>0<>0<><>::
-::res://new folder/::1790611217
-::res://new folder/scenes/::1790611232
-::res://new folder/scenes/demos/::1790611642
-CathedralAvatarDemo.tscn::PackedScene::4753818191133014902::1790611642::0::1::::<><><>0<>0<><>::uid://1hswntsf4rqm::::res://new folder/scripts/avatar/CathedralAvatarHarness.gd<>uid://dmscd4wswwwwu::::res://CathedralSomaticEngine.gd<>uid://d2cq7nw4vpouc::::res://CathedralDialogueDriver.gd<>uid://c5q8ttjy54nj2::::res://new folder/scripts/avatar/CathedralCharacterCreator.gd<>uid://dgfdnw4cbar1f::::res://new folder/scripts/avatar/CathedralAvatarDebugger.gd
-::res://new folder/scripts/::1790611256
-::res://new folder/scripts/avatar/::1790611642
-CathedralAvatarDebugger.gd::GDScript::7590923568382118349::1789185893::0::1::::CathedralAvatarDebugger<>Control<><>0<>0<><>::
-CathedralAvatarHarness.gd::GDScript::1840493485183479592::1789185893::0::1::::CathedralAvatarHarness<>Node<><>0<>0<><>::
-CathedralCharacterCreator.gd::GDScript::6913575324416204297::1789185893::0::1::::CathedralCharacterCreator<>Control<><>0<>0<><>::
-::res://new folder/scripts/core/::1790611256
-CathedralAshArchive.gd::GDScript::6907196389779653146::1789185893::0::1::::CathedralAshArchive<>RefCounted<><>0<>0<><>::
-::res://new folder/shaders/::1790611210
-::res://new folder/textures/::1790611217
 ::res://packages/::1790049838
 ::res://packages/cathedral-core/::1790049650
 ::res://packages/cathedral-core/logic/::1787415286
@@ -1330,6 +1324,9 @@ scale_pulse.gd::GDScript::1352687367057120864::1788644106::0::1::::<>Control<><>
 state_orchestrator.gd::GDScript::63717487400682873::1788644106::0::1::::<>Node<><>0<>0<><>::
 ::res://sd-scripts/::1787968800
 ::res://sd-scripts/networks/::1787968800
+::res://shaders/::1790613131
+HeartOculus.gdshader::Shader::106200::1790579882::0::1::::<><><>0<>0<><>::
+ResonanceScreen.gdshader::Shader::112596833075::1790274592::0::1::::<><><>0<>0<><>::
 ::res://Spoon-Knife/::1789191454
 README.md::TextFile::-1::1789191454::0::1::::<><><>0<>0<><>::
 ::res://strata/::1790609613
@@ -1337,6 +1334,7 @@ README.md::TextFile::-1::1789191454::0::1::::<><><>0<>0<><>::
 ::res://tests/::1790609071
 ::res://tests/__pycache__/::1790531544
 ::res://tests/standalone_runners/::1790609071
+::res://wandb/::1790614424
 ::res://Web/::1790132634
 ::res://Web/HTML/::1790132609
 ::res://Web/HTML/Create Codex Image_files/::1789263742

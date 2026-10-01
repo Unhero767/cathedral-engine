@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8x1y3z"]
+
+[ext_resource type="Script" path="res://SomaticStateMachine.gd" id="1_somatic"]
+[ext_resource type="Shader" path="res://CathedralHD2D.gdshader" id="2_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cathedral"]
+shader = ExtResource("2_shader")
+shader_parameter/ego_density = 8.3
+shader_parameter/spectral_coherence = 0.98
+shader_parameter/emission_color = Color(0, 1, 0.8, 1)
+
+[node name="MasterWorld" type="Node2D"]
+
+[node name="SomaticController" type="Node" parent="."]
+script = ExtResource("1_somatic")
+
+[node name="ResonanceScreen" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_cathedral")
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.0470588, 0.0509804, 0.0627451, 1)
