@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: High-End IDE Language Servers Installation
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 echo "Installing language servers and tooling for C#, Python, and Godot..."

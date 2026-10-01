@@ -1,18 +1,14 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Belnap-Dunn 4-Valued Logic & Arbiter Test Expansion
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 echo "==> Expanding unit test suite for Paraconsistent Logic Engine..."
 mkdir -p tests/unit
 
 cat << 'INNER_EOF' > tests/unit/test_belnap_dunn.py
-# ====================================================================
 # MLAOS-Prime :: Belnap-Dunn 4-Valued Logic Matrix Tests
 # Matrix Values: T (True), F (False), B (Both/Contradiction), N (Neither)
-# ====================================================================
 import pytest
 
 class BelnapValue:

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Engine Expansion & Godot Integration Bridge
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 # Always ensure working directory is correct
@@ -14,9 +12,7 @@ echo "==> [Σ-7] Initializing Engine Expansion Pipeline..."
 mkdir -p src/bridge tests/integration
 
 cat << 'INNER_EOF' > src/bridge/telemetry_emitter.py
-# ====================================================================
 # MLAOS-Prime :: Ash Archive Telemetry Emitter (SSE / WebSocket Hook)
-# ====================================================================
 import time
 import sqlite3
 import json

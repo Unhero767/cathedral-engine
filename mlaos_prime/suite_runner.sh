@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Comprehensive Suite Runner & Verification Hook
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 # Enforce correct working stratum

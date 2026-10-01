@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ==============================================================================
 # Cathedral Engine - Master Consolidation Script (Track 1)
 # Target: /Users/kennethdallmier/cathedral-engine/cathedral_engine_full_project
-# ==============================================================================
 set -euo pipefail
 
 BASE_DIR="/Users/kennethdallmier/cathedral-engine"

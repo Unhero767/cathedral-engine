@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Console Node Path Alignment
-# ====================================================================
 
 # Update the OutputLog path to account for the MarginContainer wrapper
 if [[ "$OSTYPE" == "darwin"* ]]; then

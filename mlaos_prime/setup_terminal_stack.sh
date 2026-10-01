@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Terminal Stack Installer & Verifier (Homebrew)
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 # Ensure we are in the correct stratum

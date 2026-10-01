@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: One-Shot Turnkey Test Runner
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 echo "==> [Σ-7] Initializing One-Shot Test Pipeline..."

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Backend Instantiation & Syntax Patch
-# ====================================================================
 
 # 1. Patch the Python 3.12+ invalid escape sequence warnings in axioms.py
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -14,10 +12,8 @@ fi
 
 # 2. Instantiate the FastAPI Sovereign Router (main.py)
 cat << 'MAIN_EOF' > main.py
-# ====================================================================
 # MLAOS-Prime :: FastAPI Sovereign Router
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 from fastapi import FastAPI, Request
 from pydantic import BaseModel
 

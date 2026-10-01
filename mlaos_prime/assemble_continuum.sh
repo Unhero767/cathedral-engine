@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Continuum Taxonomy & Drive Synchronization
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 # Target Google Drive remote path (Assumes rclone remote is named 'gdrive')

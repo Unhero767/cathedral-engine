@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Stratum Verification Utility
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 
 FILES=(
     "CathedralConsole.tscn"

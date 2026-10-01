@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-# ==============================================================================
 # Cathedral Engine - Phase 2: Operations & Pipeline Consolidation
 # Migrates operational scripts, patches, generators, dashboards, and releases
 # into their designated numbered directories without affecting the Godot client.
-# ==============================================================================
 set -euo pipefail
 
 BASE_DIR="/users/kennethdallmier/cathedral_engine"

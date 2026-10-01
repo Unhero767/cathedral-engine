@@ -5,9 +5,7 @@ TARGET_DIR="/users/kennethdallmier/cathedral_engine"
 TIMESTAMP=$(date -u +"%Y%m%dT%H%M%SZ")
 BACKUP_DIR="/users/kennethdallmier/cathedral_engine_archive_${TIMESTAMP}"
 
-echo "============================================================"
 echo " CATHEDRAL-ENGINE: LOCAL RESET & RE-INITIALIZATION PROTOCOL"
-echo "============================================================"
 
 # 1. State Preservation / Ash Archive Backup
 if [ -d "$TARGET_DIR" ]; then
@@ -84,6 +82,4 @@ cat << 'EOF' > MLAOS_NOTEBOOKLM_MASTER_CORPUS.md
 Root architecture initialized under the Never-Overwrite Doctrine and Master Isomorphic Axiom.
 EOF
 
-echo "============================================================"
 echo "[✓] RESET COMPLETE: ${TARGET_DIR} re-initialized."
-echo "============================================================"

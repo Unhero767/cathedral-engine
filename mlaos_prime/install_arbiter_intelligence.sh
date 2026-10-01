@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Sovereign Arbiter Intelligence
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 echo -e "\033[1;36m┌──────────────────────────────────────────────┐\033[0m"
@@ -10,10 +8,8 @@ echo -e "\033[1;36m│   Σ-7 :: INSTALLING ARBITER INTELLIGENCE     │\033[0m"
 echo -e "\033[1;36m└──────────────────────────────────────────────┘\033[0m"
 
 cat << 'MAIN_EOF' > main.py
-# ====================================================================
 # MLAOS-Prime :: FastAPI Sovereign Router & Arbiter
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 import os
 import sqlite3
 import datetime

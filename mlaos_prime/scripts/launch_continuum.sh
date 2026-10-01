@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Dual-Process Ignition (FastAPI Backend + Godot Engine)
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 echo "[i] Purging orphaned paraconsistent processes on Port 8000..."

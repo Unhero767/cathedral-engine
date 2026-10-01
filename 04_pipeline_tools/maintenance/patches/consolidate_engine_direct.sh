@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ==============================================================================
 # Cathedral Engine - Direct Consolidation Script (Track 1)
 # Configured for Kenneth's Exact macOS Filesystem Layout
-# ==============================================================================
 set -euo pipefail
 
 HOME_DIR="/Users/kennethdallmier"

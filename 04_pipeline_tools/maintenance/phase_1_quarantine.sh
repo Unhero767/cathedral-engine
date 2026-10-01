@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ==============================================================================
 # Cathedral Engine - Phase 1: Zero-Risk Quarantine Migration
 # Non-destructively relocates stray, malformed, and duplicate copy files.
-# ==============================================================================
 set -euo pipefail
 
 BASE_DIR="/users/kennethdallmier/cathedral_engine"

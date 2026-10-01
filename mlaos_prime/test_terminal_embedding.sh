@@ -1,17 +1,13 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Terminal Embedding Test & Architecture Analysis
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 echo "==> [1/3] Scaffolding embedded terminal test script..."
 mkdir -p tests/unit
 
 cat << 'INNER_EOF' > tests/unit/test_terminal_bridge.py
-# ====================================================================
 # MLAOS-Prime :: Embedded Terminal Bridge Verification
-# ====================================================================
 import subprocess
 import os
 

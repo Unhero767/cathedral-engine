@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
-# ==============================================================================
 # Cathedral Engine - Phase 4: Sub-Repository & Lore Consolidation
 # 1. Migrates lore (chambers & codices) into 01_Lore_and_Codices/
 # 2. Migrates documentation & research reports into 08_docs_research/
 # 3. Isolates all nested sub-repositories into Archives/Repositories/legacy_snapshots/
-# ==============================================================================
 set -euo pipefail
 
 BASE_DIR="/users/kennethdallmier/cathedral_engine"

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Console Autoload Repair & Inscription Check
-# ====================================================================
 
 # 1. Ensure project.godot points to the .tscn, not the bare script
 if [ -f "project.godot" ]; then

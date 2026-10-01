@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Phase 1 High-Performance Visual Core Setup (macOS M4)
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 echo "Installing Phase 1 Visual Core & Multiplexing Stack via Homebrew..."

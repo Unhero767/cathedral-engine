@@ -1,17 +1,13 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: One-Shot Test Directory Scaffolding & Stub
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 echo "==> Scaffolding tests/unit/ structure..."
 mkdir -p tests/unit
 
 cat << 'INNER_EOF' > tests/unit/test_mlaos_core.py
-# ====================================================================
 # MLAOS-Prime :: Core Paraconsistent & Architecture Unit Tests
-# ====================================================================
 import pytest
 
 def test_lex_invariant():

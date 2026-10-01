@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Absolute Mathematical Enforcement (C# -> Python Bridge)
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 echo -e "\033[1;36m┌──────────────────────────────────────────────┐\033[0m"
@@ -17,10 +15,8 @@ pip install pythonnet
 echo -e "\033[1;33m[i] Rewriting FastAPI router to utilize C# Matrix...\033[0m"
 
 cat << 'MAIN_EOF' > main.py
-# ====================================================================
 # MLAOS-Prime :: FastAPI Sovereign Router (Deterministic C# Bound)
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 import os
 import sys
 from fastapi import FastAPI, Request

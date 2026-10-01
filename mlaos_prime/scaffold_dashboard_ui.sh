@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Somatic Telemetry Dashboard Scaffolding
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 echo -e "\033[1;36m┌──────────────────────────────────────────────┐\033[0m"
@@ -96,9 +94,7 @@ TSCN_EOF
 
 cat << 'GD_EOF' > SomaticDashboard.gd
 extends CanvasLayer
-# ====================================================================
 # MLAOS-Prime :: Somatic Telemetry Dashboard Controller
-# ====================================================================
 
 @onready var ego_val = $MarginContainer/PanelContainer/VBoxContainer/MarginContainer/GridContainer/EgoValue
 @onready var coherence_val = $MarginContainer/PanelContainer/VBoxContainer/MarginContainer/GridContainer/CoherenceValue

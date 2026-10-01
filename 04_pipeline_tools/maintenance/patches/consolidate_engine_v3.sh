@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ==============================================================================
 # Cathedral Engine - Absolute Path Master Consolidation Script (Track 3)
 # Target: /Users/kennethdallmier/cathedral-engine/cathedral_engine_full_project
-# ==============================================================================
 set -euo pipefail
 
 HOME_DIR="/Users/kennethdallmier"

@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Zsh History Expansion Disabler & Fixer
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 # Disable zsh history expansion (!) so pasted bash scripts don't trigger event not found errors

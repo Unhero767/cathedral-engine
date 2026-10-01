@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ====================================================================
 # MLAOS-Prime :: Phase 3 Advanced Visual Git & Telemetry Setup
 # Datum: Olney, IL | Invariant: Lex I (dH/dt > 0)
-# ====================================================================
 set -e
 
 echo "Installing LazyGit and Bottom (btm) via Homebrew..."

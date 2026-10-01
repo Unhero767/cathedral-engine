@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# ==============================================================================
 # Cathedral Engine - Dynamic Master Consolidation Script (Track 2)
 # Target: /Users/kennethdallmier/cathedral-engine/cathedral_engine_full_project
-# ==============================================================================
 set -euo pipefail
 
 BASE_DIR="/Users/kennethdallmier/cathedral-engine"

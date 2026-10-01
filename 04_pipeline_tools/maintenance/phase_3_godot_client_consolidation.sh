@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-# ==============================================================================
 # Cathedral Engine - Phase 3: Godot 4 Client Consolidation & Path Rewriting
 # Relocates scenes, scripts, shaders, archetypes, and C# systems into 03_godot_client/
 # and updates internal res:// resource mappings and preloads in lockstep.
-# ==============================================================================
 set -euo pipefail
 
 BASE_DIR="/users/kennethdallmier/cathedral_engine"
