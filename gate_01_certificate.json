@@ -1,0 +1,27 @@
+{
+  "protocol": "MLAOS_ASH_ARCHIVE_VERIFIER_V2",
+  "sprint": "Sprint_01",
+  "timestamp_utc": "2026-10-02T20:02:00.038772Z",
+  "physical_datum": {
+    "latitude": 38.7306,
+    "longitude": -88.0853,
+    "location": "Olney, Illinois"
+  },
+  "target": "ash_archive.db",
+  "dag_verification": {
+    "mode": "dag",
+    "status": "VERIFIED",
+    "total_blocks": 5,
+    "final_merkle_tip": "6018fc403eebfbdac71498b653dbabf9d4d2b40a1151e1996e06cacf296a0212",
+    "average_pulse_interval_sec": 19920.730113,
+    "effective_pulse_frequency_hz": 0.0001,
+    "lex_i_immutable_passed": true,
+    "violations_count": 0,
+    "violations": []
+  },
+  "strata_verification": {
+    "status": "SKIPPED"
+  },
+  "attestation_status": "VERIFIED",
+  "attestation_hash": "a5805780fdc6a3dab012e19e81fbdf98b709152d021fa79976afa1b94695fbd5"
+}

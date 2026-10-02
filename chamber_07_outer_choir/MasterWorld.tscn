@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://chamber07masterworld"]
+
+[ext_resource type="Script" path="res://scripts/CathedralSpriteController.gd" id="1_controller"]
+[ext_resource type="Shader" path="res://shaders/SpatialLumenDither.gdshader" id="2_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lumen"]
+shader = ExtResource("2_shader")
+shader_parameter/u_afield_potency = 1.0
+shader_parameter/u_shadow_depth_ramp = 0.35
+shader_parameter/u_lumen_emission_gain = 1.396
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_base"]
+size = Vector2(128, 128)
+
+[node name="MasterWorld" type="Node2D"]
+script = ExtResource("1_controller")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.01, 0.01, 0.02, 1.0)
+
+[node name="AFieldOverlay" type="Sprite2D" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_lumen")
+position = Vector2(640, 360)
+scale = Vector2(5, 5)
+texture = SubResource("PlaceholderTexture2D_base")

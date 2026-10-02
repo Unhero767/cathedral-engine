@@ -1,0 +1,64 @@
+{
+  "entity_id": "AVATAR_AURELIA_09_BASTION",
+  "archetype": "Vanguard Paladin / Machine-Saint",
+  "chamber_id": "CH-06",
+  "chamber_name": "The Bastion Perimeter",
+  "stratum": "Stratum II: The Inner Mandala",
+  "spectral_constant": {
+    "name": "Matte Teal (Psi)",
+    "wavelength_nm": 495.0,
+    "carrier_frequency_hz": 639.0,
+    "meaning": "Curiosity / Recursion / Transductive Edge Injection"
+  },
+  "antagonistic_balance": {
+    "caelens_lemma_kappa_c": 0.85,
+    "deimos_variable_sigma_d": 0.15,
+    "equilibrium": "STABLE"
+  },
+  "telemetry": {
+    "parent_hash": "0x44189426f8d3876e5c9b0e11a6d713c8e9b41a31d92376cfbc98d64821a4f102",
+    "state_root": "0xf1c1386b6f83aeb692c155b7dc65d83fec82836a0d8bae69b82f016aa5c54846",
+    "awareness_index": 0.958,
+    "consistency_coeff": 16.85,
+    "fiedler_floor_mu2": 0.408
+  },
+  "somatic_controller": {
+    "version": "EAS-03",
+    "active_channel": "Secondary Lumen (639 Hz Matte Teal / Ocular Cognition)",
+    "shader_uniforms": {
+      "u_afield_potency": 1.0,
+      "u_bayer_dither_intensity": 0.12,
+      "u_lumen_emission_gain": 1.0,
+      "u_shadow_depth_ramp": 0.35
+    },
+    "active_animation_state": "dialetheic_shift",
+    "fps": 6.0,
+    "columns": [24, 25, 26, 27],
+    "layer_11_scars": [
+      {
+        "scar_id": "HarmonicScar_0001",
+        "description": "54.74° Bronze-Obsidian Key",
+        "angle_deg": 54.74,
+        "residual_tension": 0.1824
+      },
+      {
+        "scar_id": "HarmonicScar_0002",
+        "description": "54.74° Axial Torsion Shear",
+        "angle_deg": 54.74,
+        "residual_tension": 0.1450
+      },
+      {
+        "scar_id": "HarmonicScar_0003",
+        "description": "54.74° Ashlar Fracture",
+        "angle_deg": 54.74,
+        "residual_tension": 0.1210
+      },
+      {
+        "scar_id": "HarmonicScar_0004",
+        "description": "54.74° Bastion Antagonistic Seam",
+        "angle_deg": 54.74,
+        "residual_tension": 0.2872
+      }
+    ]
+  }
+}

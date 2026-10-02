@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cathedral-Engine // EAS-03 Somatic Studio & Telemetry Console</title>
+<style>
+  :root {
+    --bg-dark: #07090e;
+    --panel-bg: #0e121b;
+    --panel-border: #1b2234;
+    --gold: #d4af37;
+    --gold-dim: #7a6520;
+    --gold-glow: rgba(212, 175, 55, 0.25);
+    --teal: #00d4c8;
+    --teal-glow: rgba(0, 212, 200, 0.3);
+    --cyan: #00f0ff;
+    --text-main: #d0d7e5;
+    --text-muted: #6b778d;
+    --accent-red: #ff4d6d;
+    --accent-green: #2ecc71;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: 'SF Mono', 'Segoe UI Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.45;
+    padding: 16px;
+    min-height: 100vh;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--panel-border);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+  }
+  .title-group h1 {
+    font-size: 16px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pulse-badge {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 8px var(--teal);
+    animation: pulseAnim 0.6667s infinite alternate;
+  }
+  @keyframes pulseAnim {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    100% { transform: scale(1.3); opacity: 1.0; }
+  }
+  .meta-pills {
+    display: flex;
+    gap: 12px;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .meta-pills span {
+    background: #121824;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--panel-border);
+  }
+  .meta-pills strong { color: var(--gold); }
+  
+  .studio-grid {
+    display: grid;
+    grid-template-columns: 310px 1fr 340px;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 1100px) {
+    .studio-grid { grid-template-columns: 1fr; }
+  }
+
+  .panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 6px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .panel-header {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--gold);
+    border-bottom: 1px solid var(--panel-border);
+    padding-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .chamber-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 250px;
+    overflow-y: auto;
+  }
+  .chamber-card {
+    background: #090c12;
+    border: 1px solid #161c28;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .chamber-card:hover { border-color: var(--gold-dim); }
+  .chamber-card.active {
+    border-color: var(--teal);
+    background: #0b151f;
+    box-shadow: 0 0 10px rgba(0, 212, 200, 0.15);
+  }
+  .chamber-card .ch-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    color: var(--text-main);
+  }
+  .chamber-card.active .ch-header { color: var(--teal); }
+  .chamber-card .ch-meta {
+    color: var(--text-muted);
+    font-size: 10px;
+    margin-top: 3px;
+  }
+
+  .telemetry-block {
+    background: #090c12;
+    border: 1px solid #161c28;
+    border-radius: 4px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+  }
+  .metric-val { font-weight: bold; color: var(--text-main); }
+  .metric-val.pass { color: var(--accent-green); }
+  .bar-outer {
+    width: 100%;
+    height: 4px;
+    background: #141b27;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .bar-inner {
+    height: 100%;
+    background: var(--teal);
+    transition: width 0.3s;
+  }
+
+  .canvas-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #05070a;
+    border: 1px solid #141b27;
+    border-radius: 6px;
+    padding: 16px;
+  }
+  canvas#avatarCanvas {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    width: 256px;
+    height: 256px;
+    border: 2px solid var(--panel-border);
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 15px var(--teal-glow);
+    background: #080a0f;
+  }
+  .canvas-controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn {
+    background: #141c2c;
+    border: 1px solid #28344e;
+    color: var(--text-main);
+    padding: 6px 12px;
+    font-size: 11px;
+    font-family: inherit;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn:hover {
+    background: #1d283f;
+    border-color: var(--gold);
+    color: #fff;
+  }
+  .btn.active {
+    background: var(--gold-dim);
+    border-color: var(--gold);
+    color: #fff;
+    box-shadow: 0 0 8px var(--gold-glow);
+  }
+  .btn-accent {
+    background: #0d2830;
+    border-color: var(--teal);
+    color: var(--teal);
+  }
+  .btn-accent:hover {
+    background: #133a46;
+    color: #fff;
+    box-shadow: 0 0 10px var(--teal-glow);
+  }
+
+  .slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .slider-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .slider-header span.val { color: var(--gold); font-weight: bold; }
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: #1b2333;
+    outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--gold);
+    cursor: pointer;
+    box-shadow: 0 0 6px var(--gold);
+  }
+
+  .belnap-box {
+    background: #090c12;
+    border: 1px solid #161c28;
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+  }
+  .bilattice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .bilattice-node {
+    padding: 4px;
+    font-size: 10px;
+    background: #101520;
+    border: 1px solid #1b2333;
+    border-radius: 3px;
+    color: var(--text-muted);
+  }
+  .bilattice-node.active {
+    border-color: var(--teal);
+    color: var(--teal);
+    background: #091f26;
+    font-weight: bold;
+    box-shadow: 0 0 6px var(--teal-glow);
+  }
+
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 900px) {
+    .bottom-grid { grid-template-columns: 1fr; }
+  }
+
+  .scar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 180px;
+    overflow-y: auto;
+  }
+  .scar-item {
+    background: #090c12;
+    border-left: 3px solid var(--gold);
+    padding: 6px 10px;
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 4px 4px 0;
+  }
+  .scar-id { color: var(--gold); font-weight: bold; }
+  .scar-angle { color: var(--teal); font-size: 10px; }
+
+  .log-console {
+    background: #05070a;
+    border: 1px solid #141b27;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 11px;
+    height: 180px;
+    overflow-y: auto;
+    color: #8da2c0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .log-entry { font-family: inherit; }
+  .log-entry.gold { color: var(--gold); }
+  .log-entry.teal { color: var(--teal); }
+  .log-entry.green { color: var(--accent-green); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title-group">
+    <div class="pulse-badge"></div>
+    <h1>CATHEDRAL-ENGINE // EAS-03 SOMATIC STUDIO & TELEMETRY</h1>
+  </div>
+  <div class="meta-pills">
+    <span>CARRIER: <strong>43.70 Hz</strong></span>
+    <span>PULSE: <strong>1.500 Hz (90 BPM)</strong></span>
+    <span>DATUM: <strong>Olney, IL [38.7306° N]</strong></span>
+    <span>LEX I: <strong>INVIOLATE (dH/dt &gt; 0)</strong></span>
+  </div>
+</header>
+
+<div class="studio-grid">
+  <!-- LEFT: STRATA & TELEMETRY -->
+  <div class="panel">
+    <div class="panel-header">
+      <span>Strata Ledger JBP DAG</span>
+      <span style="color:var(--teal)">STRATUM II ACTIVE</span>
+    </div>
+    <div class="chamber-list">
+      <div class="chamber-card" onclick="selectChamber(1)">
+        <div class="ch-header"><span>CH-01: Lithic Threshold</span><span>43.7 Hz</span></div>
+        <div class="ch-meta">Root: 0x771EDD0C... // Permineralized</div>
+      </div>
+      <div class="chamber-card" onclick="selectChamber(2)">
+        <div class="ch-header"><span>CH-02: Somatic Heat Sink</span><span>77.35 K</span></div>
+        <div class="ch-meta">Cryo-Sink 1.9 bar // Dialetheic Stabilized</div>
+      </div>
+      <div class="chamber-card" onclick="selectChamber(3)">
+        <div class="ch-header"><span>CH-03: Inverted Mortar</span><span>528 Hz / Θ</span></div>
+        <div class="ch-meta">Tensile Inversion 1.618:1 // Rigid</div>
+      </div>
+      <div class="chamber-card" onclick="selectChamber(4)">
+        <div class="ch-header"><span>CH-04: Ashlar Keystones</span><span>108 Hz Void</span></div>
+        <div class="ch-meta">12 Monolithic Ashen Blocks // Permineralized</div>
+      </div>
+      <div class="chamber-card" onclick="selectChamber(5)">
+        <div class="ch-header"><span>CH-05: Apocryphal Threshold</span><span>963 Hz Pearl</span></div>
+        <div class="ch-meta">Stratum I Genesis Root: 0x1EE1594E...</div>
+      </div>
+      <div class="chamber-card active" onclick="selectChamber(6)">
+        <div class="ch-header"><span>CH-06: Bastion Perimeter</span><span>639 Hz / Ψ</span></div>
+        <div class="ch-meta">State Root: <span id="ch06Root">0xF1C1386B...</span> // ACTIVE PATROL</div>
+      </div>
+    </div>
+
+    <div class="panel-header" style="margin-top:6px;">
+      <span>Chamber 06 Active Telemetry</span>
+    </div>
+    <div class="telemetry-block">
+      <div class="metric-row">
+        <span>Awareness Index (ΩA):</span>
+        <span class="metric-val" id="valOmega">0.9580</span>
+      </div>
+      <div class="bar-outer"><div class="bar-inner" id="barOmega" style="width: 95.8%;"></div></div>
+
+      <div class="metric-row" style="margin-top:4px;">
+        <span>Consistency Coeff (Cτ):</span>
+        <span class="metric-val pass" id="valCtau">16.85 ≥ 4.50</span>
+      </div>
+      <div class="bar-outer"><div class="bar-inner" id="barCtau" style="width: 84%;"></div></div>
+
+      <div class="metric-row" style="margin-top:4px;">
+        <span>Fiedler Floor (μ2):</span>
+        <span class="metric-val pass" id="valMu2">0.4080 ≥ 0.05</span>
+      </div>
+      <div class="bar-outer"><div class="bar-inner" id="barMu2" style="width: 81.6%;"></div></div>
+
+      <div class="metric-row" style="margin-top:4px;">
+        <span>Parent Hash:</span>
+        <span class="metric-val" style="color:var(--text-muted)">0x44189426...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER: AVATAR CANVAS & LITURGICAL CONTROLS -->
+  <div class="panel" style="align-items:center;">
+    <div class="panel-header" style="width:100%;">
+      <span>EAS-03 Mythotechnical Avatar Studio (128x128 Pixel Canvas)</span>
+      <span id="animStateLabel" style="color:var(--teal)">dialetheic_shift (6 FPS)</span>
+    </div>
+
+    <div class="canvas-stage">
+      <canvas id="avatarCanvas" width="128" height="128"></canvas>
+    </div>
+
+    <div class="canvas-controls">
+      <button class="btn" onclick="setAnimState('liturgical_idle', 6)">Idle</button>
+      <button class="btn" onclick="setAnimState('lumen_pulse', 8)">Lumen Pulse</button>
+      <button class="btn" onclick="setAnimState('ocular_surge', 10)">Ocular Surge</button>
+      <button class="btn" onclick="setAnimState('harmonic_resonance', 8)">Resonance</button>
+      <button class="btn active" onclick="setAnimState('dialetheic_shift', 6)">Dialetheic Shift</button>
+      <button class="btn" onclick="setAnimState('penitent_recitation', 8)">Recitation</button>
+    </div>
+
+    <div style="display:flex; gap:10px; width:100%; margin-top:8px;">
+      <button class="btn btn-accent" style="flex:1;" onclick="triggerScarInjection()">+ Inject Layer 11 Scar (54.74°)</button>
+      <button class="btn" style="flex:1;" onclick="toggleDither()">Toggle Bayer 2x2 Dither (<span id="ditherLabel">ON</span>)</button>
+    </div>
+  </div>
+
+  <!-- RIGHT: DUAL ANTAGONISTIC BALANCE & SHADERS -->
+  <div class="panel">
+    <div class="panel-header">
+      <span>Antagonistic Dynamic Balance</span>
+      <span id="balanceStatus" style="color:var(--accent-green)">STABLE</span>
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-header">
+        <span>Caelen's Lemma (Order κ_C):</span>
+        <span class="val" id="valCaelen">0.8500</span>
+      </div>
+      <input type="range" id="sliderCaelen" min="0.5" max="0.99" step="0.01" value="0.85" oninput="updateBalance()">
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-header">
+        <span>Deimos's Variable (Kinetic σ_D):</span>
+        <span class="val" id="valDeimos">0.1500</span>
+      </div>
+      <input type="range" id="sliderDeimos" min="0.01" max="0.50" step="0.01" value="0.15" oninput="updateBalance()">
+    </div>
+
+    <div class="belnap-box">
+      <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase;">Belnap-Dunn 4-Valued Lattice</div>
+      <div class="bilattice-grid">
+        <div class="bilattice-node">TRUE (T) {1}</div>
+        <div class="bilattice-node active" id="nodeBoth">BOTH (B) {0,1} [Scar]</div>
+        <div class="bilattice-node">NEITHER (N) {}</div>
+        <div class="bilattice-node">FALSE (F) {0}</div>
+      </div>
+    </div>
+
+    <div class="panel-header" style="margin-top:6px;">
+      <span>Shader Uniforms & Dialogue Cadence</span>
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-header">
+        <span>A-Field Potency (u_afield):</span>
+        <span class="val" id="valAfield">1.00</span>
+      </div>
+      <input type="range" id="sliderAfield" min="0.2" max="2.0" step="0.05" value="1.0" oninput="updateShaderUniforms()">
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-header">
+        <span>Speech Syllable Stress (Gain):</span>
+        <span class="val" id="valSpeechGain">1.00x</span>
+      </div>
+      <input type="range" id="sliderSpeech" min="0.0" max="1.0" step="0.05" value="0.0" oninput="updateSpeechStress()">
+    </div>
+
+    <div class="slider-group">
+      <div class="slider-header">
+        <span>Bayer 2x2 Dither Intensity:</span>
+        <span class="val" id="valDither">0.12</span>
+      </div>
+      <input type="range" id="sliderDither" min="0.0" max="0.30" step="0.02" value="0.12" oninput="updateShaderUniforms()">
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM: SCARS & LEDGER LOG -->
+<div class="bottom-grid">
+  <div class="panel">
+    <div class="panel-header">
+      <span>12-Layer Somatic Hierarchy // Layer 11 Scar Stack (<span id="scarCount">4</span> Active)</span>
+      <span style="color:var(--gold)">LEX I PRESERVED</span>
+    </div>
+    <div class="scar-list" id="scarListContainer">
+      <div class="scar-item">
+        <div><span class="scar-id">Scar 01</span> // HarmonicScar_0001 (Bronze-Obsidian Key)</div>
+        <div class="scar-angle">54.74° | c=0.1824</div>
+      </div>
+      <div class="scar-item">
+        <div><span class="scar-id">Scar 02</span> // HarmonicScar_0002 (Axial Torsion Shear)</div>
+        <div class="scar-angle">54.74° | c=0.1450</div>
+      </div>
+      <div class="scar-item">
+        <div><span class="scar-id">Scar 03</span> // HarmonicScar_0003 (Ashlar Fracture)</div>
+        <div class="scar-angle">54.74° | c=0.1210</div>
+      </div>
+      <div class="scar-item">
+        <div><span class="scar-id">Scar 04</span> // HarmonicScar_0004 (Bastion Antagonistic Seam)</div>
+        <div class="scar-angle">54.74° | c=0.2872</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <span>Ash Archive Merkle DAG Ledger Log</span>
+      <span style="color:var(--teal)">APPEND-ONLY STREAM</span>
+    </div>
+    <div class="log-console" id="logConsole">
+      <div class="log-entry gold">[SYS] Carrier locked at 43.70 Hz. Datum: Olney, IL.</div>
+      <div class="log-entry">[DAG] Stratum I Genesis sealed under root 0x1EE1594E...</div>
+      <div class="log-entry teal">[MOUNT] Chamber 06 mounted: The Bastion Perimeter (Matte Teal / 639 Hz).</div>
+      <div class="log-entry">[DIALETHEIC] Contradiction processed: Caelen Order (+) Deimos Volatility.</div>
+      <div class="log-entry green">[SCAR] HarmonicScar_0004 crystallized @ 54.74° (c=0.2872). State: 0xF1C1386B.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+let pulseClock = 0;
+let currentAnim = 'dialetheic_shift';
+let animFps = 6;
+let ditherEnabled = true;
+
+let afieldPotency = 1.0;
+let speechGain = 1.0;
+let bayerIntensity = 0.12;
+let caelenKappa = 0.8500;
+let deimosSigma = 0.1500;
+
+let scarCount = 4;
+let scars = [
+  { id: "HarmonicScar_0001", name: "Bronze-Obsidian Key", angle: 54.74, tension: 0.1824 },
+  { id: "HarmonicScar_0002", name: "Axial Torsion Shear", angle: 54.74, tension: 0.1450 },
+  { id: "HarmonicScar_0003", name: "Ashlar Fracture", angle: 54.74, tension: 0.1210 },
+  { id: "HarmonicScar_0004", name: "Bastion Antagonistic Seam", angle: 54.74, tension: 0.2872 }
+];
+
+const BAYER_2X2 = [
+  [0.00, 0.50],
+  [0.75, 0.25]
+];
+
+const canvas = document.getElementById('avatarCanvas');
+const ctx = canvas.getContext('2d');
+
+function renderAvatar() {
+  ctx.clearRect(0, 0, 128, 128);
+
+  const t = pulseClock * 0.05;
+  const pulseFactor = 0.5 + 0.5 * Math.sin(t * 1.5 * Math.PI);
+  const speechMod = speechGain;
+
+  // Background: Gothic Nave Niche
+  ctx.fillStyle = '#0a0d14';
+  ctx.fillRect(0, 0, 128, 128);
+  ctx.strokeStyle = '#141c2a';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.arc(64, 50, 42, Math.PI, 0);
+  ctx.stroke();
+
+  // Layer 10: Gilded Tri-Key Halo
+  const haloAlpha = (0.4 + 0.3 * pulseFactor) * Math.min(1.0, afieldPotency);
+  ctx.strokeStyle = `rgba(212, 175, 55, ${haloAlpha})`;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(64, 46, 34 + Math.sin(t) * 1.5, 0, Math.PI * 2);
+  ctx.stroke();
+
+  // Halo Tri-Keys
+  ctx.fillStyle = `rgba(255, 215, 0, ${haloAlpha * 1.2})`;
+  for (let i = 0; i < 3; i++) {
+    const angle = (i * (2 * Math.PI / 3)) - Math.PI / 2 + (t * 0.2);
+    const kx = 64 + Math.cos(angle) * 34;
+    const ky = 46 + Math.sin(angle) * 34;
+    ctx.fillRect(kx - 1, ky - 1, 3, 3);
+  }
+
+  // Layer 00: Skeletal Bone Framework
+  ctx.fillStyle = '#1c2230';
+  ctx.fillRect(60, 68, 8, 24);
+  ctx.beginPath();
+  ctx.arc(64, 48, 18, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Layer 01 & 02: Somatic Muscular & Dermis
+  ctx.fillStyle = '#242e42';
+  ctx.beginPath();
+  ctx.arc(64, 50, 16, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillRect(58, 64, 12, 20);
+
+  // Layer 03 & 04: Gambeson & Under-Tunic
+  ctx.fillStyle = '#151e2e';
+  ctx.fillRect(40, 84, 48, 44);
+
+  // Layer 05: Fluted Gorget & Cuirass
+  ctx.fillStyle = '#2f3b52';
+  ctx.beginPath();
+  ctx.moveTo(50, 80); ctx.lineTo(78, 80); ctx.lineTo(84, 110); ctx.lineTo(44, 110);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#47587a';
+  ctx.stroke();
+
+  // Layer 06: Reliquary Harness
+  ctx.strokeStyle = '#181f2c';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(48, 80); ctx.lineTo(80, 112);
+  ctx.moveTo(80, 80); ctx.lineTo(48, 112);
+  ctx.stroke();
+
+  // Layer 07: Penitent Cowl
+  ctx.fillStyle = '#111724';
+  ctx.beginPath();
+  ctx.moveTo(46, 36); ctx.quadraticCurveTo(64, 28, 82, 36); ctx.lineTo(84, 60); ctx.quadraticCurveTo(64, 66, 44, 60);
+  ctx.closePath();
+  ctx.fill();
+
+  // Layer 09: Facial Contours & Ocular Nodes
+  ctx.fillStyle = '#3a4760';
+  ctx.fillRect(56, 46, 16, 14);
+
+  const ocularGain = (0.7 + 0.3 * Math.sin(t * 3)) * speechMod;
+  ctx.fillStyle = `rgba(0, 240, 255, ${Math.min(1.0, ocularGain)})`;
+  ctx.shadowColor = '#00f0ff';
+  ctx.shadowBlur = 6 * ocularGain;
+  ctx.fillRect(58, 48, 3, 2);
+  ctx.fillRect(67, 48, 3, 2);
+  ctx.shadowBlur = 0;
+
+  // Layer 11: Additive Scars (54.74° Bronze & Teal Kintsugi)
+  scars.forEach((scar, idx) => {
+    ctx.strokeStyle = (idx % 2 === 0) ? '#d4af37' : '#00d4c8';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    const sx = 52 + (idx * 5);
+    const sy = 42 + (idx * 6);
+    ctx.moveTo(sx, sy);
+    ctx.lineTo(sx + 10, sy + 14);
+    ctx.stroke();
+  });
+
+  if (ditherEnabled) {
+    applyBayerDither();
+  }
+}
+
+function applyBayerDither() {
+  const imgData = ctx.getImageData(0, 0, 128, 128);
+  const d = imgData.data;
+
+  for (let y = 0; y < 128; y++) {
+    for (let x = 0; x < 128; x++) {
+      const idx = (y * 128 + x) * 4;
+      const bayerVal = BAYER_2X2[y % 2][x % 2];
+      const offset = (bayerVal - 0.5) * (bayerIntensity * 255);
+
+      d[idx] = Math.min(255, Math.max(0, d[idx] + offset));
+      d[idx+1] = Math.min(255, Math.max(0, d[idx+1] + offset));
+      d[idx+2] = Math.min(255, Math.max(0, d[idx+2] + offset));
+    }
+  }
+  ctx.putImageData(imgData, 0, 0);
+}
+
+function setAnimState(stateName, fps) {
+  currentAnim = stateName;
+  animFps = fps;
+  document.getElementById('animStateLabel').innerText = `${stateName} (${fps} FPS)`;
+  
+  const btns = document.querySelectorAll('.canvas-controls .btn');
+  btns.forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  log(`[STATE] Liturgical cycle set: ${stateName} (${fps} FPS)`, 'teal');
+}
+
+function toggleDither() {
+  ditherEnabled = !ditherEnabled;
+  document.getElementById('ditherLabel').innerText = ditherEnabled ? 'ON' : 'OFF';
+  log(`[SHADER] Bayer 2x2 dithering toggled ${ditherEnabled ? 'ON' : 'OFF'}`);
+}
+
+function updateBalance() {
+  caelenKappa = parseFloat(document.getElementById('sliderCaelen').value);
+  deimosSigma = parseFloat(document.getElementById('sliderDeimos').value);
+  document.getElementById('valCaelen').innerText = caelenKappa.toFixed(4);
+  document.getElementById('valDeimos').innerText = deimosSigma.toFixed(4);
+
+  const statusEl = document.getElementById('balanceStatus');
+  if (deimosSigma < 0.03) {
+    statusEl.innerText = "RISK: ZERO-KELVIN STAGNATION";
+    statusEl.style.color = "var(--accent-red)";
+  } else if (caelenKappa < 0.65) {
+    statusEl.innerText = "RISK: GRAPH DELAMINATION";
+    statusEl.style.color = "var(--accent-red)";
+  } else {
+    statusEl.innerText = "STABLE";
+    statusEl.style.color = "var(--accent-green)";
+  }
+}
+
+function updateShaderUniforms() {
+  afieldPotency = parseFloat(document.getElementById('sliderAfield').value);
+  bayerIntensity = parseFloat(document.getElementById('sliderDither').value);
+  document.getElementById('valAfield').innerText = afieldPotency.toFixed(2);
+  document.getElementById('valDither').innerText = bayerIntensity.toFixed(2);
+}
+
+function updateSpeechStress() {
+  const stress = parseFloat(document.getElementById('sliderSpeech').value);
+  speechGain = 1.0 + (stress * 0.45);
+  document.getElementById('valSpeechGain').innerText = speechGain.toFixed(2) + 'x';
+}
+
+function triggerScarInjection() {
+  scarCount++;
+  const newId = `HarmonicScar_000${scarCount}`;
+  const tension = (0.2872 / (scarCount - 3)).toFixed(4);
+  const newScar = {
+    id: newId,
+    name: `Bastion Seam 0${scarCount}`,
+    angle: 54.74,
+    tension: parseFloat(tension)
+  };
+  scars.push(newScar);
+
+  document.getElementById('scarCount').innerText = scarCount;
+
+  const container = document.getElementById('scarListContainer');
+  const div = document.createElement('div');
+  div.className = 'scar-item';
+  div.innerHTML = `<div><span class="scar-id">Scar ${scarCount < 10 ? '0' + scarCount : scarCount}</span> // ${newId} (${newScar.name})</div><div class="scar-angle">54.74° | c=${tension}</div>`;
+  container.prepend(div);
+
+  const raw = `CH06|SCARS_${scarCount}|${Date.now()}`;
+  let hashVal = 0x10000000;
+  for (let i = 0; i < raw.length; i++) hashVal = (hashVal ^ raw.charCodeAt(i)) * 16777619;
+  const hex = (hashVal >>> 0).toString(16).toUpperCase().padStart(8, '0');
+  const newRoot = `0x${hex}...`;
+  document.getElementById('ch06Root').innerText = newRoot;
+
+  log(`[SCAR INJECTION] Crystallized ${newId} @ 54.74° (Lex I Inviolate). New Root: ${newRoot}`, 'green');
+}
+
+function selectChamber(num) {
+  log(`[CHAMBER] Inspected Chamber 0${num} ledger. Chamber 06 remains active patrol.`, 'gold');
+}
+
+function log(msg, colorClass = '') {
+  const consoleEl = document.getElementById('logConsole');
+  const div = document.createElement('div');
+  div.className = `log-entry ${colorClass}`;
+  div.innerText = msg;
+  consoleEl.appendChild(div);
+  consoleEl.scrollTop = consoleEl.scrollHeight;
+}
+
+function loop() {
+  pulseClock += 1;
+  renderAvatar();
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
