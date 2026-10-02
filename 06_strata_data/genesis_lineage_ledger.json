@@ -1,0 +1,20 @@
+[
+  {
+    "block_hash": "1b1fc7fc5d6bda16f767468cfe277da42b12413aaaddf4fef4cac509910a5f86",
+    "parent_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "state_hash": "sha256_state_001",
+    "metadata": {
+      "chamber": "Chamber I",
+      "phase": "Potential"
+    }
+  },
+  {
+    "block_hash": "1b1fc7fc5d6bda16f767468cfe277da42b12413aaaddf4fef4cac509910a5f86",
+    "parent_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "state_hash": "sha256_state_001",
+    "metadata": {
+      "chamber": "Chamber I",
+      "phase": "Potential"
+    }
+  }
+]
