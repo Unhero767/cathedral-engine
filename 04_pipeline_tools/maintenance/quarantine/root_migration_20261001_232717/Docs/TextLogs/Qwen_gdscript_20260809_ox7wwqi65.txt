@@ -1,1 +1,0 @@
-book_chamber.set_meta(&"book_id", &"Book_XXXIII")

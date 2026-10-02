@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" shape-rendering="crispEdges">
-  <rect width="128" height="128" fill="#0c1626"/>
-  <rect x="12" y="12" width="104" height="104" fill="#0f223d" stroke="#00e5ff" stroke-width="2"/>
-  <!-- Cryo Slits -->
-  <line x1="28" y1="36" x2="100" y2="36" stroke="#00e5ff" stroke-width="3"/>
-  <line x1="28" y1="54" x2="100" y2="54" stroke="#00e5ff" stroke-width="3"/>
-  <line x1="28" y1="72" x2="100" y2="72" stroke="#00e5ff" stroke-width="3"/>
-  <line x1="28" y1="90" x2="100" y2="90" stroke="#00e5ff" stroke-width="3"/>
-</svg>

@@ -1,9 +1,0 @@
-{
-    "name": "Cathedral-Engine Sovereign Altar",
-    "short_name": "Cathedral",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#07070a",
-    "theme_color": "#ffd700",
-    "icons": []
-}

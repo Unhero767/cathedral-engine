@@ -67,3 +67,7 @@ CathedralEngine.Systems
 *.key
 *.env
 .env.*
+
+# Staged Migration Quarantine
+04_pipeline_tools/maintenance/quarantine/
+*.bak
