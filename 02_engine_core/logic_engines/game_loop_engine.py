@@ -30,6 +30,32 @@ class GameState(str, Enum):
     SANCTUARY_REST = "SANCTUARY_REST"
     PARADOX_BREAK = "PARADOX_BREAK"
 
+CHAMBER_MANIFESTS = {
+    1: {
+        "name": "Chamber I: The Lithic Threshold",
+        "stratum": "Prime Foundations",
+        "carrier_hz": 42.00,
+        "temperature_k": 293.15,
+        "pressure_bar": 1.01,
+        "spectral_dominant": "Gold/Joy (580nm)",
+        "cryo_flow_rate_l_min": 0.0,
+        "portal_exit": (7, 7),
+        "description": "Basaltic bedrock foundation; 42.0 Hz carrier baseline."
+    },
+    2: {
+        "name": "Chamber II: Consciousness Intersections and Somatic Heat Sink",
+        "stratum": "Prime Foundations",
+        "carrier_hz": 52.80,
+        "temperature_k": 77.35,
+        "pressure_bar": 2.10,
+        "spectral_dominant": "Teal/Curiosity (495nm) × Blue/Memory (470nm)",
+        "cryo_flow_rate_l_min": 9.4,
+        "portal_exit": (7, 7),
+        "description": "Liquid nitrogen cryogenic manifold; 52.8 Hz somatic heat sink."
+    }
+}
+
+
 @dataclass
 class PlayerSession:
     character_name: str
@@ -75,6 +101,52 @@ class GameLoopEngine:
         self.grid_height = 8
         self.turn_counter = 1
         self.action_log: List[str] = []
+
+
+    def transition_to_chamber(self, target_chamber_index: int, entry_x: int = 4, entry_y: int = 4) -> Dict[str, Any]:
+        """
+        Executes an isomorphic spatial transition between consecrated chambers.
+        Updates spatial coordinates, thermodynamic telemetry, carrier frequency,
+        and spectral dominant, appending the transition record to the Ash Archive.
+        """
+        if target_chamber_index not in CHAMBER_MANIFESTS:
+            return {"error": f"Invalid chamber index {target_chamber_index}."}
+        
+        prev_chamber = self.player.chamber_index
+        target_manifest = CHAMBER_MANIFESTS[target_chamber_index]
+        
+        self.player.chamber_index = target_chamber_index
+        self.player.active_stratum = target_manifest["stratum"]
+        self.player.x = entry_x
+        self.player.y = entry_y
+        self.player.current_ap = self.player.max_ap
+        
+        # Attune emotional state and spectrum if transitioning into Chamber II
+        if target_chamber_index == 2:
+            self.player.spectrum_affinity = EnemySpectrum.TEAL
+            self.player.emotional_state = "Teal/Curiosity (Somatic Attuned)"
+        
+        log_msg = (
+            f"🌀 CHAMBER TRANSITION: Exited Chamber {prev_chamber} -> Inscribed into "
+            f"{target_manifest['name']} at ({entry_x}, {entry_y}). "
+            f"[Carrier: {target_manifest['carrier_hz']:.1f} Hz | "
+            f"Temp: {target_manifest['temperature_k']:.2f} K ({target_manifest['temperature_k'] - 273.15:.1f} °C) | "
+            f"Pressure: {target_manifest['pressure_bar']:.2f} bar | "
+            f"Spectrum: {target_manifest['spectral_dominant']}]"
+        )
+        self.action_log.append(log_msg)
+        
+        # Clear previous combat squad and restore exploration
+        self.active_combat_squad = []
+        self.state = GameState.EXPLORATION
+        
+        # Record to Paraconsistent ledger / Ash Archive under Lex I
+        try:
+            self.paraconsistent.process_frame_tick(self.turn_counter, c_pos=0.85, c_neg=0.15)
+        except Exception:
+            pass
+            
+        return self.get_full_game_state()
 
     def start_new_game(self, character_name: str = "Kiri Vespera", archetype: str = "Void Walker") -> Dict[str, Any]:
         """Initializes a fresh RPG adventure in Chamber I."""
@@ -149,6 +221,14 @@ class GameLoopEngine:
         # Trigger random exploration encounter if moving onto trigger zones (e.g. x >= 4 in exploration)
         if self.state == GameState.EXPLORATION and target_x >= 4 and not self.active_combat_squad:
             self.trigger_combat_encounter()
+
+
+        # Portal check: stepping on chamber exit threshold (7, 7)
+        if self.state == GameState.EXPLORATION and (target_x, target_y) == (7, 7):
+            next_chamber = self.player.chamber_index + 1
+            if next_chamber in CHAMBER_MANIFESTS:
+                self.action_log.append(f"Threshold portal reached at (7, 7). Advancing to Chamber {next_chamber}...")
+                return self.transition_to_chamber(next_chamber, entry_x=4, entry_y=4)
 
         return self.get_full_game_state()
 

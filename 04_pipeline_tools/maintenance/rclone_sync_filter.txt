@@ -1,0 +1,29 @@
+# Exclude build caches, version control, and temporary migration dumps
+- .godot/**
+- .git/**
+- **/__pycache__/**
+- **/node_modules/**
+- **/.DS_Store
+- 04_pipeline_tools/maintenance/quarantine/**
+- *.tmp
+- *.log
+
+# Include canonical numbered strata and top-level descriptors
++ 01_Lore_and_Codices/**
++ 01_MLAOS_and_Codex_Docs/**
++ 02_Code_and_Installers/**
++ 02_engine_core/**
++ 03_godot_client/**
++ 04_pipeline_tools/**
++ 05_web_interface/**
++ 06_strata_data/**
++ 07_dist_releases/**
++ 08_docs_research/**
++ README.md
++ project.godot
++ .gitignore
++ braided_pipeline_harness.py
++ verify_dependencies.py
+
+# Exclude any other loose untracked files
+- *
