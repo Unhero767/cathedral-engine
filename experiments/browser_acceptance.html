@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ω-ONT-001 — Browser Acceptance Runtime</title>
+  <style>
+    body { background: #0b0b0e; color: #c0c0d0; font-family: monospace; padding: 2rem; }
+    h1 { color: #d4af37; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
+    .box { background: #15151c; border: 1px solid #2a2a38; padding: 1rem; margin-top: 1rem; border-radius: 4px; }
+    .pass { color: #50fa7b; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Ω-ONT-001 — Browser Acceptance Runtime</h1>
+  <div class="box">
+    <h3>Subsystem Status</h3>
+    <p id="status">Initializing offline deterministic substrate...</p>
+    <pre id="output"></pre>
+  </div>
+
+  <script type="module">
+    import { CathedralSerializer } from "./serializer_adapter.mjs";
+
+    try {
+      // Validate offline execution surface
+      const testPayload = {
+        experiment: "Ω-ONT-001",
+        mode: "BROWSER_OFFLINE",
+        timestamp: Date.now()
+      };
+
+      const pkg = CathedralSerializer.exportPackage({ state: testPayload });
+      const verified = CathedralSerializer.importPackage(pkg);
+
+      if (verified.valid && verified.state.experiment === "Ω-ONT-001") {
+        document.getElementById("status").innerHTML = "<span class="pass">STATUS: PASS — OFFLINE SURFACE VERIFIED</span>";
+        document.getElementById("output").textContent = JSON.stringify(verified.state, null, 2);
+      } else {
+        throw new Error("Validation check failed.");
+      }
+    } catch (err) {
+      document.getElementById("status").innerHTML = "<span style="color: #ff5555;">STATUS: FAIL</span>";
+      document.getElementById("output").textContent = err.message;
+    }
+  </script>
+</body>
+</html>

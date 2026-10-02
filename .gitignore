@@ -60,3 +60,10 @@ diffusers/
 cosmo/
 CathedralEngine.Core
 CathedralEngine.Systems
+
+# Credential & Key Safeguards
+*API Key*.txt
+*api_key*
+*.key
+*.env
+.env.*

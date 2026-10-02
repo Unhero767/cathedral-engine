@@ -5,13 +5,22 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Dict, Any, List, Optional, Tuple
 
-from .paraconsistent_engine import EAS03ParaconsistentEngine
-from .emotional_physics_engine import EmotionalPhysicsEngine
-from .arcana_engine import ArcanaEngine
-from .enemy_engine import EnemyEngine, EnemyInstance, EnemySpectrum
-from .dialogue_engine import DialogueEngine
-from .progression_engine import ProgressionEngine
-from .campaign_engine import CampaignEngine
+try:
+    from .paraconsistent_engine import EAS03ParaconsistentEngine
+    from .emotional_physics_engine import EmotionalPhysicsEngine
+    from .arcana_engine import ArcanaEngine
+    from .enemy_engine import EnemyEngine, EnemyInstance, EnemySpectrum
+    from .dialogue_engine import DialogueEngine
+    from .progression_engine import ProgressionEngine
+    from .campaign_engine import CampaignEngine
+except (ImportError, ValueError):
+    from paraconsistent_engine import EAS03ParaconsistentEngine
+    from emotional_physics_engine import EmotionalPhysicsEngine
+    from arcana_engine import ArcanaEngine
+    from enemy_engine import EnemyEngine, EnemyInstance, EnemySpectrum
+    from dialogue_engine import DialogueEngine
+    from progression_engine import ProgressionEngine
+    from campaign_engine import CampaignEngine
 
 class GameState(str, Enum):
     EXPLORATION = "EXPLORATION"

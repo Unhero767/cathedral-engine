@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ω-ONT-001 — Ash Archive Spatial Telemetry Lattice [Resilient Edition]</title>
+  <style>
+    body {
+      margin: 0;
+      background: #07070a;
+      color: #d4af37;
+      font-family: monospace;
+      overflow: hidden;
+      user-select: none;
+    }
+    #ui {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      background: rgba(15, 15, 22, 0.95);
+      border: 1px solid #2a2a38;
+      padding: 1.2rem;
+      border-radius: 6px;
+      max-width: 420px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+    }
+    h1 { font-size: 1.05rem; margin: 0 0 0.4rem 0; color: #f3e5ab; letter-spacing: 1px; }
+    p { font-size: 0.78rem; margin: 0.3rem 0; color: #a0a0b5; }
+    #status { font-weight: bold; color: #50fa7b; }
+    #feed {
+      margin-top: 0.8rem;
+      max-height: 160px;
+      overflow-y: auto;
+      font-size: 0.73rem;
+      border-top: 1px solid #2a2a38;
+      padding-top: 0.5rem;
+    }
+    .log-entry { margin-bottom: 0.3rem; border-left: 2px solid #d4af37; padding-left: 0.5rem; }
+  </style>
+</head>
+<body>
+  <div id="ui">
+    <h1>MLAOS-PRIME SPATIAL LATTICE</h1>
+    <p>Status: <span id="status">Initializing...</span></p>
+    <p>Active Nodes: <span id="node-count">0</span></p>
+    <div id="feed">
+      <div class="log-entry">[SYSTEM] Initializing WebGL Renderer...</div>
+    </div>
+  </div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+    const container = document.createElement("div");
+    document.body.appendChild(container);
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x07070a, 0.025);
+
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 6, 22);
+
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+      document.getElementById("status").textContent = "Connected (WebGL Active)";
+    } catch (e) {
+      document.getElementById("status").textContent = "WebGL Error: " + e.message;
+    }
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
+    const ambientLight = new THREE.AmbientLight(0x151522, 2.5);
+    scene.add(ambientLight);
+
+    const goldLight = new THREE.PointLight(0xd4af37, 6, 60);
+    goldLight.position.set(12, 15, 12);
+    scene.add(goldLight);
+
+    const latticeGroup = new THREE.Group();
+    scene.add(latticeGroup);
+
+    const coreGeo = new THREE.OctahedronGeometry(1.4, 0);
+    const coreMat = new THREE.MeshStandardMaterial({
+      color: 0xd4af37,
+      roughness: 0.2,
+      metalness: 0.9,
+      emissive: 0xd4af37,
+      emissiveIntensity: 0.5,
+      wireframe: true
+    });
+    const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+    latticeGroup.add(coreMesh);
+
+    const nodesMap = new Map();
+    const geometryNode = new THREE.IcosahedronGeometry(0.55, 1);
+
+    function addTelemetryNode(data) {
+      if (nodesMap.has(data.id)) return;
+
+      const color = 0x50fa7b;
+      const material = new THREE.MeshStandardMaterial({
+        color: color,
+        roughness: 0.25,
+        metalness: 0.85,
+        emissive: color,
+        emissiveIntensity: 0.6
+      });
+
+      const mesh = new THREE.Mesh(geometryNode, material);
+      const angle = data.id * 0.85;
+      const radius = 3.5 + ((data.id % 5) * 0.6);
+      mesh.position.set(
+        Math.cos(angle) * radius,
+        ((data.id % 6) * 0.7) - 2.0,
+        Math.sin(angle) * radius
+      );
+
+      latticeGroup.add(mesh);
+      nodesMap.set(data.id, { mesh, data });
+      document.getElementById("node-count").textContent = nodesMap.size;
+    }
+
+    async function fetchStreamBatch() {
+      try {
+        const res = await fetch("http://localhost:8000/stream");
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          const text = decoder.decode(value);
+          const lines = text.split("\n\n");
+          for (const line of lines) {
+            if (line.startsWith("data: ")) {
+              try {
+                const parsed = JSON.parse(line.replace("data: ", ""));
+                if (parsed.id) addTelemetryNode(parsed);
+              } catch (err) {}
+            }
+          }
+        }
+      } catch (err) {
+        setTimeout(fetchStreamBatch, 2000);
+      }
+    }
+
+    fetchStreamBatch();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      coreMesh.rotation.y += 0.008;
+      latticeGroup.rotation.y += 0.0015;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>

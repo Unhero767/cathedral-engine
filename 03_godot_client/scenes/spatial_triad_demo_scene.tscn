@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://03_godot_client/scripts/AtlasAnimator.gd" id="1_animator"]
+[ext_resource type="Script" path="res://scripts/AtlasAnimator.gd" id="1_animator"]
 
 [node name="SpatialTriadDemo" type="Node2D"]
 
