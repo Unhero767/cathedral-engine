@@ -1,0 +1,36 @@
+{
+  "stratum": "Stratum III",
+  "chambers": [
+    {
+      "id": "Chamber_07",
+      "title": "The Calculus of Scars",
+      "spectral_constant": "Teal/Curiosity"
+    },
+    {
+      "id": "Chamber_08",
+      "title": "The Paraconsistent Vault",
+      "spectral_constant": "Blue/Sorrow"
+    },
+    {
+      "id": "Chamber_09",
+      "title": "The Ash Ledger Stratum",
+      "spectral_constant": "Gold/Joy"
+    },
+    {
+      "id": "Chamber_10",
+      "title": "The Squeegee Threshold",
+      "spectral_constant": "Emerald/Love"
+    },
+    {
+      "id": "Chamber_11",
+      "title": "The Somatic Lattice",
+      "spectral_constant": "Violet/Fear"
+    },
+    {
+      "id": "Chamber_12",
+      "title": "The Sovereign Convergence",
+      "spectral_constant": "Bronze-Obsidian/Null"
+    }
+  ],
+  "vector_catalog_status": "INDEXED"
+}
