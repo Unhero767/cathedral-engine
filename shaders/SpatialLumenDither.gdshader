@@ -1,36 +1,29 @@
-shader_type canvas_item;
+// File: shaders/SpatialLumenDither.gdshader
+// Spatial Display Shader bound to read-only projection parameters.
+shader_type spatial;
+render_mode unshaded, blend_mix, depth_draw_opaque, cull_back;
 
-uniform float u_afield_potency : hint_range(0.0, 2.0) = 1.0;
-uniform float u_shadow_depth_ramp : hint_range(0.0, 1.0) = 0.35;
-uniform float u_lumen_emission_gain : hint_range(0.0, 3.0) = 1.396;
+uniform vec4 u_albedo : source_color = vec4(0.85, 0.75, 0.45, 1.0); // Gold Joy baseline
+uniform float kenomic_entropy : hint_range(0.0, 100.0) = 0.0;
+uniform int belnap_fog_level : hint_range(0, 2) = 0;
+uniform float u_emission_multiplier = 8.5;
 
-const float BAYER_2X2[4] = {
-    0.00, 0.50,
-    0.75, 0.25
-};
+// Bayer 2x2 Matrix for Bio-Semantic Dithering
+const mat2 BAYER_2X2 = mat2(
+    vec2(0.00, 0.50),
+    vec2(0.75, 0.25)
+);
 
 void fragment() {
-    vec4 base_color = texture(TEXTURE, UV);
-    if (base_color.a < 0.001) {
-        base_color = vec4(0.0, 0.92, 1.0, 1.0); // Matte Teal baseline fallback for placeholder
-    }
-    ivec2 pixel_coord = ivec2(floor(UV * 128.0));
-    int bayer_index = (pixel_coord.x % 2) + (pixel_coord.y % 2) * 2;
-    float dither_offset = (BAYER_2X2[bayer_index] - 0.5) * 0.12;
+    vec2 screen_pos = mod(floor(FRAGCOORD.xy), 2.0);
+    float dither_val = BAYER_2X2[int(screen_pos.x)][int(screen_pos.y)];
     
-    float luminance = dot(base_color.rgb, vec3(0.299, 0.587, 0.114)) + dither_offset;
+    float entropy_factor = clamp(kenomic_entropy / 100.0, 0.0, 1.0);
+    vec3 base_lum = u_albedo.rgb * (u_emission_multiplier * 0.15);
     
-    vec3 emission = vec3(0.0);
-    if (base_color.b > 0.65 && base_color.r < 0.35) {
-        emission = vec3(0.0, 0.92, 1.0) * u_lumen_emission_gain * u_afield_potency;
-    } else if (base_color.r > 0.70 && base_color.g > 0.55) {
-        emission = vec3(1.0, 0.82, 0.28) * u_afield_potency;
+    if (belnap_fog_level > 0) {
+        base_lum *= mix(1.0, dither_val, float(belnap_fog_level) * 0.4 * entropy_factor);
     }
     
-    vec3 final_rgb = base_color.rgb + emission;
-    if (luminance < u_shadow_depth_ramp) {
-        final_rgb *= 0.618;
-    }
-    
-    COLOR = vec4(final_rgb, 1.0);
+    ALBEDO = base_lum;
 }
