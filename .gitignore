@@ -71,3 +71,11 @@ CathedralEngine.Systems
 # Staged Migration Quarantine
 04_pipeline_tools/maintenance/quarantine/
 *.bak
+
+# Ω5-R1 runtime databases
+omega_core_05r1/testdata/*.sqlite
+omega_core_05r1/testdata/*.sqlite-shm
+omega_core_05r1/testdata/*.sqlite-wal
+
+# Ω5-R1 development backup
+omega_core_05r1/node.py.before_r1_reconcile
