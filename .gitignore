@@ -79,3 +79,9 @@ omega_core_05r1/testdata/*.sqlite-wal
 
 # Ω5-R1 development backup
 omega_core_05r1/node.py.before_r1_reconcile
+
+# Benchmark/runtime artifacts
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite-journal
