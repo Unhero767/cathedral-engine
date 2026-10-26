@@ -35,6 +35,10 @@ window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[dotnet]
+
+project/assembly_name="cathedral_engine_full_project"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

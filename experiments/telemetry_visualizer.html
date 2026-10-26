@@ -2,137 +2,390 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Ω-ONT-001 — Ash Archive Spatial Telemetry Lattice [Resilient Edition]</title>
+  <title>Ω-ONT-001 — Ash Archive Spatial Telemetry Lattice [Expanded Edition]</title>
   <style>
+    :root {
+      --bg-dark: #07070a;
+      --panel-bg: rgba(13, 13, 20, 0.92);
+      --gold-primary: #d4af37;
+      --gold-light: #f3e5ab;
+      --teal-curiosity: #00ced1;
+      --emerald-converged: #50fa7b;
+      --crimson-volatile: #ff5555;
+      --amber-high: #ffb86c;
+      --border-dark: #2a2a3e;
+      --text-muted: #8b8b9e;
+    }
+
     body {
       margin: 0;
-      background: #07070a;
-      color: #d4af37;
-      font-family: monospace;
+      background: var(--bg-dark);
+      color: var(--gold-primary);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       overflow: hidden;
       user-select: none;
     }
+
     #ui {
       position: absolute;
-      top: 20px;
-      left: 20px;
+      top: 18px;
+      left: 18px;
       z-index: 10;
-      background: rgba(15, 15, 22, 0.95);
-      border: 1px solid #2a2a38;
-      padding: 1.2rem;
-      border-radius: 6px;
-      max-width: 420px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+      background: var(--panel-bg);
+      border: 1px solid var(--border-dark);
+      padding: 1.1rem;
+      border-radius: 8px;
+      width: 360px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
     }
-    h1 { font-size: 1.05rem; margin: 0 0 0.4rem 0; color: #f3e5ab; letter-spacing: 1px; }
-    p { font-size: 0.78rem; margin: 0.3rem 0; color: #a0a0b5; }
-    #status { font-weight: bold; color: #50fa7b; }
-    #feed {
+
+    h1 {
+      font-size: 0.95rem;
+      margin: 0 0 0.35rem 0;
+      color: var(--gold-light);
+      letter-spacing: 1.2px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.76rem;
+      margin: 0.25rem 0;
+      color: var(--text-muted);
+    }
+    .stat-val {
+      font-weight: bold;
+      color: #e2e2ec;
+    }
+    #status { color: var(--emerald-converged); }
+
+    #timeline-panel {
       margin-top: 0.8rem;
-      max-height: 160px;
-      overflow-y: auto;
-      font-size: 0.73rem;
-      border-top: 1px solid #2a2a38;
-      padding-top: 0.5rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid var(--border-dark);
     }
-    .log-entry { margin-bottom: 0.3rem; border-left: 2px solid #d4af37; padding-left: 0.5rem; }
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      margin-bottom: 0.3rem;
+      color: var(--text-muted);
+    }
+    input[type=range] {
+      width: 100%;
+      height: 5px;
+      background: #1e1e2d;
+      border-radius: 3px;
+      outline: none;
+      accent-color: var(--gold-primary);
+      cursor: pointer;
+    }
+    .btn-bar {
+      display: flex;
+      gap: 6px;
+      margin-top: 0.5rem;
+    }
+    button {
+      flex: 1;
+      background: #171724;
+      border: 1px solid var(--border-dark);
+      color: var(--gold-light);
+      padding: 4px 8px;
+      font-size: 0.7rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    button:hover {
+      background: #252538;
+      border-color: var(--gold-primary);
+    }
+    button.active {
+      background: var(--gold-primary);
+      color: #07070a;
+      font-weight: bold;
+    }
+
+    #inspector {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      z-index: 10;
+      background: var(--panel-bg);
+      border: 1px solid var(--border-dark);
+      padding: 1.1rem;
+      border-radius: 8px;
+      width: 320px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+    }
+    #inspector h2 {
+      font-size: 0.85rem;
+      margin: 0 0 0.5rem 0;
+      color: var(--gold-light);
+      border-bottom: 1px solid var(--border-dark);
+      padding-bottom: 0.4rem;
+    }
+    .inspect-field {
+      font-size: 0.72rem;
+      margin: 0.3rem 0;
+      color: var(--text-muted);
+    }
+    .inspect-field span {
+      color: #ffffff;
+      font-weight: bold;
+    }
+    pre {
+      font-size: 0.65rem;
+      background: #09090f;
+      padding: 6px;
+      border-radius: 4px;
+      border: 1px solid #1a1a28;
+      color: #a0a0ba;
+      overflow-x: auto;
+      max-height: 120px;
+    }
+
+    #legend {
+      margin-top: 0.8rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid var(--border-dark);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 2px 0;
+    }
+    .color-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    #tooltip {
+      position: absolute;
+      z-index: 20;
+      pointer-events: none;
+      background: rgba(10, 10, 16, 0.95);
+      border: 1px solid var(--gold-primary);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.68rem;
+      color: #fff;
+      display: none;
+      transform: translate(-50%, -120%);
+    }
   </style>
 </head>
 <body>
   <div id="ui">
-    <h1>MLAOS-PRIME SPATIAL LATTICE</h1>
-    <p>Status: <span id="status">Initializing...</span></p>
-    <p>Active Nodes: <span id="node-count">0</span></p>
-    <div id="feed">
-      <div class="log-entry">[SYSTEM] Initializing WebGL Renderer...</div>
+    <h1>
+      <span>MLAOS-PRIME LATTICE</span>
+      <span class="badge">Ω-ONT-001</span>
+    </h1>
+    <div class="stat-row">
+      <span>Gateway Feed</span>
+      <span id="status" class="stat-val">Connecting...</span>
+    </div>
+    <div class="stat-row">
+      <span>Total Verified Nodes</span>
+      <span id="node-count" class="stat-val">0</span>
+    </div>
+    <div class="stat-row">
+      <span>Convergence Floor</span>
+      <span id="min-loss" class="stat-val">—</span>
+    </div>
+    <div class="stat-row">
+      <span>Latest Step Telemetry</span>
+      <span id="latest-step" class="stat-val">—</span>
+    </div>
+
+    <div id="timeline-panel">
+      <div class="slider-header">
+        <span>Historical Scrubber</span>
+        <span id="slider-label">All Nodes</span>
+      </div>
+      <input type="range" id="time-slider" min="1" max="1" value="1">
+      <div class="btn-bar">
+        <button id="btn-play">▶ Play Cadence</button>
+        <button id="btn-live" class="active">● Live Stream</button>
+        <button id="btn-reset-cam">Reset View</button>
+      </div>
+    </div>
+
+    <div id="legend">
+      <div class="legend-row"><span class="color-dot" style="background: #50fa7b;"></span> Floor / Converged (Loss &le; 0.15)</div>
+      <div class="legend-row"><span class="color-dot" style="background: #00ced1;"></span> Attuned / Decaying (0.15 &lt; Loss &le; 0.8)</div>
+      <div class="legend-row"><span class="color-dot" style="background: #ffb86c;"></span> Initial Transduction (0.8 &lt; Loss &le; 1.5)</div>
+      <div class="legend-row"><span class="color-dot" style="background: #ff5555;"></span> High Volatility (Loss &gt; 1.5)</div>
+      <div class="legend-row"><span class="color-dot" style="background: #d4af37;"></span> Genesis / Strata Anchor</div>
     </div>
   </div>
 
+  <div id="inspector">
+    <h2>TELEMETRY NODE INSPECTOR</h2>
+    <div class="inspect-field">Node ID: <span id="insp-id">—</span></div>
+    <div class="inspect-field">Tier: <span id="insp-tier">—</span></div>
+    <div class="inspect-field">Timestamp: <span id="insp-time">—</span></div>
+    <div class="inspect-field">Training Step: <span id="insp-step">—</span></div>
+    <div class="inspect-field">Loss: <span id="insp-loss">—</span></div>
+    <div class="inspect-field">Learning Rate: <span id="insp-lr">—</span></div>
+    <div class="inspect-field">MPS Memory: <span id="insp-mem">—</span></div>
+    <div class="inspect-field" style="margin-top: 6px;">Raw Payload:</div>
+    <pre id="insp-raw">{}</pre>
+  </div>
+
+  <div id="tooltip"></div>
+
   <script type="importmap">
-    {
-      "imports": {
-        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-      }
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
     }
+  }
   </script>
 
   <script type="module">
     import * as THREE from "three";
     import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
-    const container = document.createElement("div");
-    document.body.appendChild(container);
-
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x07070a, 0.025);
+    scene.fog = new THREE.FogExp2(0x07070a, 0.022);
 
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 6, 22);
+    const initialCamPos = new THREE.Vector3(0, 8, 24);
+    camera.position.copy(initialCamPos);
 
     let renderer;
     try {
       renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      container.appendChild(renderer.domElement);
-      document.getElementById("status").textContent = "Connected (WebGL Active)";
+      document.body.appendChild(renderer.domElement);
+      document.getElementById("status").textContent = "Connected (SSE)";
     } catch (e) {
-      document.getElementById("status").textContent = "WebGL Error: " + e.message;
+      document.getElementById("status").textContent = "WebGL Error";
     }
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
 
-    const ambientLight = new THREE.AmbientLight(0x151522, 2.5);
-    scene.add(ambientLight);
-
-    const goldLight = new THREE.PointLight(0xd4af37, 6, 60);
-    goldLight.position.set(12, 15, 12);
+    scene.add(new THREE.AmbientLight(0x151525, 2.8));
+    const goldLight = new THREE.PointLight(0xd4af37, 7, 75);
+    goldLight.position.set(12, 16, 14);
     scene.add(goldLight);
+
+    const cyanLight = new THREE.PointLight(0x00ced1, 4, 60);
+    cyanLight.position.set(-14, -8, -12);
+    scene.add(cyanLight);
 
     const latticeGroup = new THREE.Group();
     scene.add(latticeGroup);
 
-    const coreGeo = new THREE.OctahedronGeometry(1.4, 0);
+    const coreGeo = new THREE.OctahedronGeometry(1.6, 0);
     const coreMat = new THREE.MeshStandardMaterial({
       color: 0xd4af37,
-      roughness: 0.2,
-      metalness: 0.9,
+      roughness: 0.15,
+      metalness: 0.95,
       emissive: 0xd4af37,
-      emissiveIntensity: 0.5,
+      emissiveIntensity: 0.6,
       wireframe: true
     });
     const coreMesh = new THREE.Mesh(coreGeo, coreMat);
     latticeGroup.add(coreMesh);
 
     const nodesMap = new Map();
-    const geometryNode = new THREE.IcosahedronGeometry(0.55, 1);
+    const meshToNode = new Map();
+    const geometryNode = new THREE.IcosahedronGeometry(0.52, 1);
+
+    let minObservedLoss = Infinity;
+    let maxNodeId = 0;
+    let isLiveMode = true;
+    let isPlaying = false;
+    let playInterval = null;
+
+    function getSpectralColor(data) {
+      const payload = data.payload || {};
+      if (data.tier === "Genesis" || data.tier === "Prime Foundations") return 0xd4af37;
+      if (payload.loss !== undefined) {
+        const loss = Number(payload.loss);
+        if (loss <= 0.15) return 0x50fa7b;
+        if (loss <= 0.80) return 0x00ced1;
+        if (loss <= 1.50) return 0xffb86c;
+        return 0xff5555;
+      }
+      return 0x00ced1;
+    }
 
     function addTelemetryNode(data) {
       if (nodesMap.has(data.id)) return;
 
-      const color = 0x50fa7b;
+      const hexColor = getSpectralColor(data);
       const material = new THREE.MeshStandardMaterial({
-        color: color,
+        color: hexColor,
         roughness: 0.25,
         metalness: 0.85,
-        emissive: color,
-        emissiveIntensity: 0.6
+        emissive: hexColor,
+        emissiveIntensity: 0.65
       });
 
       const mesh = new THREE.Mesh(geometryNode, material);
       const angle = data.id * 0.85;
-      const radius = 3.5 + ((data.id % 5) * 0.6);
+      const radius = 4.0 + ((data.id % 7) * 0.55);
       mesh.position.set(
         Math.cos(angle) * radius,
-        ((data.id % 6) * 0.7) - 2.0,
+        ((data.id % 8) * 0.65) - 2.4,
         Math.sin(angle) * radius
       );
 
+      mesh.userData = { id: data.id, baseHex: hexColor };
       latticeGroup.add(mesh);
+
       nodesMap.set(data.id, { mesh, data });
+      meshToNode.set(mesh, data);
+
+      if (data.id > maxNodeId) {
+        maxNodeId = data.id;
+        const slider = document.getElementById("time-slider");
+        slider.max = maxNodeId;
+        if (isLiveMode) {
+          slider.value = maxNodeId;
+          document.getElementById("slider-label").textContent = `Node ${maxNodeId} (Live)`;
+        }
+      }
+
+      const payload = data.payload || {};
+      if (payload.loss !== undefined) {
+        const loss = Number(payload.loss);
+        if (loss < minObservedLoss) {
+          minObservedLoss = loss;
+          document.getElementById("min-loss").textContent = loss.toFixed(4);
+        }
+      }
+      if (payload.step !== undefined) {
+        document.getElementById("latest-step").textContent = `Step ${payload.step} (Loss: ${payload.loss ?? '—'})`;
+      }
+
       document.getElementById("node-count").textContent = nodesMap.size;
     }
 
@@ -141,7 +394,7 @@
         const res = await fetch("http://localhost:8000/stream");
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
-        
+
         while (true) {
           const { value, done } = await reader.read();
           if (done) break;
@@ -157,17 +410,147 @@
           }
         }
       } catch (err) {
+        document.getElementById("status").textContent = "Reconnecting...";
         setTimeout(fetchStreamBatch, 2000);
       }
     }
-
     fetchStreamBatch();
+
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2(-100, -100);
+    let hoveredMesh = null;
+    const tooltip = document.getElementById("tooltip");
+
+    window.addEventListener("pointermove", (e) => {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+      tooltip.style.left = `${e.clientX}px`;
+      tooltip.style.top = `${e.clientY}px`;
+    });
+
+    window.addEventListener("pointerdown", () => {
+      if (hoveredMesh) {
+        inspectNode(meshToNode.get(hoveredMesh));
+      }
+    });
+
+    function inspectNode(data) {
+      if (!data) return;
+      const inspector = document.getElementById("inspector");
+      inspector.style.display = "block";
+
+      const p = data.payload || {};
+      document.getElementById("insp-id").textContent = data.id;
+      document.getElementById("insp-tier").textContent = data.tier || "Ω-TRAINING";
+      document.getElementById("insp-time").textContent = data.timestamp || "—";
+      document.getElementById("insp-step").textContent = p.step ?? "—";
+      document.getElementById("insp-loss").textContent = p.loss !== undefined ? Number(p.loss).toFixed(4) : "—";
+      document.getElementById("insp-lr").textContent = p.lr ?? "—";
+      document.getElementById("insp-mem").textContent = p.mps_mem_allocated ?? "—";
+      document.getElementById("insp-raw").textContent = JSON.stringify(p, null, 2);
+    }
+
+    const timeSlider = document.getElementById("time-slider");
+    timeSlider.addEventListener("input", (e) => {
+      isLiveMode = false;
+      document.getElementById("btn-live").classList.remove("active");
+      applyScrubCutoff(parseInt(e.target.value));
+    });
+
+    function applyScrubCutoff(cutoff) {
+      document.getElementById("slider-label").textContent = `Frame ${cutoff}/${maxNodeId}`;
+      nodesMap.forEach(({ mesh }, id) => {
+        mesh.visible = id <= cutoff;
+      });
+    }
+
+    const btnPlay = document.getElementById("btn-play");
+    btnPlay.addEventListener("click", () => {
+      if (isPlaying) {
+        clearInterval(playInterval);
+        isPlaying = false;
+        btnPlay.textContent = "▶ Play Cadence";
+        btnPlay.classList.remove("active");
+      } else {
+        isPlaying = true;
+        isLiveMode = false;
+        document.getElementById("btn-live").classList.remove("active");
+        btnPlay.textContent = "⏸ Pause Cadence";
+        btnPlay.classList.add("active");
+
+        playInterval = setInterval(() => {
+          let curr = parseInt(timeSlider.value);
+          if (curr >= maxNodeId) {
+            curr = 1;
+          } else {
+            curr += 3;
+          }
+          timeSlider.value = curr;
+          applyScrubCutoff(curr);
+        }, 50);
+      }
+    });
+
+    const btnLive = document.getElementById("btn-live");
+    btnLive.addEventListener("click", () => {
+      if (isPlaying) {
+        clearInterval(playInterval);
+        isPlaying = false;
+        btnPlay.textContent = "▶ Play Cadence";
+        btnPlay.classList.remove("active");
+      }
+      isLiveMode = true;
+      btnLive.classList.add("active");
+      timeSlider.value = maxNodeId;
+      document.getElementById("slider-label").textContent = `Node ${maxNodeId} (Live)`;
+      nodesMap.forEach(({ mesh }) => { mesh.visible = true; });
+    });
+
+    document.getElementById("btn-reset-cam").addEventListener("click", () => {
+      camera.position.copy(initialCamPos);
+      controls.target.set(0, 0, 0);
+      controls.update();
+    });
 
     function animate() {
       requestAnimationFrame(animate);
       controls.update();
-      coreMesh.rotation.y += 0.008;
-      latticeGroup.rotation.y += 0.0015;
+
+      coreMesh.rotation.y += 0.007;
+      coreMesh.rotation.x += 0.003;
+      latticeGroup.rotation.y += 0.0012;
+
+      raycaster.setFromCamera(mouse, camera);
+      const visibleMeshes = [];
+      nodesMap.forEach(({ mesh }) => { if (mesh.visible) visibleMeshes.push(mesh); });
+      const intersects = raycaster.intersectObjects(visibleMeshes);
+
+      if (intersects.length > 0) {
+        const topMesh = intersects[0].object;
+        if (hoveredMesh !== topMesh) {
+          if (hoveredMesh) {
+            hoveredMesh.scale.set(1, 1, 1);
+            hoveredMesh.material.emissiveIntensity = 0.65;
+          }
+          hoveredMesh = topMesh;
+          hoveredMesh.scale.set(1.35, 1.35, 1.35);
+          hoveredMesh.material.emissiveIntensity = 1.0;
+
+          const d = meshToNode.get(hoveredMesh);
+          const p = d ? d.payload || {} : {};
+          tooltip.style.display = "block";
+          tooltip.textContent = `Node #${hoveredMesh.userData.id} | Step: ${p.step ?? '—'} | Loss: ${p.loss ?? '—'}`;
+        }
+      } else {
+        if (hoveredMesh) {
+          hoveredMesh.scale.set(1, 1, 1);
+          hoveredMesh.material.emissiveIntensity = 0.65;
+          hoveredMesh = null;
+          tooltip.style.display = "none";
+        }
+      }
+
       renderer.render(scene, camera);
     }
     animate();

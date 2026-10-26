@@ -1,0 +1,2 @@
+class_name CathedralSomaticEngine
+extends Node

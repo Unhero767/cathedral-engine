@@ -1,0 +1,2 @@
+class_name HeartOculusCamera
+extends Camera3D

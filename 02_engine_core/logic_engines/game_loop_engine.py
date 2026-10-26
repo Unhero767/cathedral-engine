@@ -224,7 +224,7 @@ class GameLoopEngine:
 
 
         # Portal check: stepping on chamber exit threshold (7, 7)
-        if self.state == GameState.EXPLORATION and (target_x, target_y) == (7, 7):
+        if (target_x, target_y) == (7, 7):
             next_chamber = self.player.chamber_index + 1
             if next_chamber in CHAMBER_MANIFESTS:
                 self.action_log.append(f"Threshold portal reached at (7, 7). Advancing to Chamber {next_chamber}...")

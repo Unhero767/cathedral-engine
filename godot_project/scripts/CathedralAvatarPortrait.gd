@@ -1,0 +1,2 @@
+class_name CathedralAvatarPortrait
+extends Control

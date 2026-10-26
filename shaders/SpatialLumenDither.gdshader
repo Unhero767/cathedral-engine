@@ -1,29 +1,31 @@
-// File: shaders/SpatialLumenDither.gdshader
-// Spatial Display Shader bound to read-only projection parameters.
 shader_type spatial;
-render_mode unshaded, blend_mix, depth_draw_opaque, cull_back;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_burley, specular_schlick_ggx;
 
-uniform vec4 u_albedo : source_color = vec4(0.85, 0.75, 0.45, 1.0); // Gold Joy baseline
-uniform float kenomic_entropy : hint_range(0.0, 100.0) = 0.0;
-uniform int belnap_fog_level : hint_range(0, 2) = 0;
-uniform float u_emission_multiplier = 8.5;
+uniform vec4 base_albedo : source_color = vec4(0.1, 0.1, 0.12, 1.0);
+uniform float u_strain_glow_gain : hint_range(0.0, 10.0) = 1.0;
+uniform sampler2D texture_albedo : source_color, filter_nearest, repeat_enable;
 
-// Bayer 2x2 Matrix for Bio-Semantic Dithering
-const mat2 BAYER_2X2 = mat2(
-    vec2(0.00, 0.50),
-    vec2(0.75, 0.25)
-);
+const float BAYER_2X2[4] = {
+	0.0, 2.0,
+	3.0, 1.0
+};
+
+float bayer_dither(vec2 pos) {
+	int x = int(mod(pos.x, 2.0));
+	int y = int(mod(pos.y, 2.0));
+	int index = x + y * 2;
+	return BAYER_2X2[index] / 4.0 - 0.5;
+}
 
 void fragment() {
-    vec2 screen_pos = mod(floor(FRAGCOORD.xy), 2.0);
-    float dither_val = BAYER_2X2[int(screen_pos.x)][int(screen_pos.y)];
-    
-    float entropy_factor = clamp(kenomic_entropy / 100.0, 0.0, 1.0);
-    vec3 base_lum = u_albedo.rgb * (u_emission_multiplier * 0.15);
-    
-    if (belnap_fog_level > 0) {
-        base_lum *= mix(1.0, dither_val, float(belnap_fog_level) * 0.4 * entropy_factor);
-    }
-    
-    ALBEDO = base_lum;
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo, base_uv);
+	ALBEDO = albedo_tex.rgb * base_albedo.rgb * (1.0 + (u_strain_glow_gain * 0.2));
+	
+	float dither = bayer_dither(FRAGCOORD.xy);
+	ALPHA = clamp(albedo_tex.a + dither * 0.05, 0.0, 1.0);
+	
+	EMISSION = ALBEDO * u_strain_glow_gain * 0.15;
+	ROUGHNESS = 0.85;
+	SPECULAR = 0.1;
 }
