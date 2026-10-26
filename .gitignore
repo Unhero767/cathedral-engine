@@ -85,3 +85,23 @@ omega_core_05r1/node.py.before_r1_reconcile
 *.sqlite-shm
 *.sqlite-wal
 *.sqlite-journal
+
+# --- Cathedral-Engine Custom Exclusions ---
+# Database & WAL artifacts
+*.db-shm
+*.db-wal
+*.db
+!/strata/vault/*.db
+
+# Generated Assets, Datasets & Forged Plates
+/datasets/
+/training_data/
+/forged_arcana_plates/
+/dist/
+/omega_core_*/
+aurelia9_atlas_strip.png
+
+# Godot & Editor metadata
+.DS_Store
+*.uid
+.cathedral_cache/
