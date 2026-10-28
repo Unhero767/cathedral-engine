@@ -1,0 +1,40 @@
+[2026-10-28T20:17:04.112Z] [VALIDATOR:CODEX-XXII] Auditing transition trace for 'vault.axiom.042'...
+[PASS] State N [0,0] -> State T [1,0] verified via signature 0x9a8f.
+[PASS] Dialetheic input detected at block 1793218624 (Polarity -1 collides with existing +1).
+[PASS] Classical explosion gate bypassed. Paraconsistent lattice engaged.
+[PASS] State T [1,0] -> State B [1,1] (Harmonic Scar 'scar_8841_alpha').
+[PASS] Evidence preservation check: Both tx_01H8X9A and tx_01H8X9Z retained in Merkle tree.
+[PASS] Downstream inference check: Non-colliding strata isolated from B-state contagion.
+[RESULT] AUDIT VERIFIED. Merkle Root: 0x1322be852940c384e8bc357bff45c9b99eedc6935c7353bf747a82076195a783
+
+--- CANONICAL B-STATE PAYLOAD DUMP ---
+{
+  "stratum_id": "vault.axiom.042",
+  "transition": "T -> B",
+  "epistemic_state": "B",
+  "truth_vector": [
+    1,
+    1
+  ],
+  "spectral_signature": "BLUE_SORROW_TO_GOLD_SYNTHESIS",
+  "d_phi_dt": 4.891,
+  "evidence_chain": [
+    {
+      "tx_id": "tx_01H8X9A",
+      "polarity": "+1",
+      "timestamp_block": 1793218620
+    },
+    {
+      "tx_id": "tx_01H8X9Z",
+      "polarity": "-1",
+      "timestamp_block": 1793218624
+    }
+  ],
+  "harmonic_scar": {
+    "scar_id": "scar_8841_alpha",
+    "load_bearing_index": 0.942,
+    "paraconsistent_isolation": true,
+    "explosion_contained": true
+  },
+  "merkle_root": "0x1322be852940c384e8bc357bff45c9b99eedc6935c7353bf747a82076195a783"
+}
