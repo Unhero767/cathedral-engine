@@ -1,0 +1,38 @@
+[
+    {
+        "consciousness_intensity_dphi_dt": 0.1,
+        "metric_perturbation_delta_g_ms2": 1.2e-10,
+        "interferometer_phase_shift_rad": 0.00048,
+        "harmonic_scar_status": "SUB-THRESHOLD"
+    },
+    {
+        "consciousness_intensity_dphi_dt": 0.5,
+        "metric_perturbation_delta_g_ms2": 6e-10,
+        "interferometer_phase_shift_rad": 0.0024,
+        "harmonic_scar_status": "SUB-THRESHOLD"
+    },
+    {
+        "consciousness_intensity_dphi_dt": 1.0,
+        "metric_perturbation_delta_g_ms2": 1.2e-09,
+        "interferometer_phase_shift_rad": 0.0048,
+        "harmonic_scar_status": "SUB-THRESHOLD"
+    },
+    {
+        "consciousness_intensity_dphi_dt": 2.5,
+        "metric_perturbation_delta_g_ms2": 3e-09,
+        "interferometer_phase_shift_rad": 0.012,
+        "harmonic_scar_status": "NOMINAL"
+    },
+    {
+        "consciousness_intensity_dphi_dt": 5.0,
+        "metric_perturbation_delta_g_ms2": 6e-09,
+        "interferometer_phase_shift_rad": 0.024,
+        "harmonic_scar_status": "LOCKED"
+    },
+    {
+        "consciousness_intensity_dphi_dt": 10.0,
+        "metric_perturbation_delta_g_ms2": 1.2e-08,
+        "interferometer_phase_shift_rad": 0.048,
+        "harmonic_scar_status": "LOCKED"
+    }
+]

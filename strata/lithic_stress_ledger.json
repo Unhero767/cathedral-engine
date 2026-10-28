@@ -1,0 +1,90 @@
+[
+    {
+        "node_id": 0,
+        "position_m": 0.0,
+        "peak_stress_mpa": 15.0,
+        "crystal_phase_shift_density": 0.0,
+        "lithic_memory_status": "NOMINAL",
+        "autonomous_remediation_active": false
+    },
+    {
+        "node_id": 1,
+        "position_m": 1.0,
+        "peak_stress_mpa": 15.0,
+        "crystal_phase_shift_density": 0.0,
+        "lithic_memory_status": "NOMINAL",
+        "autonomous_remediation_active": false
+    },
+    {
+        "node_id": 2,
+        "position_m": 2.0,
+        "peak_stress_mpa": 15.0,
+        "crystal_phase_shift_density": 0.0,
+        "lithic_memory_status": "NOMINAL",
+        "autonomous_remediation_active": false
+    },
+    {
+        "node_id": 3,
+        "position_m": 3.0,
+        "peak_stress_mpa": 15.000000001030381,
+        "crystal_phase_shift_density": 0.0,
+        "lithic_memory_status": "NOMINAL",
+        "autonomous_remediation_active": false
+    },
+    {
+        "node_id": 4,
+        "position_m": 4.0,
+        "peak_stress_mpa": 15.000167699392744,
+        "crystal_phase_shift_density": 0.0,
+        "lithic_memory_status": "NOMINAL",
+        "autonomous_remediation_active": false
+    },
+    {
+        "node_id": 5,
+        "position_m": 5.0,
+        "peak_stress_mpa": 15.499904844220904,
+        "crystal_phase_shift_density": 0.0,
+        "lithic_memory_status": "NOMINAL",
+        "autonomous_remediation_active": false
+    },
+    {
+        "node_id": 6,
+        "position_m": 6.0,
+        "peak_stress_mpa": 42.293879687068504,
+        "crystal_phase_shift_density": 0.20839656248767155,
+        "lithic_memory_status": "LOCKED_TRAUMA",
+        "autonomous_remediation_active": true
+    },
+    {
+        "node_id": 7,
+        "position_m": 7.0,
+        "peak_stress_mpa": 42.293879687068504,
+        "crystal_phase_shift_density": 0.20839656248767155,
+        "lithic_memory_status": "LOCKED_TRAUMA",
+        "autonomous_remediation_active": true
+    },
+    {
+        "node_id": 8,
+        "position_m": 8.0,
+        "peak_stress_mpa": 15.499904844220904,
+        "crystal_phase_shift_density": 0.0,
+        "lithic_memory_status": "NOMINAL",
+        "autonomous_remediation_active": false
+    },
+    {
+        "node_id": 9,
+        "position_m": 9.0,
+        "peak_stress_mpa": 15.000167699392744,
+        "crystal_phase_shift_density": 0.0,
+        "lithic_memory_status": "NOMINAL",
+        "autonomous_remediation_active": false
+    },
+    {
+        "node_id": 10,
+        "position_m": 10.0,
+        "peak_stress_mpa": 15.000000001030381,
+        "crystal_phase_shift_density": 0.0,
+        "lithic_memory_status": "NOMINAL",
+        "autonomous_remediation_active": false
+    }
+]

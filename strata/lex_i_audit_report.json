@@ -1,0 +1,46 @@
+{
+  "timestamp_utc": "2026-10-02T17:45:20.643007+00:00",
+  "stratum_database": "/Users/kennethdallmier/cathedral_engine/ash_archive.db",
+  "block_height": 5,
+  "merkle_tip": "829129e887bdf9d494b44df2762d60a5eda19e6d6348e7360d88221462969b9a",
+  "telemetry_frames_ingested": 197,
+  "lab_experiments_recorded": 151,
+  "lex_i_compliance": true,
+  "chain_topology": [
+    {
+      "block_id": 1,
+      "timestamp": 1790883401.237238,
+      "node_type": "RECONCILIATION_NODE",
+      "parent_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "current_hash": "9db67d678657db7ce78a0de8037101a82f580aa5030f983e07186cecdd67d5ea"
+    },
+    {
+      "block_id": 2,
+      "timestamp": 1790891751.1555488,
+      "node_type": "RECONCILIATION_NODE",
+      "parent_hash": "9db67d678657db7ce78a0de8037101a82f580aa5030f983e07186cecdd67d5ea",
+      "current_hash": "e25c28b78b53ea546d759b8f2210356448f93dc191b3e041957872d99089ff5e"
+    },
+    {
+      "block_id": 3,
+      "timestamp": 1790895946.109609,
+      "node_type": "RECONCILIATION_NODE",
+      "parent_hash": "e25c28b78b53ea546d759b8f2210356448f93dc191b3e041957872d99089ff5e",
+      "current_hash": "d60a87c6194c90c9e9a24d4d016ba78b5dd0ca1a42ab09cf90b974b10a356384"
+    },
+    {
+      "block_id": 4,
+      "timestamp": 1790896048.190094,
+      "node_type": "RECONCILIATION_NODE",
+      "parent_hash": "d60a87c6194c90c9e9a24d4d016ba78b5dd0ca1a42ab09cf90b974b10a356384",
+      "current_hash": "f968785a2e22bdda5e3a3d864e6897c876de3281c5bbc570519b9ec016d36b1c"
+    },
+    {
+      "block_id": 5,
+      "timestamp": 1790963084.157689,
+      "node_type": "RECONCILIATION_NODE",
+      "parent_hash": "f968785a2e22bdda5e3a3d864e6897c876de3281c5bbc570519b9ec016d36b1c",
+      "current_hash": "829129e887bdf9d494b44df2762d60a5eda19e6d6348e7360d88221462969b9a"
+    }
+  ]
+}

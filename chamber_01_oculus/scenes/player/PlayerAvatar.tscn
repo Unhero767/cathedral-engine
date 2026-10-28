@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/PlayerAvatar.gd" id="1_script"]
+[ext_resource type="Shader" path="res://shaders/cathedral_portrait_dither.gdshader" id="2_shader"]
+[ext_resource type="Texture2D" path="res://assets/textures/player_128.png" id="3_texture"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_avatar"]
+shader = ExtResource("2_shader")
+shader_parameter/u_shadow_depth_ramp = 0.55
+shader_parameter/u_specular_rim_factor = 1.35
+shader_parameter/u_lumen_emission_gain = 1.0
+shader_parameter/u_afield_potency = 1.0
+shader_parameter/u_enable_dither = true
+shader_parameter/u_enable_dual_lumen = true
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_col"]
+radius = 16.0
+height = 54.0
+
+[node name="PlayerAvatar" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
+motion_mode = 1
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_avatar")
+texture = ExtResource("3_texture")
+offset = Vector2(0, -32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_col")

@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://cathedral_sandbox_001"]
+
+[ext_resource type="Script" path="res://scripts/MlaosSubstrateEngine.cs" id="1_engine"]
+[ext_resource type="Script" path="res://scripts/SubstrateDisplay.cs" id="2_display"]
+[ext_resource type="Script" path="res://scripts/SubstrateBrushController.cs" id="3_brush"]
+[ext_resource type="Script" path="res://scripts/SubstrateHUD.cs" id="4_hud"]
+
+[node name="SubstrateSandbox" type="Node2D"]
+
+[node name="Engine" type="Node" parent="."]
+script = ExtResource("1_engine")
+GridWidth = 256
+GridHeight = 256
+TargetSimulationFrequency = 30.0
+
+[node name="Display" type="TextureRect" parent="."]
+texture_filter = 0
+custom_minimum_size = Vector2(768, 768)
+offset_right = 768.0
+offset_bottom = 768.0
+script = ExtResource("2_display")
+EnginePath = NodePath("../Engine")
+
+[node name="BrushController" type="Node" parent="."]
+script = ExtResource("3_brush")
+EnginePath = NodePath("../Engine")
+DisplayPath = NodePath("../Display")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="TelemetryLabel" type="Label" parent="HUD"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 650.0
+offset_bottom = 120.0
+script = ExtResource("4_hud")
+BrushPath = NodePath("../../BrushController")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(384, 384)

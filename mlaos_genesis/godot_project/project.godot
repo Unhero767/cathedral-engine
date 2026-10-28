@@ -1,0 +1,20 @@
+; Engine configuration file.
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+config/name="MLAOS-Prime Genesis"
+run/main_scene="res://scenes/VaultTerminal.tscn"
+config/features=PackedStringArray("4.3", "C#", "Forward Plus")
+
+[dotnet]
+project/assembly_name="MLAOS-Prime"
+
+[physics]
+common/enable_pause_aware_picking=true
+
+[rendering]
+environment/defaults/default_environment="res://default_env.tres"

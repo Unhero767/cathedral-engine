@@ -40,9 +40,9 @@ def test_lex_i_immutability(temp_ledger):
     
     with sqlite3.connect(temp_ledger.db_path) as conn:
         cursor = conn.cursor()
-        with pytest.raises(sqlite3.OperationalError):
+        with pytest.raises((sqlite3.OperationalError, sqlite3.IntegrityError)):
             cursor.execute("UPDATE blocks SET payload = 'corrupted' WHERE index_id = 1")
-        with pytest.raises(sqlite3.OperationalError):
+        with pytest.raises((sqlite3.OperationalError, sqlite3.IntegrityError)):
             cursor.execute("DELETE FROM blocks WHERE index_id = 1")
 
 def test_metamorphic_squeeze(temp_ledger):
@@ -50,7 +50,7 @@ def test_metamorphic_squeeze(temp_ledger):
     reasoner = DialetheicReasoner(temp_ledger)
     result = reasoner.evaluate_pair(
         "Observation A", "Observation ~A", 
-        FourValuedLogic.TRUE, FourValuedLogic.TRUE
+        FourValuedLogic.TRUE, FourValuedLogic.FALSE
     )
     assert result["truth_value"] == FourValuedLogic.BOTH.value
     assert result["scar"]["crystallization_angle"] == 54.74

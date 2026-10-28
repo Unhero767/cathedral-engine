@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/PlayerAvatar.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/environment/AltarInteractable.tscn" id="2_altar"]
+[ext_resource type="Script" path="res://scripts/camera/OculusCamera.gd" id="3_camera"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_lr"]
+size = Vector2(32, 1280)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_tb"]
+size = Vector2(768, 32)
+
+[node name="Chamber01_Oculus" type="Node2D"]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.04, 0.04, 0.07, 1)
+
+[node name="NaveWalls" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 2
+
+[node name="LeftWall" type="CollisionShape2D" parent="NaveWalls"]
+position = Vector2(-384, 0)
+shape = SubResource("RectangleShape2D_wall_lr")
+
+[node name="RightWall" type="CollisionShape2D" parent="NaveWalls"]
+position = Vector2(384, 0)
+shape = SubResource("RectangleShape2D_wall_lr")
+
+[node name="TopWall" type="CollisionShape2D" parent="NaveWalls"]
+position = Vector2(0, -640)
+shape = SubResource("RectangleShape2D_wall_tb")
+
+[node name="BottomWall" type="CollisionShape2D" parent="NaveWalls"]
+position = Vector2(0, 640)
+shape = SubResource("RectangleShape2D_wall_tb")
+
+[node name="AltarInteractable" parent="." instance=ExtResource("2_altar")]
+position = Vector2(0, -60)
+
+[node name="PlayerAvatar" parent="." groups=["player"] instance=ExtResource("1_player")]
+position = Vector2(0, 220)
+
+[node name="OculusCamera" type="Camera2D" parent="."]
+script = ExtResource("3_camera")
+smooth_speed = 5.0

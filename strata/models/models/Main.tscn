@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://mla0sgen001main"]
+
+[ext_resource type="Script" path="res://scripts/world/DungeonGrid.cs" id="1_dungeon"]
+[ext_resource type="Script" path="res://scripts/core/CombatManager.cs" id="2_combat"]
+[ext_resource type="Script" path="res://scripts/core/DelveRecoveryController.cs" id="3_delve"]
+[ext_resource type="Script" path="res://scripts/core/StableManager.cs" id="4_stable"]
+[ext_resource type="PackedScene" path="res://scenes/CatPlayer.tscn" id="5_player"]
+
+[node name="Main" type="Node2D"]
+y_sort_enabled = true
+
+[node name="DungeonGrid" type="Node" parent="."]
+script = ExtResource("1_dungeon")
+
+[node name="CombatManager" type="Node" parent="."]
+script = ExtResource("2_combat")
+
+[node name="DelveRecoveryController" type="Node" parent="."]
+script = ExtResource("3_delve")
+
+[node name="StableManager" type="Node" parent="."]
+script = ExtResource("4_stable")
+
+[node name="CatPlayer" parent="." instance=ExtResource("5_player")]
+position = Vector2(320, 180)

@@ -1,0 +1,54 @@
+[
+    {
+        "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "block_hash": "c45d0e1e2cbdaed3c61244078f7218e48d20442b2739f993ea190304463fb740",
+        "metrics": {
+            "circuit_id": "CIRCUIT-01",
+            "circuit_name": "Dialetheic Conjunction Glut",
+            "input_a": "B",
+            "input_b": "F",
+            "gate_operation": "AND",
+            "output_state": "F",
+            "timestamp": "2026-09-24T19:05:09.124547Z"
+        }
+    },
+    {
+        "prev_hash": "c45d0e1e2cbdaed3c61244078f7218e48d20442b2739f993ea190304463fb740",
+        "block_hash": "7cc911f60ff5f4eeaa369c037aee52ede475856ddfb549618cd89c1e822b8a00",
+        "metrics": {
+            "circuit_id": "CIRCUIT-02",
+            "circuit_name": "Truth-Value Gap Integration",
+            "input_a": "N",
+            "input_b": "T",
+            "gate_operation": "OR",
+            "output_state": "T",
+            "timestamp": "2026-09-24T19:05:09.124724Z"
+        }
+    },
+    {
+        "prev_hash": "7cc911f60ff5f4eeaa369c037aee52ede475856ddfb549618cd89c1e822b8a00",
+        "block_hash": "ebdc3666e43f51a5b5b320c045371a262f1046b9f4859b77f80108ed1f17c4dd",
+        "metrics": {
+            "circuit_id": "CIRCUIT-03",
+            "circuit_name": "Recursive Negation Loop",
+            "input_a": "B",
+            "input_b": "N",
+            "gate_operation": "NOT_A_AND_B",
+            "output_state": "N",
+            "timestamp": "2026-09-24T19:05:09.124750Z"
+        }
+    },
+    {
+        "prev_hash": "ebdc3666e43f51a5b5b320c045371a262f1046b9f4859b77f80108ed1f17c4dd",
+        "block_hash": "e5061747fb98e2796c2d68aea21b1ce3bcddcb43b7e85b652adde919132217a5",
+        "metrics": {
+            "circuit_id": "CIRCUIT-04",
+            "circuit_name": "Absolute Dialetheic Synthesis",
+            "input_a": "B",
+            "input_b": "B",
+            "gate_operation": "OR",
+            "output_state": "B",
+            "timestamp": "2026-09-24T19:05:09.124766Z"
+        }
+    }
+]

@@ -1,0 +1,62 @@
+[
+    {
+        "prev_hash": "7c4af5cfb4d91a8082e46e54e0784cbc638a32c4da49fd7e826c06acf104784d",
+        "block_hash": "7b761a9d3a1abad24dbd4ffc2f03b11640df0b1a7bc65aa5cf753fe68a2e3ad4",
+        "data": {
+            "entity_id": "ENT-01",
+            "entity_name": "Mr. Laos (Sovereign Interface)",
+            "operational_stratum": "Active Expedition",
+            "ontological_coherence": 0.98,
+            "binary_existence_state": false,
+            "timestamp": "2026-09-24T18:48:14.356131Z"
+        }
+    },
+    {
+        "prev_hash": "7b761a9d3a1abad24dbd4ffc2f03b11640df0b1a7bc65aa5cf753fe68a2e3ad4",
+        "block_hash": "c7b12f274892de8fabf56bb1c54f8db93436160c94b470512e7aa122cc135cef",
+        "data": {
+            "entity_id": "ENT-02",
+            "entity_name": "Ash Archive Watcher Daemon",
+            "operational_stratum": "Basecamp Sanctum",
+            "ontological_coherence": 0.85,
+            "binary_existence_state": false,
+            "timestamp": "2026-09-24T18:48:14.356299Z"
+        }
+    },
+    {
+        "prev_hash": "c7b12f274892de8fabf56bb1c54f8db93436160c94b470512e7aa122cc135cef",
+        "block_hash": "0988bdbccdd73613c43711ed5d7b323a90e1bcadb5214d987aa552d78227cc81",
+        "data": {
+            "entity_id": "ENT-03",
+            "entity_name": "Lithic Stress Telemetry Grid",
+            "operational_stratum": "Active Expedition",
+            "ontological_coherence": 0.92,
+            "binary_existence_state": false,
+            "timestamp": "2026-09-24T18:48:14.356320Z"
+        }
+    },
+    {
+        "prev_hash": "0988bdbccdd73613c43711ed5d7b323a90e1bcadb5214d987aa552d78227cc81",
+        "block_hash": "8e5734a4f0ff9149e4677512c56203cd9f3f23526796aed7f8c9d848a1dbc870",
+        "data": {
+            "entity_id": "ENT-04",
+            "entity_name": "Polymer Remediation Swarm",
+            "operational_stratum": "Basecamp Sanctum",
+            "ontological_coherence": 0.78,
+            "binary_existence_state": false,
+            "timestamp": "2026-09-24T18:48:14.356333Z"
+        }
+    },
+    {
+        "prev_hash": "8e5734a4f0ff9149e4677512c56203cd9f3f23526796aed7f8c9d848a1dbc870",
+        "block_hash": "8c12b66bffc3b62aae588015f62c2e0a79b98ea187a1e440bdaae4479345fff8",
+        "data": {
+            "entity_id": "ENT-05",
+            "entity_name": "HGTH Entropic Field Monitor",
+            "operational_stratum": "Active Expedition",
+            "ontological_coherence": 0.95,
+            "binary_existence_state": false,
+            "timestamp": "2026-09-24T18:48:14.356343Z"
+        }
+    }
+]

@@ -1,0 +1,90 @@
+[
+    {
+        "node_id": 0,
+        "position_m": 0.0,
+        "phase_shift_density": 0.0,
+        "resin_released_ml": 0.0,
+        "structural_integrity_recovery": 1.0,
+        "remediation_status": "STABLE"
+    },
+    {
+        "node_id": 1,
+        "position_m": 1.0,
+        "phase_shift_density": 0.0,
+        "resin_released_ml": 0.0,
+        "structural_integrity_recovery": 1.0,
+        "remediation_status": "STABLE"
+    },
+    {
+        "node_id": 2,
+        "position_m": 2.0,
+        "phase_shift_density": 0.0,
+        "resin_released_ml": 0.0,
+        "structural_integrity_recovery": 1.0,
+        "remediation_status": "STABLE"
+    },
+    {
+        "node_id": 3,
+        "position_m": 3.0,
+        "phase_shift_density": 0.0,
+        "resin_released_ml": 0.0,
+        "structural_integrity_recovery": 1.0,
+        "remediation_status": "STABLE"
+    },
+    {
+        "node_id": 4,
+        "position_m": 4.0,
+        "phase_shift_density": 0.0,
+        "resin_released_ml": 0.0,
+        "structural_integrity_recovery": 1.0,
+        "remediation_status": "STABLE"
+    },
+    {
+        "node_id": 5,
+        "position_m": 5.0,
+        "phase_shift_density": 0.0,
+        "resin_released_ml": 0.0,
+        "structural_integrity_recovery": 1.0,
+        "remediation_status": "STABLE"
+    },
+    {
+        "node_id": 6,
+        "position_m": 6.0,
+        "phase_shift_density": 0.20839656248767155,
+        "resin_released_ml": 2.6049570310958945,
+        "structural_integrity_recovery": 0.5209914062191789,
+        "remediation_status": "SEALED"
+    },
+    {
+        "node_id": 7,
+        "position_m": 7.0,
+        "phase_shift_density": 0.20839656248767155,
+        "resin_released_ml": 2.6049570310958945,
+        "structural_integrity_recovery": 0.5209914062191789,
+        "remediation_status": "SEALED"
+    },
+    {
+        "node_id": 8,
+        "position_m": 8.0,
+        "phase_shift_density": 0.0,
+        "resin_released_ml": 0.0,
+        "structural_integrity_recovery": 1.0,
+        "remediation_status": "STABLE"
+    },
+    {
+        "node_id": 9,
+        "position_m": 9.0,
+        "phase_shift_density": 0.0,
+        "resin_released_ml": 0.0,
+        "structural_integrity_recovery": 1.0,
+        "remediation_status": "STABLE"
+    },
+    {
+        "node_id": 10,
+        "position_m": 10.0,
+        "phase_shift_density": 0.0,
+        "resin_released_ml": 0.0,
+        "structural_integrity_recovery": 1.0,
+        "remediation_status": "STABLE"
+    }
+]
