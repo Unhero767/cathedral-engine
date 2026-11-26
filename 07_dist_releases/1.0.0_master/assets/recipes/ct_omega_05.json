@@ -1,0 +1,10 @@
+{
+  "specimen_id": "CT-OMEGA-05",
+  "archetype_name": "Vanguard Templar Inquisitor",
+  "caste": "Melee Vanguard",
+  "spectral_constant": "GOLD_JOY_528HZ",
+  "dialetheic_afield": 0.89,
+  "positive_prompt": "masterpiece, 8k resolution, MLAOS-Prime CC-Omega visual doctrine, Regime 03 Spectral, 6-star gacha splash art, Vanguard Templar Inquisitor, fluted Damascus plate armor with brass rivets, central chest reliquary chamber core, gold filigree solar rays, chiaroscuro lighting bias",
+  "negative_prompt": "low quality, generic cyberpunk, flat lighting, blurry",
+  "master_blueprint": "MLAOS-PRIME // VANGUARD TEMPLAR INQUISITOR (CT-OMEGA-05)"
+}

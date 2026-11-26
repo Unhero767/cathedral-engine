@@ -1,0 +1,24 @@
+{
+  "batch": "CC-OMEGA-15",
+  "recipe_count": 15,
+  "recipes": [
+    "assets/recipes/ct_omega_05.json",
+    "assets/recipes/ac_omega_03.json",
+    "assets/recipes/vv_omega_01.json",
+    "assets/recipes/hc_omega_01.json",
+    "assets/recipes/ac_omega_04.json",
+    "assets/recipes/ow_omega_02.json",
+    "assets/recipes/sm_omega_01.json",
+    "assets/recipes/cs_omega_03.json",
+    "assets/recipes/vp_omega_02.json",
+    "assets/recipes/cp_omega_01.json",
+    "assets/recipes/nb_omega_03.json",
+    "assets/recipes/ex_omega_01.json",
+    "assets/recipes/pr_omega_02.json",
+    "assets/recipes/ds_omega_01.json",
+    "assets/recipes/om_omega_40.json"
+  ],
+  "workflow_command": "for recipe in assets/recipes/*_omega_*.json; do python3 src/Bridge/ComfyUIBridge.py --recipe \"$recipe\" --export-workflow \"${recipe%.json}_workflow.json\"; done",
+  "queue_status": "NOT_EXECUTED",
+  "queue_reason": "No ComfyUIBridge.py project executable or installed ComfyUI plugin/bridge was available in the current runtime."
+}

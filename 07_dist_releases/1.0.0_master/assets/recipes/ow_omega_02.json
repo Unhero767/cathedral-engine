@@ -1,0 +1,10 @@
+{
+  "specimen_id": "OW-OMEGA-02",
+  "archetype_name": "Obsidian Warden",
+  "caste": "Barrier Bastion",
+  "spectral_constant": "OBSIDIAN_GOLD_174HZ",
+  "dialetheic_afield": 0.88,
+  "positive_prompt": "masterpiece, 8k resolution, MLAOS-Prime CC-Omega visual doctrine, Regime 01 Spectral, 6-star gacha splash art, Obsidian Warden, carbon-filigree skeleton, thermal sink organs, impenetrable pauldrons",
+  "negative_prompt": "low quality, fragile frame, flat lighting, blurry",
+  "master_blueprint": "MLAOS-PRIME // OBSIDIAN WARDEN (OW-OMEGA-02)"
+}

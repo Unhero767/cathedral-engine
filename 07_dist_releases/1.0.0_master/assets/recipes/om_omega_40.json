@@ -1,0 +1,10 @@
+{
+  "specimen_id": "OM-OMEGA-40",
+  "archetype_name": "The Sovereign Codex Root",
+  "caste": "System Root",
+  "spectral_constant": "WHITE_GOLD_963HZ",
+  "dialetheic_afield": 1.0,
+  "positive_prompt": "masterpiece, 8k resolution, MLAOS-Prime CC-Omega visual doctrine, Regime 03 Spectral, 6-star gacha splash art, The Sovereign Codex Root, total isometric synthesis across forty book codex, cathedral-engine core avatar, divine geometry halo",
+  "negative_prompt": "low quality, human proportions only, flat lighting, blurry",
+  "master_blueprint": "MLAOS-PRIME // THE SOVEREIGN CODEX ROOT (OM-OMEGA-40)"
+}

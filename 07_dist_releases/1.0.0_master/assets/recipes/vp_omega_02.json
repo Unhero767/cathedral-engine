@@ -1,0 +1,10 @@
+{
+  "specimen_id": "VP-OMEGA-02",
+  "archetype_name": "Veil Physician",
+  "caste": "Diagnostic Healer",
+  "spectral_constant": "BLUE_TEAL_639HZ",
+  "dialetheic_afield": 0.87,
+  "positive_prompt": "masterpiece, 8k resolution, MLAOS-Prime CC-Omega visual doctrine, Regime 02 Spectral, 6-star gacha splash art, Veil Physician, deep-time retina, microfracture dermis, surgical diagnostic tools",
+  "negative_prompt": "low quality, generic doctor, flat lighting, blurry",
+  "master_blueprint": "MLAOS-PRIME // VEIL PHYSICIAN (VP-OMEGA-02)"
+}

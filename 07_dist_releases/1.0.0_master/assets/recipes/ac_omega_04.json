@@ -1,0 +1,10 @@
+{
+  "specimen_id": "AC-OMEGA-04",
+  "archetype_name": "Ash Cantor",
+  "caste": "Vocal Resonator",
+  "spectral_constant": "BLUE_SORROW_396HZ",
+  "dialetheic_afield": 0.91,
+  "positive_prompt": "masterpiece, 8k resolution, MLAOS-Prime CC-Omega visual doctrine, Regime 03 Spectral, 6-star gacha splash art, Ash Cantor, laryngeal phase array, thoracic resonance cage, quiet weeping expression, pale ash dermis",
+  "negative_prompt": "low quality, aggressive pose, flat lighting, blurry",
+  "master_blueprint": "MLAOS-PRIME // ASH CANTOR (AC-OMEGA-04)"
+}

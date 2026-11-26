@@ -1,0 +1,10 @@
+{
+  "specimen_id": "DS-OMEGA-01",
+  "archetype_name": "Dialetheic Shard-Bearer",
+  "caste": "Collision Vanguard",
+  "spectral_constant": "TEAL_CRIMSON_432HZ",
+  "dialetheic_afield": 0.94,
+  "positive_prompt": "masterpiece, 8k resolution, MLAOS-Prime CC-Omega visual doctrine, Regime 02 Spectral, 6-star gacha splash art, Dialetheic Shard-Bearer, harmonic scar crystallization, floating contradictory glass shards",
+  "negative_prompt": "low quality, unbroken symmetry, flat lighting, blurry",
+  "master_blueprint": "MLAOS-PRIME // DIALETHEIC SHARD-BEARER (DS-OMEGA-01)"
+}

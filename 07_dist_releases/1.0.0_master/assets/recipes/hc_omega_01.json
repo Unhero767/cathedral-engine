@@ -1,0 +1,10 @@
+{
+  "specimen_id": "HC-OMEGA-01",
+  "archetype_name": "Harmonic Cartographer",
+  "caste": "Navigational Cortex",
+  "spectral_constant": "TEAL_CURIOUS_432HZ",
+  "dialetheic_afield": 0.85,
+  "positive_prompt": "masterpiece, 8k resolution, MLAOS-Prime CC-Omega visual doctrine, Regime 02 Spectral, 6-star gacha splash art, Harmonic Cartographer, topological cortex, luminous branching lines across skin, geometric astrolabe collar",
+  "negative_prompt": "low quality, static armor, flat lighting, blurry",
+  "master_blueprint": "MLAOS-PRIME // HARMONIC CARTOGRAPHER (HC-OMEGA-01)"
+}

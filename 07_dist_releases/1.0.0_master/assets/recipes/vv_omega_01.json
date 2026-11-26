@@ -1,0 +1,10 @@
+{
+  "specimen_id": "VV-OMEGA-01",
+  "archetype_name": "Void-Weaver Prelate",
+  "caste": "Abyssal Prelate",
+  "spectral_constant": "OBSIDIAN_NULL_0HZ",
+  "dialetheic_afield": 0.98,
+  "positive_prompt": "masterpiece, 8k resolution, MLAOS-Prime CC-Omega visual doctrine, Regime 01 Spectral, 6-star gacha splash art, Void-Weaver Prelate, null-dermis boundary, fiber-optic chasuble, abyssal crown, volumetric shadow rays",
+  "negative_prompt": "low quality, bright daylight, generic fantasy, blurry",
+  "master_blueprint": "MLAOS-PRIME // VOID-WEAVER PRELATE (VV-OMEGA-01)"
+}

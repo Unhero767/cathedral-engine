@@ -1,0 +1,10 @@
+{
+  "specimen_id": "SM-OMEGA-01",
+  "archetype_name": "Spectral Midwife",
+  "caste": "Phase Transitioner",
+  "spectral_constant": "VIOLET_RAINBOW_BREACH",
+  "dialetheic_afield": 0.96,
+  "positive_prompt": "masterpiece, 8k resolution, MLAOS-Prime CC-Omega visual doctrine, Regime 05 Spectral, 6-star gacha splash art, Spectral Midwife, chromatic vascular network, prismatic dermis, splitting dimensional veil",
+  "negative_prompt": "low quality, flat color, solid monochrome, blurry",
+  "master_blueprint": "MLAOS-PRIME // SPECTRAL MIDWIFE (SM-OMEGA-01)"
+}

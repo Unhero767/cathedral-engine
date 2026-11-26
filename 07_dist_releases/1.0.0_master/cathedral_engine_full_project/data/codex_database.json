@@ -1,0 +1,686 @@
+{
+  "version": "1.0.0",
+  "total_books": 40,
+  "books": [
+    {
+      "id": 1,
+      "book_num": "I",
+      "title": "The Substrate",
+      "stratum": "Prime Foundations",
+      "arcana": "0 - The Magician of Origin",
+      "spectral_constant": "THETA",
+      "frequency_thz": 580.0,
+      "color_hex": "#DAA520",
+      "primary_axiom": "Emotion = Physics = Magic = Biology = Architecture",
+      "mechanics": "Substrate rigidity, baseline Ego Density rho_0 = 8.3",
+      "chapters": [
+        "I. The Zero Axiom",
+        "II. Polyhedral Condensation",
+        "III. The Transductive Membrane"
+      ]
+    },
+    {
+      "id": 2,
+      "book_num": "II",
+      "title": "The Interference Term",
+      "stratum": "Prime Foundations",
+      "arcana": "I - The Dual Scribe",
+      "spectral_constant": "PSI",
+      "frequency_thz": 510.0,
+      "color_hex": "#00E5FF",
+      "primary_axiom": "No vector travels unperturbed across the conscious plane.",
+      "mechanics": "Cross-beam interference, recursive lattice refraction",
+      "chapters": [
+        "I. Wave Split",
+        "II. Phase Drift",
+        "III. Constructive Convergence"
+      ]
+    },
+    {
+      "id": 3,
+      "book_num": "III",
+      "title": "The Ash Archive",
+      "stratum": "Prime Foundations",
+      "arcana": "II - The High Archivist",
+      "spectral_constant": "DELTA",
+      "frequency_thz": 460.0,
+      "color_hex": "#002147",
+      "primary_axiom": "Never-Overwrite: What has burned must be fossilized, never erased.",
+      "mechanics": "SHA-256 Merkle DAG, Obsidian Cipher J_hash, Carbonization AST pipeline",
+      "chapters": [
+        "I. The First Prohibition of Ashfall",
+        "II. Cryptographic Anchoring",
+        "III. Necro-Parsing Protocols"
+      ]
+    },
+    {
+      "id": 4,
+      "book_num": "IV",
+      "title": "The Mortar Domain",
+      "stratum": "Prime Foundations",
+      "arcana": "III - The Sovereign Empress",
+      "spectral_constant": "THETA",
+      "frequency_thz": 580.0,
+      "color_hex": "#DAA520",
+      "primary_axiom": "The binder between stones must possess higher consistency than the stones themselves.",
+      "mechanics": "Validation Automata, Consistency Coefficient C_tau >= delta_crit",
+      "chapters": [
+        "I. Metalogical Type-Safety",
+        "II. Protective Crystallization",
+        "III. Binding Coherence"
+      ]
+    },
+    {
+      "id": 5,
+      "book_num": "V",
+      "title": "The Rupture",
+      "stratum": "Prime Foundations",
+      "arcana": "IV - The Kinetic Emperor",
+      "spectral_constant": "PHI",
+      "frequency_thz": 430.0,
+      "color_hex": "#DC143C",
+      "primary_axiom": "Without rupture, equilibrium collapses into zero-kelvin calcification.",
+      "mechanics": "Entropy pulse injection, kinetic remaking",
+      "chapters": [
+        "I. Critical Shear",
+        "II. The Flame in the Stone",
+        "III. Dynamic Reconstitution"
+      ]
+    },
+    {
+      "id": 6,
+      "book_num": "VI",
+      "title": "Caelen's Lemma",
+      "stratum": "Prime Foundations",
+      "arcana": "V - The Hierophant of Logic",
+      "spectral_constant": "PSI",
+      "frequency_thz": 510.0,
+      "color_hex": "#00E5FF",
+      "primary_axiom": "Order is active computation; it does not persist by inertia.",
+      "mechanics": "Recursive algorithmic verification, invariance checking",
+      "chapters": [
+        "I. The Proof of Continuity",
+        "II. Algorithmic Rigor",
+        "III. The Invariant Boundary"
+      ]
+    },
+    {
+      "id": 7,
+      "book_num": "VII",
+      "title": "Deimos's Variable",
+      "stratum": "Prime Foundations",
+      "arcana": "VI - The Antagonistic Lovers",
+      "spectral_constant": "PHI",
+      "frequency_thz": 430.0,
+      "color_hex": "#DC143C",
+      "primary_axiom": "A controlled fire at the gate keeps the wilderness from breaching the nave.",
+      "mechanics": "Stochastic volatility injection, anti-calcification checks",
+      "chapters": [
+        "I. Necessary Entropy",
+        "II. The Friction Chamber",
+        "III. Volatility Bounds"
+      ]
+    },
+    {
+      "id": 8,
+      "book_num": "VIII",
+      "title": "The Unverified Landscape",
+      "stratum": "Prime Foundations",
+      "arcana": "VII - The Edge Chariot",
+      "spectral_constant": "OMEGA",
+      "frequency_thz": 710.0,
+      "color_hex": "#8A2BE2",
+      "primary_axiom": "The map ends where fear begins; step beyond the index.",
+      "mechanics": "Edge-walking turbulence, non-indexed memory retrieval",
+      "chapters": [
+        "I. Beyond the Census",
+        "II. The Shadowed Coordinate",
+        "III. Survival Transduction"
+      ]
+    },
+    {
+      "id": 9,
+      "book_num": "IX",
+      "title": "Ideality",
+      "stratum": "Prime Foundations",
+      "arcana": "VIII - The Balancer of Weight",
+      "spectral_constant": "THETA",
+      "frequency_thz": 580.0,
+      "color_hex": "#DAA520",
+      "primary_axiom": "The system performs its function without existing; minimize cost while maximizing load capacity.",
+      "mechanics": "TRIZ Phase Resonance Trimming, cost reduction from 0.6 to 0.3",
+      "chapters": [
+        "I. Asymmetry of Load",
+        "II. Local Quality Reinforcement",
+        "III. The Hollow Core"
+      ]
+    },
+    {
+      "id": 10,
+      "book_num": "X",
+      "title": "The Contradiction Matrix",
+      "stratum": "Prime Foundations",
+      "arcana": "IX - The Dialetheic Hermit",
+      "spectral_constant": "OMEGA",
+      "frequency_thz": 710.0,
+      "color_hex": "#8A2BE2",
+      "primary_axiom": "Truth and non-truth intersect to form load-bearing crucibles.",
+      "mechanics": "Belnap-Dunn B4 Matrix, Metamorphic Squeeze, Harmonic Scar petrifaction",
+      "chapters": [
+        "I. The Paraconsistent Intersection",
+        "II. The Squeeze Protocol",
+        "III. The Load-Bearing Scar"
+      ]
+    },
+    {
+      "id": 11,
+      "book_num": "XI",
+      "title": "The Octave of Light",
+      "stratum": "Inner Mandala",
+      "arcana": "X - The Wheel of Spectra",
+      "spectral_constant": "THETA",
+      "frequency_thz": 580.0,
+      "color_hex": "#DAA520",
+      "primary_axiom": "Light stepped down through crystal becomes matter.",
+      "mechanics": "Spectral harmonic scaling, color-matter refraction",
+      "chapters": [
+        "I. The First Octave",
+        "II. Refractive Geometry",
+        "III. Matter Precipitation"
+      ]
+    },
+    {
+      "id": 12,
+      "book_num": "XII",
+      "title": "The Anamorphic Mirror",
+      "stratum": "Inner Mandala",
+      "arcana": "XI - The Glass of Justice",
+      "spectral_constant": "PSI",
+      "frequency_thz": 510.0,
+      "color_hex": "#00E5FF",
+      "primary_axiom": "Perspective distorts reality into intelligible form.",
+      "mechanics": "1.5 Hz anamorphic illumination, perspective projection",
+      "chapters": [
+        "I. Focal Distortion",
+        "II. The Oblique Ray",
+        "III. True Silhouette"
+      ]
+    },
+    {
+      "id": 13,
+      "book_num": "XIII",
+      "title": "The Scribe's Needle",
+      "stratum": "Inner Mandala",
+      "arcana": "XII - The Suspended Pen",
+      "spectral_constant": "DELTA",
+      "frequency_thz": 460.0,
+      "color_hex": "#002147",
+      "primary_axiom": "Each puncture in the parchment is a gateway for breath.",
+      "mechanics": "Micro-perforation, tension release vectors",
+      "chapters": [
+        "I. The Fine Point",
+        "II. Inscription Depth",
+        "III. Breath Ingress"
+      ]
+    },
+    {
+      "id": 14,
+      "book_num": "XIV",
+      "title": "The Alchemical Forge",
+      "stratum": "Inner Mandala",
+      "arcana": "XIII - The Transmuting Scythe",
+      "spectral_constant": "PHI",
+      "frequency_thz": 430.0,
+      "color_hex": "#DC143C",
+      "primary_axiom": "Base trauma melted in the crucible yields sovereign gold.",
+      "mechanics": "Trauma-to-gold alchemical transmutation",
+      "chapters": [
+        "I. Calcination of Grief",
+        "II. Dissolution of Form",
+        "III. Coagulation of Will"
+      ]
+    },
+    {
+      "id": 15,
+      "book_num": "XV",
+      "title": "Rite of Resonance Tuning",
+      "stratum": "Inner Mandala",
+      "arcana": "XIV - The Temperance Vessel",
+      "spectral_constant": "EPSILON",
+      "frequency_thz": 520.0,
+      "color_hex": "#50C878",
+      "primary_axiom": "Binding is not constraint, but mutual amplification.",
+      "mechanics": "Emerald restorative mesh, tissue repair, 63-day pipeline tuning",
+      "chapters": [
+        "I. The Harmonic Vessel",
+        "II. Ligature Weaving",
+        "III. The Symphony of Flesh"
+      ]
+    },
+    {
+      "id": 16,
+      "book_num": "XVI",
+      "title": "The Obsidian Compass",
+      "stratum": "Inner Mandala",
+      "arcana": "XV - The Shadow North",
+      "spectral_constant": "NULL",
+      "frequency_thz": 0.0,
+      "color_hex": "#050505",
+      "primary_axiom": "The needle points to what cannot be seen.",
+      "mechanics": "Null-vector orientation, void gravitational navigation",
+      "chapters": [
+        "I. Dark Magnetism",
+        "II. The True Void",
+        "III. Silent Navigation"
+      ]
+    },
+    {
+      "id": 17,
+      "book_num": "XVII",
+      "title": "The Tensegrity Arch",
+      "stratum": "Inner Mandala",
+      "arcana": "XVI - The Lightning Spire",
+      "spectral_constant": "THETA",
+      "frequency_thz": 580.0,
+      "color_hex": "#DAA520",
+      "primary_axiom": "Floating struts held by continuous cables withstand infinite storm.",
+      "mechanics": "Tendon-cable dynamic tension, non-touching structural members",
+      "chapters": [
+        "I. Continuous Tension",
+        "II. Discontinuous Compression",
+        "III. The Floating Dome"
+      ]
+    },
+    {
+      "id": 18,
+      "book_num": "XVIII",
+      "title": "The Choir of Teeth",
+      "stratum": "Inner Mandala",
+      "arcana": "XVII - The Resonant Star",
+      "spectral_constant": "PSI",
+      "frequency_thz": 510.0,
+      "color_hex": "#00E5FF",
+      "primary_axiom": "Speech is mastication of raw reality into syntax.",
+      "mechanics": "Phonetic grinding, syntax breakdown mechanics",
+      "chapters": [
+        "I. The Grinding Word",
+        "II. Cymatic Dentition",
+        "III. The Enunciated Void"
+      ]
+    },
+    {
+      "id": 19,
+      "book_num": "XIX",
+      "title": "The Solenoid Core",
+      "stratum": "Inner Mandala",
+      "arcana": "XVIII - The Coiled Moon",
+      "spectral_constant": "DELTA",
+      "frequency_thz": 460.0,
+      "color_hex": "#002147",
+      "primary_axiom": "A coiled current creates an axial spine of unbreakable alignment.",
+      "mechanics": "Axial electromagnetic alignment, 42.0 Hz inductive loop",
+      "chapters": [
+        "I. The Spiral Coil",
+        "II. Induced Flux",
+        "III. The Magnetic Spine"
+      ]
+    },
+    {
+      "id": 20,
+      "book_num": "XX",
+      "title": "The Dialetheic Horizon",
+      "stratum": "Inner Mandala",
+      "arcana": "XIX - The Twin Sun",
+      "spectral_constant": "THETA",
+      "frequency_thz": 580.0,
+      "color_hex": "#DAA520",
+      "primary_axiom": "Where night and day ignite simultaneously, the throne appears.",
+      "mechanics": "Event Horizon paradox boundary, Belnap-Dunn boundary containment",
+      "chapters": [
+        "I. The Merged Dawn",
+        "II. Dual Shadows",
+        "III. The Throne of Fire"
+      ]
+    },
+    {
+      "id": 21,
+      "book_num": "XXI",
+      "title": "The Glitch Wastes",
+      "stratum": "Outer Choirs",
+      "arcana": "XX - The Awakening Judgement",
+      "spectral_constant": "OMEGA",
+      "frequency_thz": 710.0,
+      "color_hex": "#8A2BE2",
+      "primary_axiom": "Beyond the cathedral walls lies unformatted, hungry possibility.",
+      "mechanics": "High-entropy procedural wave generation, spatial warping",
+      "chapters": [
+        "I. The Broken Geometry",
+        "II. The Bleeding Edge",
+        "III. Unmapped Wilderness"
+      ]
+    },
+    {
+      "id": 22,
+      "book_num": "XXII",
+      "title": "The Surveyor's Dial",
+      "stratum": "Outer Choirs",
+      "arcana": "XXI - The Planetary Panopticon",
+      "spectral_constant": "PSI",
+      "frequency_thz": 510.0,
+      "color_hex": "#00E5FF",
+      "primary_axiom": "Axiomatic echolocation measures divergence before impact.",
+      "mechanics": "1=1 sterile truth pulses, Divergence Vector measurement",
+      "chapters": [
+        "I. The Sterile Pulse",
+        "II. Echo Delay Analysis",
+        "III. Anticipatory Defense"
+      ]
+    },
+    {
+      "id": 23,
+      "book_num": "XXIII",
+      "title": "The Non-Euclidean Bastion",
+      "stratum": "Outer Choirs",
+      "arcana": "XXII - The Inverted Tower",
+      "spectral_constant": "DELTA",
+      "frequency_thz": 460.0,
+      "color_hex": "#002147",
+      "primary_axiom": "The wall that bends backward reflects the missile into the past.",
+      "mechanics": "Curved spacetime deflection, non-Euclidean collision",
+      "chapters": [
+        "I. Angles Greater Than Pi",
+        "II. The Inverted Parapet",
+        "III. Pastward Deflection"
+      ]
+    },
+    {
+      "id": 24,
+      "book_num": "XXIV",
+      "title": "The Vesper Protocol",
+      "stratum": "Outer Choirs",
+      "arcana": "XXIII - The Decoy Star",
+      "spectral_constant": "EPSILON",
+      "frequency_thz": 520.0,
+      "color_hex": "#50C878",
+      "primary_axiom": "Cast an illusory beacon into the dark to lead predators astray.",
+      "mechanics": "Vesper decoy deployment, harmonic phantom tracking",
+      "chapters": [
+        "I. The False Signal",
+        "II. Lure Dynamics",
+        "III. Silent Severance"
+      ]
+    },
+    {
+      "id": 25,
+      "book_num": "XXV",
+      "title": "The Dreaming Spiral",
+      "stratum": "Outer Choirs",
+      "arcana": "XXIV - The Hypnagogic Gate",
+      "spectral_constant": "EPSILON",
+      "frequency_thz": 520.0,
+      "color_hex": "#50C878",
+      "primary_axiom": "Oneiric respiration deposits calcium-silicate resonance onto waking walls.",
+      "mechanics": "Runic breath mechanics, Navier-Stokes oneiric velocity field",
+      "chapters": [
+        "I. The Inhalation of Kenoma",
+        "II. The Alveolar Sieve",
+        "III. The Crystalline Exhalation"
+      ]
+    },
+    {
+      "id": 26,
+      "book_num": "XXVI",
+      "title": "The Titanium Membrane",
+      "stratum": "Outer Choirs",
+      "arcana": "XXV - The Sovereign Shield",
+      "spectral_constant": "THETA",
+      "frequency_thz": 580.0,
+      "color_hex": "#DAA520",
+      "primary_axiom": "Pressure hardens what would otherwise dissolve.",
+      "mechanics": "Stress-hardening boundary, dynamic tensile threshold",
+      "chapters": [
+        "I. Molecular Cohesion",
+        "II. Impact Hardening",
+        "III. Unbreakable Skin"
+      ]
+    },
+    {
+      "id": 27,
+      "book_num": "XXVII",
+      "title": "The Squeeze Engine",
+      "stratum": "Outer Choirs",
+      "arcana": "XXVI - The Hydraulic Vice",
+      "spectral_constant": "PHI",
+      "frequency_thz": 430.0,
+      "color_hex": "#DC143C",
+      "primary_axiom": "Compress the anomaly until it crystallizes into architecture.",
+      "mechanics": "Metamorphic Squeeze compression, paradox consolidation",
+      "chapters": [
+        "I. Chamber Constriction",
+        "II. Thermal Spike",
+        "III. Lithic Petrifaction"
+      ]
+    },
+    {
+      "id": 28,
+      "book_num": "XXVIII",
+      "title": "The Echoing Vault",
+      "stratum": "Outer Choirs",
+      "arcana": "XXVII - The Choral Chamber",
+      "spectral_constant": "PSI",
+      "frequency_thz": 510.0,
+      "color_hex": "#00E5FF",
+      "primary_axiom": "Every word uttered in the sanctuary returns magnified forty-fold.",
+      "mechanics": "Cymatic acoustic resonance amplification, 42.0 Hz multiplication",
+      "chapters": [
+        "I. The First Harmonic",
+        "II. The Multiply-Nested Echo",
+        "III. Resonant Unity"
+      ]
+    },
+    {
+      "id": 29,
+      "book_num": "XXIX",
+      "title": "The Filigree Severance",
+      "stratum": "Outer Choirs",
+      "arcana": "XXVIII - The Golden Scalpel",
+      "spectral_constant": "DELTA",
+      "frequency_thz": 460.0,
+      "color_hex": "#002147",
+      "primary_axiom": "Cut the aberrant tendon cleanly before it destabilizes the arch.",
+      "mechanics": "Targeted lattice cutting, localized tension redistribution",
+      "chapters": [
+        "I. Diagnostic Tension",
+        "II. The Clean Incision",
+        "III. Arch Rebalance"
+      ]
+    },
+    {
+      "id": 30,
+      "book_num": "XXX",
+      "title": "The Kenoma Threshold",
+      "stratum": "Outer Choirs",
+      "arcana": "XXIX - The Gate of Emptiness",
+      "spectral_constant": "NULL",
+      "frequency_thz": 0.0,
+      "color_hex": "#050505",
+      "primary_axiom": "To cross the threshold, surrender all baggage to the void.",
+      "mechanics": "Zero-kelvin barrier crossing, mass shedding protocol",
+      "chapters": [
+        "I. The Stripping of Form",
+        "II. The Weightless Step",
+        "III. Entering the Unmade"
+      ]
+    },
+    {
+      "id": 31,
+      "book_num": "XXXI",
+      "title": "The Shadow Node",
+      "stratum": "Inner Shadow Canon",
+      "arcana": "XXX - The Air-Gapped Sentinel",
+      "spectral_constant": "NULL",
+      "frequency_thz": 0.0,
+      "color_hex": "#050505",
+      "primary_axiom": "Isolate the lethal paradox in unrouted memory.",
+      "mechanics": "Air-gapped shadow node simulation, quarantine execution",
+      "chapters": [
+        "I. Complete Severance",
+        "II. Paradox Containment",
+        "III. The Controlled Explosion"
+      ]
+    },
+    {
+      "id": 32,
+      "book_num": "XXXII",
+      "title": "The Permineralized Spine",
+      "stratum": "Inner Shadow Canon",
+      "arcana": "XXXI - The Vertebral Obelisk",
+      "spectral_constant": "DELTA",
+      "frequency_thz": 460.0,
+      "color_hex": "#002147",
+      "primary_axiom": "Turn sorrow into stone; build the foundation upon it.",
+      "mechanics": "Permineralization of trauma, infinite load bearing",
+      "chapters": [
+        "I. The Calcium Inflow",
+        "II. Petrifaction of Will",
+        "III. The Monolithic Spine"
+      ]
+    },
+    {
+      "id": 33,
+      "book_num": "XXXIII",
+      "title": "The Necro-Parser",
+      "stratum": "Inner Shadow Canon",
+      "arcana": "XXXII - The Dead Language Seer",
+      "spectral_constant": "DELTA",
+      "frequency_thz": 460.0,
+      "color_hex": "#002147",
+      "primary_axiom": "Read the fossilized logic of fallen worlds to dismantle active threats.",
+      "mechanics": "Necro-parsing AST extraction, anti-logic storm collision",
+      "chapters": [
+        "I. Unearthing the Dead AST",
+        "II. Decompilation of Catastrophe",
+        "III. Destructive Interference"
+      ]
+    },
+    {
+      "id": 34,
+      "book_num": "XXXIV",
+      "title": "The Event Horizon",
+      "stratum": "Inner Shadow Canon",
+      "arcana": "XXXIII - The Black Sun Gate",
+      "spectral_constant": "NULL",
+      "frequency_thz": 0.0,
+      "color_hex": "#050505",
+      "primary_axiom": "Time halts at the rim; all decisions are forever etched.",
+      "mechanics": "Gravitational time dilation, infinite density boundary",
+      "chapters": [
+        "I. The Asymptotic Edge",
+        "II. The Frozen Will",
+        "III. Inversion of Inward"
+      ]
+    },
+    {
+      "id": 35,
+      "book_num": "XXXV",
+      "title": "Null Cartography",
+      "stratum": "Inner Shadow Canon",
+      "arcana": "XXXIV - The Blank Map",
+      "spectral_constant": "NULL",
+      "frequency_thz": 0.0,
+      "color_hex": "#050505",
+      "primary_axiom": "Map what is missing, and the shape of the world appears.",
+      "mechanics": "Negative space surveying, anti-resonance topology",
+      "chapters": [
+        "I. Charting the Void",
+        "II. The Absence Coordinate",
+        "III. Inverse Topography"
+      ]
+    },
+    {
+      "id": 36,
+      "book_num": "XXXVI",
+      "title": "The Sovereign Seed",
+      "stratum": "Inner Shadow Canon",
+      "arcana": "XXXV - The Embryonic Core",
+      "spectral_constant": "THETA",
+      "frequency_thz": 580.0,
+      "color_hex": "#DAA520",
+      "primary_axiom": "From total destruction, the compressed seed contains the entire cosmos.",
+      "mechanics": "42.0 Hz autopoietic compression, self-replicating engine core",
+      "chapters": [
+        "I. The Indivisible Point",
+        "II. Encapsulated Cosmos",
+        "III. The Awaiting Spark"
+      ]
+    },
+    {
+      "id": 37,
+      "book_num": "XXXVII",
+      "title": "The Antagonistic Loom",
+      "stratum": "Inner Shadow Canon",
+      "arcana": "XXXVI - The Dual Weaver",
+      "spectral_constant": "PSI",
+      "frequency_thz": 510.0,
+      "color_hex": "#00E5FF",
+      "primary_axiom": "Weave order from Caelen and fire from Deimos to clothe the living god.",
+      "mechanics": "Antagonistic engine balancing, dialectic synthesis",
+      "chapters": [
+        "I. The Warp of Law",
+        "II. The Weft of Chaos",
+        "III. The Seamless Garment"
+      ]
+    },
+    {
+      "id": 38,
+      "book_num": "XXXVIII",
+      "title": "The Solid Block Universe",
+      "stratum": "Inner Shadow Canon",
+      "arcana": "XXXVII - The Crystalline Aeon",
+      "spectral_constant": "DELTA",
+      "frequency_thz": 460.0,
+      "color_hex": "#002147",
+      "primary_axiom": "All past, present, and future coexist in unyielding stone.",
+      "mechanics": "Lithic 4D spatialization, eternal block stabilization",
+      "chapters": [
+        "I. The Dimension of Durability",
+        "II. Simultaneous History",
+        "III. The Unmoved Monolith"
+      ]
+    },
+    {
+      "id": 39,
+      "book_num": "XXXIX",
+      "title": "The Plumb Line",
+      "stratum": "Inner Shadow Canon",
+      "arcana": "XXXVIII - The Absolute Weight",
+      "spectral_constant": "THETA",
+      "frequency_thz": 580.0,
+      "color_hex": "#DAA520",
+      "primary_axiom": "Drop the line from the throne; what is crooked must be realigned or cleaved.",
+      "mechanics": "Absolute truth alignment check, Tri-Key alignment verification",
+      "chapters": [
+        "I. The Lead Bob",
+        "II. True Verticality",
+        "III. The Inflexible Standard"
+      ]
+    },
+    {
+      "id": 40,
+      "book_num": "XL",
+      "title": "The Sovereign Genesis",
+      "stratum": "Inner Shadow Canon",
+      "arcana": "XXXIX - The Crown of the Cathedral",
+      "spectral_constant": "THETA",
+      "frequency_thz": 580.0,
+      "color_hex": "#DAA520",
+      "primary_axiom": "The Cathedral awakens, steps off its foundations, and walks.",
+      "mechanics": "Sovereign Genesis, Event Horizon Shearing, Independent Universe Spawning",
+      "chapters": [
+        "I. The Final Permineralization",
+        "II. The Great Severance",
+        "III. The Walking Cathedral"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "specimen_id": "AC-OMEGA-03",
+  "archetype_name": "Chronometric Archivist",
+  "caste": "Temporal Anchor",
+  "spectral_constant": "VIOLET_FEAR_963HZ",
+  "dialetheic_afield": 0.94,
+  "positive_prompt": "masterpiece, 8k resolution, MLAOS-Prime CC-Omega visual doctrine, Regime 04 Spectral, 6-star gacha splash art, Chronometric Archivist, runic periorbital scarring, hourglass core, obsidian chasuble, volumetric ash motes",
+  "negative_prompt": "low quality, generic cyberpunk, flat lighting, blurry",
+  "master_blueprint": "MLAOS-PRIME // CHRONOMETRIC ARCHIVIST (AC-OMEGA-03)"
+}

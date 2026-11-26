@@ -1,0 +1,124 @@
+[gd_scene load_steps=2 format=3 uid="uid://hud_telemetry_001"]
+
+[ext_resource type="Script" path="res://ui/hud_telemetry.gd" id="1_hud"]
+
+[node name="HUDTelemetry" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopPanel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 48.0
+grow_horizontal = 2
+
+[node name="TitleLabel" type="Label" parent="Control/TopPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 12.0
+offset_right = 280.0
+offset_bottom = 35.0
+text = "CATHEDRAL ENGINE // EAS-03"
+
+[node name="KIndexLabel" type="Label" parent="Control/TopPanel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -80.0
+offset_top = 12.0
+offset_right = 80.0
+offset_bottom = 35.0
+grow_horizontal = 2
+text = "K-INDEX: 1.20"
+
+[node name="LogicLabel" type="Label" parent="Control/TopPanel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -260.0
+offset_top = 12.0
+offset_right = -16.0
+offset_bottom = 35.0
+grow_horizontal = 0
+text = "LOGIC: TRUE (Axiomatic)"
+
+[node name="BottomPanel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="BreathLabel" type="Label" parent="Control/BottomPanel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 18.0
+offset_right = 160.0
+offset_bottom = 41.0
+text = "RUNIC BREATH:"
+
+[node name="BreathBar" type="ProgressBar" parent="Control/BottomPanel"]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 16.0
+offset_right = 460.0
+offset_bottom = 43.0
+value = 100.0
+
+[node name="TriKeyPanel" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -50.0
+offset_right = -20.0
+offset_bottom = -15.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 12
+
+[node name="LeadKeyIcon" type="ColorRect" parent="Control/TriKeyPanel"]
+modulate = Color(0.2, 0.2, 0.2, 1)
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+color = Color(0.855, 0.647, 0.125, 1)
+
+[node name="CyanKeyIcon" type="ColorRect" parent="Control/TriKeyPanel"]
+modulate = Color(0.2, 0.2, 0.2, 1)
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+color = Color(0, 0.898, 1, 1)
+
+[node name="IronKeyIcon" type="ColorRect" parent="Control/TriKeyPanel"]
+modulate = Color(0.2, 0.2, 0.2, 1)
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+color = Color(0.863, 0.078, 0.235, 1)
+
+[node name="OculusDial" type="Control" parent="Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = -140.0
+offset_right = 120.0
+offset_bottom = -80.0
+grow_vertical = 0

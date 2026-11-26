@@ -1,0 +1,10 @@
+{
+  "specimen_id": "CP-OMEGA-01",
+  "archetype_name": "Cathedral Pilot",
+  "caste": "Interface Sovereign",
+  "spectral_constant": "GOLD_TEAL_528HZ",
+  "dialetheic_afield": 0.9,
+  "positive_prompt": "masterpiece, 8k resolution, MLAOS-Prime CC-Omega visual doctrine, Regime 03 Spectral, 6-star gacha splash art, Cathedral Pilot, neural cathedral interface, spinal control bus, biomechanical load frame",
+  "negative_prompt": "low quality, simple pilot suit, flat lighting, blurry",
+  "master_blueprint": "MLAOS-PRIME // CATHEDRAL PILOT (CP-OMEGA-01)"
+}

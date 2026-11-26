@@ -1,0 +1,10 @@
+{
+  "specimen_id": "PR-OMEGA-02",
+  "archetype_name": "Prismatic Anchor",
+  "caste": "Resonance Stabilizer",
+  "spectral_constant": "VIOLET_GOLD_852HZ",
+  "dialetheic_afield": 0.89,
+  "positive_prompt": "masterpiece, 8k resolution, MLAOS-Prime CC-Omega visual doctrine, Regime 05 Spectral, 6-star gacha splash art, Prismatic Anchor, dual-heart resonance chamber, transparent glass chest core, crystalline plating",
+  "negative_prompt": "low quality, opaque armor, flat lighting, blurry",
+  "master_blueprint": "MLAOS-PRIME // PRISMATIC ANCHOR (PR-OMEGA-02)"
+}

@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://sanctuary_arvonlae_001"]
+
+[ext_resource type="Script" path="res://world/sanctuary_arvonlae.gd" id="1_arvonlae"]
+[ext_resource type="Script" path="res://core/heart_oculus.gd" id="2_oculus"]
+[ext_resource type="PackedScene" path="res://entities/player/player_soulframe.tscn" id="3_player"]
+[ext_resource type="PackedScene" path="res://ui/hud_telemetry.tscn" id="4_hud"]
+
+[node name="SanctuaryArvonlae" type="Node2D"]
+script = ExtResource("1_arvonlae")
+
+[node name="HeartOculus" type="Node2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("2_oculus")
+
+[node name="PlayerSoulframe" parent="." groups=["Player"] instance=ExtResource("3_player")]
+position = Vector2(640, 480)
+
+[node name="HUDTelemetry" parent="." instance=ExtResource("4_hud")]

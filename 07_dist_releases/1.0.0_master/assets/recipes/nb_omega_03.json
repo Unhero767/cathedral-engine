@@ -1,0 +1,10 @@
+{
+  "specimen_id": "NB-OMEGA-03",
+  "archetype_name": "Null Bloom Sentinel",
+  "caste": "Potential Manifest",
+  "spectral_constant": "OBSIDIAN_WHITE_963HZ",
+  "dialetheic_afield": 0.95,
+  "positive_prompt": "masterpiece, 8k resolution, MLAOS-Prime CC-Omega visual doctrine, Regime 04 Spectral, 6-star gacha splash art, Null Bloom Sentinel, latent resonance core, obsidian petal dermis, emerging light aura",
+  "negative_prompt": "low quality, fully solid, flat lighting, blurry",
+  "master_blueprint": "MLAOS-PRIME // NULL BLOOM SENTINEL (NB-OMEGA-03)"
+}

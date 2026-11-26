@@ -1,0 +1,10 @@
+{
+  "specimen_id": "EX-OMEGA-01",
+  "archetype_name": "Exarch of the First Vault",
+  "caste": "Archival Sovereign",
+  "spectral_constant": "BRONZE_OBSIDIAN_111HZ",
+  "dialetheic_afield": 0.93,
+  "positive_prompt": "masterpiece, 8k resolution, MLAOS-Prime CC-Omega visual doctrine, Regime 01 Spectral, 6-star gacha splash art, Exarch of the First Vault, lithic cranial vault, sovereign iron seals, heavy monastic robes",
+  "negative_prompt": "low quality, lightweight armor, flat lighting, blurry",
+  "master_blueprint": "MLAOS-PRIME // EXARCH OF THE FIRST VAULT (EX-OMEGA-01)"
+}

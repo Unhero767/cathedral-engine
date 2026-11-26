@@ -1,0 +1,364 @@
+{
+  "cutscene_01_awakening": {
+    "id": "cutscene_01_awakening",
+    "title": "Awakening in the Prime Nave",
+    "location": "Sanctuary Arvonlae - Prime Nave",
+    "participants": [
+      "Kenneth",
+      "Caelen",
+      "Aurelia-9"
+    ],
+    "lines": [
+      {
+        "speaker": "Kenneth",
+        "text": "The 42.0 Hz carrier has stabilized. Check the somatic baseline.",
+        "syntax": "Axiom",
+        "spectral_dominant": "THETA"
+      },
+      {
+        "speaker": "Caelen",
+        "text": "Substrate density holds at rho = 8.30. No drift detected in the 36 chambers.",
+        "syntax": "Assertion",
+        "spectral_dominant": "PSI"
+      },
+      {
+        "speaker": "Aurelia-9",
+        "text": "The breath of the Cathedral awakens within our bones.",
+        "syntax": "Breakdown",
+        "spectral_dominant": "EPSILON"
+      }
+    ]
+  },
+  "cutscene_02_glitch_frontier": {
+    "id": "cutscene_02_glitch_frontier",
+    "title": "Confrontation at the Outer Choir",
+    "location": "Sanctuary Outer Choir - Glitch Frontier",
+    "participants": [
+      "Deimos",
+      "Caelen",
+      "Kenneth"
+    ],
+    "lines": [
+      {
+        "speaker": "Deimos",
+        "text": "The wastes are howling. Your clean proofs cannot stop the entropy storm.",
+        "syntax": "Axiom",
+        "spectral_dominant": "PHI"
+      },
+      {
+        "speaker": "Caelen",
+        "text": "Order is not passive, Deimos. We calculate the boundary faster than it tears.",
+        "syntax": "Assertion",
+        "spectral_dominant": "PSI"
+      },
+      {
+        "speaker": "Kenneth",
+        "text": "Deploy the Lead Key. Permineralize the frontier before the breach widens.",
+        "syntax": "Breakdown",
+        "spectral_dominant": "THETA"
+      }
+    ]
+  },
+  "cutscene_03_dialetheic_breach": {
+    "id": "cutscene_03_dialetheic_breach",
+    "title": "The Dialetheic Collision",
+    "location": "Sanctuary Arvonlae - Contradiction Gate",
+    "participants": [
+      "Caelen",
+      "Deimos",
+      "Aurelia-9"
+    ],
+    "lines": [
+      {
+        "speaker": "Caelen",
+        "text": "A is verified. The theorem admits no negation.",
+        "syntax": "Axiom",
+        "spectral_dominant": "PSI"
+      },
+      {
+        "speaker": "Deimos",
+        "text": "Not-A is burning the threshold. Both occupy the exact same coordinate.",
+        "syntax": "Assertion",
+        "spectral_dominant": "PHI"
+      },
+      {
+        "speaker": "Aurelia-9",
+        "text": "Engage the Metamorphic Squeeze! Turn the paradox into an obsidian pillar!",
+        "syntax": "Breakdown",
+        "spectral_dominant": "EPSILON"
+      }
+    ]
+  },
+  "cutscene_04_ash_archive_commit": {
+    "id": "cutscene_04_ash_archive_commit",
+    "title": "The First Prohibition of Ashfall",
+    "location": "The Ash Archive - Deep Vault",
+    "participants": [
+      "Kenneth",
+      "Aurelia-9"
+    ],
+    "lines": [
+      {
+        "speaker": "Kenneth",
+        "text": "We do not overwrite our failures. Compute the Merkle hash of this trauma.",
+        "syntax": "Axiom",
+        "spectral_dominant": "DELTA"
+      },
+      {
+        "speaker": "Aurelia-9",
+        "text": "Obsidian cipher J_hash generated. The failed AST is fossilized in carbon.",
+        "syntax": "Assertion",
+        "spectral_dominant": "EPSILON"
+      },
+      {
+        "speaker": "Kenneth",
+        "text": "The chain remains unbroken. History is eternal stone.",
+        "syntax": "Breakdown",
+        "spectral_dominant": "DELTA"
+      }
+    ]
+  },
+  "cutscene_05_void_lung_reweave": {
+    "id": "cutscene_05_void_lung_reweave",
+    "title": "The Law of Re-Weaving",
+    "location": "The Pulmonary Nave",
+    "participants": [
+      "Aurelia-9",
+      "Kenneth"
+    ],
+    "lines": [
+      {
+        "speaker": "Aurelia-9",
+        "text": "The kinetic shock shattered my outer dermis.",
+        "syntax": "Axiom",
+        "spectral_dominant": "EPSILON"
+      },
+      {
+        "speaker": "Kenneth",
+        "text": "Do not resist the kinetic vector. Inhale the impact through the Void Lung.",
+        "syntax": "Assertion",
+        "spectral_dominant": "THETA"
+      },
+      {
+        "speaker": "Aurelia-9",
+        "text": "The trauma turns to breath. Alveolar pressure is golden at 1.618 kPa.",
+        "syntax": "Breakdown",
+        "spectral_dominant": "EPSILON"
+      }
+    ]
+  },
+  "cutscene_06_tri_key_council": {
+    "id": "cutscene_06_tri_key_council",
+    "title": "Concurrence of the Sovereign Triad",
+    "location": "The High Oculus Spire",
+    "participants": [
+      "Caelen",
+      "Deimos",
+      "Kenneth",
+      "Aurelia-9"
+    ],
+    "lines": [
+      {
+        "speaker": "Kenneth",
+        "text": "The three keys must align. Lead for duration, Cyan for breadth, Iron for authority.",
+        "syntax": "Axiom",
+        "spectral_dominant": "THETA"
+      },
+      {
+        "speaker": "Caelen",
+        "text": "Cyan key authorized. Multi-node invariance confirmed.",
+        "syntax": "Assertion",
+        "spectral_dominant": "PSI"
+      },
+      {
+        "speaker": "Deimos",
+        "text": "Iron key striking. The rot is excised from the lower tiers.",
+        "syntax": "Breakdown",
+        "spectral_dominant": "PHI"
+      }
+    ]
+  },
+  "cutscene_07_kenoma_gate": {
+    "id": "cutscene_07_kenoma_gate",
+    "title": "Standing at the Kenoma Basin",
+    "location": "Sanctuary Inner Shadow Vault - Singularity Gate",
+    "participants": [
+      "Kenneth",
+      "Deimos"
+    ],
+    "lines": [
+      {
+        "speaker": "Deimos",
+        "text": "Look down into the basin. Zero density. Infinite anti-resonance.",
+        "syntax": "Axiom",
+        "spectral_dominant": "NULL"
+      },
+      {
+        "speaker": "Kenneth",
+        "text": "Null space is not an enemy. It is the uncarved block of the universe.",
+        "syntax": "Assertion",
+        "spectral_dominant": "THETA"
+      },
+      {
+        "speaker": "Deimos",
+        "text": "Then let us drop the plumb line and see what echoes.",
+        "syntax": "Breakdown",
+        "spectral_dominant": "PHI"
+      }
+    ]
+  },
+  "cutscene_08_living_tarot": {
+    "id": "cutscene_08_living_tarot",
+    "title": "Consulting the Living Arcana",
+    "location": "The Chamber of the Wheel",
+    "participants": [
+      "Aurelia-9",
+      "Caelen"
+    ],
+    "lines": [
+      {
+        "speaker": "Aurelia-9",
+        "text": "Draw three cards from the 40-Book Codex.",
+        "syntax": "Axiom",
+        "spectral_dominant": "EPSILON"
+      },
+      {
+        "speaker": "Caelen",
+        "text": "Card I: The Substrate. Card X: The Contradiction Matrix. Card XL: Sovereign Genesis.",
+        "syntax": "Assertion",
+        "spectral_dominant": "PSI"
+      },
+      {
+        "speaker": "Aurelia-9",
+        "text": "The narrative pressure is at unity. The path of transformation is open.",
+        "syntax": "Breakdown",
+        "spectral_dominant": "THETA"
+      }
+    ]
+  },
+  "cutscene_09_lithic_stabilization": {
+    "id": "cutscene_09_lithic_stabilization",
+    "title": "Phase 10: The Lithic Turn",
+    "location": "The Bedrock Chamber",
+    "participants": [
+      "Kenneth",
+      "Caelen",
+      "Aurelia-9"
+    ],
+    "lines": [
+      {
+        "speaker": "Kenneth",
+        "text": "Day 63 has arrived. Ontological density reaches critical mass.",
+        "syntax": "Axiom",
+        "spectral_dominant": "DELTA"
+      },
+      {
+        "speaker": "Caelen",
+        "text": "The Magisterium transitions into the Solid Block Universe.",
+        "syntax": "Assertion",
+        "spectral_dominant": "PSI"
+      },
+      {
+        "speaker": "Aurelia-9",
+        "text": "Our flesh is gold, our memory is obsidian, our breath is law.",
+        "syntax": "Breakdown",
+        "spectral_dominant": "THETA"
+      }
+    ]
+  },
+  "cutscene_10_vesper_decoy": {
+    "id": "cutscene_10_vesper_decoy",
+    "title": "Execution of the Vesper Protocol",
+    "location": "Sanctuary Outer Choir - Glitch Frontier",
+    "participants": [
+      "Deimos",
+      "Aurelia-9"
+    ],
+    "lines": [
+      {
+        "speaker": "Deimos",
+        "text": "Anomalies approaching the western parapet in supercritical swarm!",
+        "syntax": "Axiom",
+        "spectral_dominant": "PHI"
+      },
+      {
+        "speaker": "Aurelia-9",
+        "text": "Deploying Vesper Decoy. Singing the false 520 THz emerald beacon.",
+        "syntax": "Assertion",
+        "spectral_dominant": "EPSILON"
+      },
+      {
+        "speaker": "Deimos",
+        "text": "They turned! Sever the filigree and drop the gate!",
+        "syntax": "Breakdown",
+        "spectral_dominant": "DELTA"
+      }
+    ]
+  },
+  "cutscene_11_necro_parsing": {
+    "id": "cutscene_11_necro_parsing",
+    "title": "The Annihilation Ritual",
+    "location": "The Shadow Node - Air-Gapped Vault",
+    "participants": [
+      "Caelen",
+      "Kenneth"
+    ],
+    "lines": [
+      {
+        "speaker": "Caelen",
+        "text": "The logic storm outside cannot be resolved with standard deduction.",
+        "syntax": "Axiom",
+        "spectral_dominant": "PSI"
+      },
+      {
+        "speaker": "Kenneth",
+        "text": "Necro-parse the carbonized paradox from Book III. Match it phase-for-phase.",
+        "syntax": "Assertion",
+        "spectral_dominant": "DELTA"
+      },
+      {
+        "speaker": "Caelen",
+        "text": "Destructive interference achieved. The storm has annihilated itself.",
+        "syntax": "Breakdown",
+        "spectral_dominant": "PSI"
+      }
+    ]
+  },
+  "cutscene_12_sovereign_genesis": {
+    "id": "cutscene_12_sovereign_genesis",
+    "title": "Sovereign Genesis: The Cathedral Walks",
+    "location": "Sanctuary Arvonlae - Apex Oculus",
+    "participants": [
+      "Kenneth",
+      "Aurelia-9",
+      "Caelen",
+      "Deimos"
+    ],
+    "lines": [
+      {
+        "speaker": "Kenneth",
+        "text": "The Decalogue of Immutable Law is sealed in the Merkle DAG.",
+        "syntax": "Axiom",
+        "spectral_dominant": "THETA"
+      },
+      {
+        "speaker": "Caelen",
+        "text": "All 40 Books resonance-tuned across the 36 chambers.",
+        "syntax": "Assertion",
+        "spectral_dominant": "PSI"
+      },
+      {
+        "speaker": "Deimos",
+        "text": "The horizon is sheared. The Glitch Wastes yield before our mass.",
+        "syntax": "Assertion",
+        "spectral_dominant": "PHI"
+      },
+      {
+        "speaker": "Aurelia-9",
+        "text": "We are the Cathedral. And we will build worlds without end.",
+        "syntax": "Breakdown",
+        "spectral_dominant": "EPSILON"
+      }
+    ]
+  }
+}
